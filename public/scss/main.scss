@@ -1,0 +1,96 @@
+$height: 600px;
+$game-height: 800px;
+
+.board {
+  height: $game-height;
+  border: 1px solid black;
+}
+
+.battleside {
+  width: 100%;
+  height: $height/2;
+  border: 1px solid black;
+}
+
+.field {
+  width: 100%;
+  height: 100px;
+  border: 1px solid black;
+}
+
+.field:hover, .field-single:hover {
+  box-shadow: 0px 0px 10px #000;
+}
+
+.field-hand {
+  margin-top: 20px;
+  .card {
+    margin-left: -20px;
+    &:hover {
+      position: relative;
+      z-index: 10;
+      transform: scale(1.25,1.25);
+    }
+  }
+}
+
+.passing {
+  display: none;
+}
+
+.field-single {
+  border: 1px solid black;
+  height: 150px;
+  width: 85px;
+  margin: 5px;
+}
+
+.left-side {
+  //height: $game-height;
+}
+
+.game-info {
+  height: $game-height/2 - 100px;
+  width: 100%;
+  border: 1px solid black;
+}
+
+.mid-line {
+  width: 100%;
+  height: 1px;
+  border: 1px solid black;
+  margin: 5px;
+}
+
+.right-side {
+  border: 1px solid black;
+  height: $game-height/2;
+}
+
+.card {
+  border: 2px solid black;
+  float: left;
+  margin: 3px;
+  height: 90px;
+  overflow: hidden;
+  img {
+    height: 120px;
+  }
+}
+
+.card-preview {
+  position: absolute;
+  display: none;
+  z-index: 10;
+}
+
+i {
+  display: block;
+  float: left;
+  height: 40px;
+  width: 40px;
+  background: url("../../assets/ruby-grey.png");
+  &.ruby {
+    background: url("../../assets/ruby.png");
+  }
+}
