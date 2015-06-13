@@ -33,6 +33,8 @@ var Battleside = (function(){
   r._range = null;
   r._siege = null;
   r._field = null;
+  r._lives = 2;
+  r._score = 0;
 
   r.foe = null;
   r.hand = null;
@@ -49,6 +51,19 @@ var Battleside = (function(){
     console.log("update:hand fired");
 
     this.send("update:hand", {cards: JSON.stringify(this.hand.getCards())});
+  }
+
+  r.getInfo = function() {
+    return {
+      name: this.getName(),
+      lives: this._lives,
+      score: this._score,
+      hand: this.hand.length()
+    }
+  }
+
+  r.getName = function() {
+    return this._name;
   }
 
   r.send = function(event, msg) {

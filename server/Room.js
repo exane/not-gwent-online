@@ -56,9 +56,7 @@ var Room = (function(){
   r.initBattle = function(){
     var self = this;
     var side = 0;
-    this._battle = Battle(this._id);/*
-    this.setReady(this._room[0], false);
-    this.setReady(this._room[1], false);*/
+    this._battle = Battle(this._id, this._room[0], this._room[1]);
     this._room[0].send("init:battle", {side: "p1"});
     this._room[1].send("init:battle", {side: "p2"});
   }

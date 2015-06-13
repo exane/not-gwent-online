@@ -8,6 +8,31 @@
   <link rel="stylesheet" href="../build/main.css">
 </head>
 <body>
+<script id="info-template" type="text/x-handlebars-template">
+  <div class="col-xs-12 game-info game-info-foe foe">
+    <div class="col-xs-12 info-name">{{name}}</div>
+    <div class="col-xs-6 field-single field-leader"></div>
+    <div class="col-xs-6">
+      <div class="row">
+        <div class="col-xs-6">Points:</div>
+        <div class="col-xs-6 score">{{score}}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">Hand:</div>
+        <div class="col-xs-6 hand-card">{{hand}}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 gwent-lives">
+          {{#health}}
+          {{/health}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 passing">Passed</div>
+      </div>
+    </div>
+  </div>
+</script>
 <script id="battle-template" type="text/x-handlebars-template">
   <div class="col-xs-3 left-side">
     <div class="col-xs-12 game-info game-info-foe foe">
@@ -37,6 +62,30 @@
       field
     </div>
     <div class="col-xs-12 game-info game-info-player player">
+      <div class="col-xs-12 info-name">{{name}}</div>
+      <div class="col-xs-6 field-single field-leader"></div>
+      <div class="col-xs-6">
+        <div class="row">
+          <div class="col-xs-6">Points:</div>
+          <div class="col-xs-6 score">{{score}}</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Hand:</div>
+          <div class="col-xs-6 hand-card">{{hand}}</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 gwent-lives">
+            <!--<i class="ruby"></i>-->
+            {{#health lives}}{{/health}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 passing">Passed</div>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <button class="button-pass">Pass</button>
+      </div>
     </div>
   </div>
   <div class="col-xs-6">
