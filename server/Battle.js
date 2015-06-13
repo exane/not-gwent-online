@@ -22,7 +22,9 @@ var Battle = (function(){
   r.init = function(p1, p2){
     this.setPlayer(p1, p2);
     this.initBattleside();
-    this.render();
+    this.both(function(p) {
+      p.send("init:battle");
+    })
   }
 
   r.setPlayer = function(p1, p2){
@@ -37,10 +39,8 @@ var Battle = (function(){
     });
   }
 
-  r.render = function() {
-    this._player.forEach(function(p) {
-      p.send("update:name", p.getID());
-    });
+  r.both = function() {
+    this._player.forEach(cb);
   }
 
 

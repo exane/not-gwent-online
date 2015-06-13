@@ -30,6 +30,10 @@ var Connections = (function(){
     return this._connections;
   }
 
+  r.hasUser = function(user) {
+    return !!this._connections[user.getID()];
+  }
+
 
   return Connections;
 })();

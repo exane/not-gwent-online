@@ -17,7 +17,8 @@
   "devDependencies": {
     "handlebars": "^3.0.3",
     "jquery": "^2.1.4",
-    "promise": "^7.0.1"
+    "promise": "^7.0.1",
+    "shortid": "^2.2.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
