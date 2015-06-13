@@ -66,14 +66,6 @@ var Socket = (function(){
       socket.on("request:joinRoom", function(){
         console.log("joinroom");
         var interval = setInterval(function(){
-          /*self.roomCollection.forEach(function(room) {
-            if(room.isOpen()) {
-              room.join(user);
-              clearInterval(interval);
-              console.log("user %s joined room %s", user.getName(), room.getID());
-              user.send("response:joinRoom", room.getID());
-            }
-          });*/
           for(var key in self.roomCollection) {
             var room = self.roomCollection[key];
             if(!room.isOpen()) continue;

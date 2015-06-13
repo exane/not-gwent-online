@@ -100,7 +100,10 @@ var BattleView = Backbone.View.extend({
     var app = this.app = options.app;
     $(this.el).prependTo('body');
 
+    this.listenTo(user, "change:showPreview", this.render);
+
     this.$hand = this.$el.find(".field-hand");
+    this.$preview = this.$el.find(".card-preview");
 
     this.app.receive("update:hand", function(data){
       console.log("update:hand", user.get("roomSide"), data._roomSide);
@@ -117,14 +120,27 @@ var BattleView = Backbone.View.extend({
     }.bind(this), 100);
     this.render();
   },
+  events: {
+    "mouseover .card": "onMouseover",
+    "mouseleave .card": "onMouseleave"
+  },
+  onMouseover: function(e){
+    var target = $(e.target).closest(".card");
+    this.user.set("showPreview", target.find("img").attr("src"));
+  },
+  onMouseleave: function(e) {
+    this.user.set("showPreview", null);
+  },
   render: function(){
     var self = this;
     this.$el.html(this.template({
-      cards: self.handCards
+      cards: self.handCards,
+      preview: self.user.get("showPreview")
     }));
     return this;
   }
-});
+})
+;
 
 var User = Backbone.Model.extend({
   defaults: {
