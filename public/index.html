@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../build/main.css">
 </head>
 <body>
-<div class="container board">
+<script id="battle-template" type="text/x-handlebars-template">
   <div class="col-xs-3 left-side">
     <div class="col-xs-12 game-info game-info-foe foe">
       <div class="col-xs-12 info-name"></div>
@@ -73,6 +73,11 @@
     </div>
     <div class="row">
       <div class="col-xs-12 field field-hand">
+        {{#each cards}}
+        <div class="card">
+          <img src='../assets/cards/{{_data.img}}.png'>
+        </div>
+        {{/each}}
       </div>
     </div>
   </div>
@@ -95,7 +100,7 @@
       </div>
     </div>
   </div>
-</div>
+</script>
 <script id="matchmaker-template" type="text/x-handlebars-template">
   <div class="col-xs-12">
     <div class="panel panel-default">

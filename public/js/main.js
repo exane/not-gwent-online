@@ -1,9 +1,7 @@
 
-var Gwent = require("./Gwent");
+var App = require("./client");
 
 (function main(){
-  var gwent = Gwent();
-
-  gwent.init();
+  var app = new App();
 
 })();

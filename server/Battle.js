@@ -1,14 +1,16 @@
 var Battleside = require("./Battleside");
 
+var io = global.io;
+
 var Battle = (function(){
-  var Battle = function(){
+  var Battle = function(id){
     if(!(this instanceof Battle)){
-      return (new Battle());
+      return (new Battle(id));
     }
     /**
      * constructor here
      */
-
+    this._id = id;
   };
   var r = Battle.prototype;
   /**
@@ -17,32 +19,30 @@ var Battle = (function(){
    * r.getProperty = function() {...}
    */
 
-  r._player = null;
+  r.p1 = null;
+  r.p2 = null;
+  r.turn = 0;
 
-  r.init = function(p1, p2){
-    this.setPlayer(p1, p2);
-    this.initBattleside();
-    this.both(function(p) {
-      p.send("init:battle");
-    })
+  r._id = null;
+
+
+  r.init = function(){
+    this.p1 = Battleside("Player 1", 0, this);
+    this.p2 = Battleside("Player 2", 1, this);
+    this.p1.foe = this.p2;
+    this.p2.foe = this.p1;
+
+    this.start();
   }
 
-  r.setPlayer = function(p1, p2){
-    this._player = [];
-    this._player.push(p1);
-    this._player.push(p2);
+  r.start = function() {
+    this.p1.draw(10);
+    this.p2.draw(10);
   }
 
-  r.initBattleside = function() {
-    this._player.forEach(function(p) {
-      p.setBattleside(Battleside(p));
-    });
+  r.send = function(event, data) {
+    io.to(this._id).emit(event, data);
   }
-
-  r.both = function() {
-    this._player.forEach(cb);
-  }
-
 
   return Battle;
 })();

@@ -1,0 +1,30 @@
+module.exports = {
+
+  "test": [
+    "redanian_foot_soldier",
+    "poor_fucking_infantry",
+    "redanian_foot_soldier",
+    "poor_fucking_infantry",
+    "yarpen_zigrin",
+    "blue_stripes_commando",
+    "sigismunt_dijkstra",
+    "prince_stennis",
+    "siegfried_of_denesle",
+    "ves",
+    "vernon_roche",
+    "john_natalis",
+    "sheldon_skaggs",
+    "sabrina_glevissig",
+    "crinfrid_reavers_dragon_hunter",
+    "sile_de_tansarville",
+    "keira_metz",
+    "dethmold",
+    "kaedweni_siege_expert",
+    "dun_banner_medic",
+    "ballista",
+    "trebuchet",
+    "thaler",
+    "foltest_king_of_temeria",
+    "decoy",
+    "impenetrable_fog"]
+}

@@ -19,10 +19,10 @@ var Socket = (function(){
      * constructor here
      */
     this.connections = Connections();
-/*
-    this.matchmaker = Matchmaker(this.connections);
-*/
-    this._roomCollection = [];
+    /*
+        this.matchmaker = Matchmaker(this.connections);
+    */
+    this.roomCollection = {};
     app.listen(this.port);
     this.io = io;
     this._events();
@@ -36,10 +36,10 @@ var Socket = (function(){
   r.io = null;
   r.port = 16918;
   r.connections = null;
-  r._roomCollection = null;
-/*
-  r.matchmaker = null;
-*/
+  r.roomCollection = null;
+  /*
+    r.matchmaker = null;
+  */
 
   r._events = function(){
     var self = this;
@@ -48,13 +48,6 @@ var Socket = (function(){
       self.connections.add(user);
       console.log("new user ", user.getName());
 
-      /* self.matchmaker.findOpponent(user)
-       .then(function(p1, p2, roomID) {
-         console.log("yo");
-         var battle = Battle();
-         battle.init(p1, p2);
-       })*/
-
       socket.on("request:name", function(data){
         if(data && data.name){
           user.setName(data.name);
@@ -62,29 +55,37 @@ var Socket = (function(){
         socket.emit("response:name", {name: user.getName()});
       })
 
-      socket.on("request:createRoom", function() {
+      socket.on("request:createRoom", function(){
         var room = Room();
-        self._roomCollection.push(room);
+        self.roomCollection[room.getID()] = room;
         room.join(user);
         console.log("room %s created by %s", room.getID(), user.getName());
         user.send("response:createRoom", room.getID());
       })
 
-      socket.on("request:joinRoom", function() {
+      socket.on("request:joinRoom", function(){
         console.log("joinroom");
         var interval = setInterval(function(){
-          self._roomCollection.forEach(function(room) {
+          /*self.roomCollection.forEach(function(room) {
             if(room.isOpen()) {
               room.join(user);
               clearInterval(interval);
               console.log("user %s joined room %s", user.getName(), room.getID());
               user.send("response:joinRoom", room.getID());
             }
-          });
+          });*/
+          for(var key in self.roomCollection) {
+            var room = self.roomCollection[key];
+            if(!room.isOpen()) continue;
+            room.join(user);
+            clearInterval(interval);
+            console.log("user %s joined room %s", user.getName(), room.getID());
+            user.send("response:joinRoom", room.getID());
+          }
         }, 1000);
       })
 
-      socket.on("request:roomData", function() {
+      socket.on("request:roomData", function(){
         var room = user.getRoom();
         var players = room.getPlayers();
         user.send("response:roomData", {players: players});
@@ -93,6 +94,10 @@ var Socket = (function(){
       socket.on("disconnect", function(){
         self.connections.remove(user);
         user.disconnect();
+      })
+
+      socket.on("request:gameLoaded", function(data){
+        self.roomCollection[data._roomID].setReady(user);
       })
     });
   }
