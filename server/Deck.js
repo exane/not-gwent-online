@@ -36,7 +36,7 @@ var Deck = (function(){
     return this._deck.length;
   }
 
-  r.length = function() {
+  r.length = function(){
     return this.getLength();
   }
 
@@ -50,45 +50,50 @@ var Deck = (function(){
     return card;
   }
 
-/*
-  r._loadCards = function(){
-    var n = this._originalDeck.length;
-    for(var i = 0; i < n; i++) {
-      this._deck.push(CardManager().add(this._originalDeck[i], this._owner));
-    }
-  }*/
+  /*
+    r._loadCards = function(){
+      var n = this._originalDeck.length;
+      for(var i = 0; i < n; i++) {
+        this._deck.push(CardManager().add(this._originalDeck[i], this._owner));
+      }
+    }*/
 
-  r._loadCards = function() {
-    this._deck = this.getDeck().map(function(cardkey) {
+  r._loadCards = function(){
+    this._deck = this.getDeck().map(function(cardkey){
       return Card(cardkey);
     });
   }
 
   r.pop = function(){
-    var id = this._deck.pop();/*
-    var card = CardManager().getCardById(id);*/
+    var id = this._deck.pop();
+    /*
+        var card = CardManager().getCardById(id);*/
     return id;
   }
 
-  /*r.find = function(key, val){
+  r.find = function(key, val){
     var res = [];
-    this.getDeck().forEach(function(id){
-      var card = CardManager().getCardById(id);
+    this.getDeck().forEach(function(card){
       if(card.getProperty(key) == val){
         res.push(card);
       }
+
     });
     return res;
-  }*/
+  }
 
-  r.removeFromDeck = function(id){
+  r.removeFromDeck = function(card){
     var n = this.length();
 
     for(var i = 0; i < n; i++) {
-      var cardID = this.getDeck()[i];
+      /*var cardID = this.getDeck()[i];
       if(id == cardID){
         this.getDeck().splice(i, 1);
         return id;
+      }*/
+      var c = this.getDeck()[i];
+      if(c.getID() === card.getID()){
+        return this.getDeck().splice(i, 1);
       }
     }
     return -1;

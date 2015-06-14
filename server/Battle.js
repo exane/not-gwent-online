@@ -1,4 +1,5 @@
 var Battleside = require("./Battleside");
+var PubSub = require("pubsub-js");
 
 var io = global.io;
 
@@ -31,25 +32,50 @@ var Battle = (function(){
 
 
   r.init = function(){
-    this.p1 = Battleside(this._user1.getName(), 0, this);
-    this.p2 = Battleside(this._user2.getName(), 1, this);
+    this.p1 = Battleside(this._user1.getName(), 0, this, this._user1);
+    this.p2 = Battleside(this._user2.getName(), 1, this, this._user2);
     this.p1.foe = this.p2;
     this.p2.foe = this.p1;
-
-    this.p1.send("update:info", {info: this.p1.getInfo()});
-    this.p2.send("update:info", {info: this.p2.getInfo()});
 
     this.start();
   }
 
-  r.start = function() {
+  r.start = function(){
+    this.p1.setLeadercard();
+    this.p2.setLeadercard();
     this.p1.draw(10);
     this.p2.draw(10);
 
-    //this.p2.wait();
+    PubSub.subscribe("nextTurn", this.switchTurn.bind(this));
+
+    this.switchTurn();
   }
 
-  r.send = function(event, data) {
+  r.switchTurn = function(){
+    /*this.playerManager.renderInfos();
+    if(this.playerManager.bothPassed() && !this._roundCheck) {
+      //start new round
+      this._roundCheck = true;
+      this.checkRound();
+      return;
+    }
+    if(this.playerManager.bothPassed()) {
+      return;
+    }
+    var entity = this.playerManager.getNextPlayer();
+
+    this.playerManager.renderInfos();*/
+    var side = this.turn++ % 2 ? this.p1 : this.p2;
+
+
+    PubSub.publish("onEachTurn");
+    PubSub.publish("turn/" + side.getID());
+    console.log("current Turn: ", side.getName());
+
+  }
+
+
+  r.send = function(event, data){
     io.to(this._id).emit(event, data);
   }
 

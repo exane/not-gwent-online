@@ -23,7 +23,7 @@ module.exports = {
 
       var cards = this.getDeck().find("name", name);
       cards.forEach(function(_card) {
-        self.getDeck().removeFromDeck(_card.getId());
+        self.getDeck().removeFromDeck(_card.getID());
         this._placeCard(_card);
       })
     }

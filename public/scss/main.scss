@@ -53,6 +53,11 @@ $game-height: 800px;
   height: $game-height/2 - 100px;
   width: 100%;
   border: 1px solid black;
+  background: rgba(252, 219, 125, 0.51);
+}
+
+.removeBackground {
+  background: 0;
 }
 
 .mid-line {

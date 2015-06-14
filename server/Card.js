@@ -73,7 +73,7 @@ var Card = (function(){
     return this._key;
   }
 
-  r.getId = function(){
+  r.getID = function(){
     return this._id;
   }
 

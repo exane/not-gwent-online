@@ -30,11 +30,19 @@ var Hand = (function(){
     return this._hand;
   }
 
+  r.getCard = function(id) {
+    for(var i=0; i< this.length(); i++) {
+      var card = this.getCards()[i];
+      if(card.getID() === id) return card;
+    }
+    return -1;
+  }
+
   r.remove = function(id){
     var n = this.length();
 
     for(var i = 0; i < n; i++) {
-      if(this._hand[i].getId() != id) continue;
+      if(this._hand[i].getID() != id) continue;
       return this._hand.splice(i, 1);
     }
     return -1;

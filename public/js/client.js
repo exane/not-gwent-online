@@ -93,65 +93,87 @@ var App = Backbone.Router.extend({
   }
 });
 
-/*var Partial = Backbone.View.extend({
-  initialize: function(options){
-    this.template = Handlebars.compile($(options.templateID).html());
-    this.infoData = this.infoData || {};
-    this.app = options.app;
-    var self = this;
-
-this.listenTo(this.infoData, "change", this.render);
-    this.app.on("update:info", function(d) {
-      self.infoData = d;
-      self.render();
-    });
-    this.render();
-  },
-  render: function(){
-    var self = this;
-    var d = this.infoData;
-    this.$el.html(this.template({
-      name: d.name,
-      score: d.score,
-      hand: d.hand,
-      lives: d.lives
-    }));
-    return this;
-  }
-});*/
-
 var SideView = Backbone.View.extend({
   el: ".container",
+  template: Handlebars.compile('<div class="card" data-key="{{_key}}"><img src="../assets/cards/{{_data.img}}.png"></div>'),
+  templateCards: Handlebars.compile('{{#each this}}' +
+  '<div class="card" data-key="{{_key}}">' +
+  '<img src="../assets/cards/{{_data.img}}.png">' +
+  '</div>' +
+  '{{/each}}'),
   initialize: function(options){
     var self = this;
     this.side = options.side;
     this.app = options.app;
     this.battleView = options.battleView;
     this.infoData = this.infoData || {};
+    this.leader = this.leader || {};
+    this.field = this.field || {};
 
-    this.$info = this.$el.find(".game-info" + this.side);
-    this.$fields = this.$el.find(".battleside" + this.side);
-    /*this.$info = new Partial({
-      templateID: "#info-template",
-      el: ".game-info"+this.side,
-      app: this.app
-    });*/
-
-    /*this.app.on("update:info", function(d){
-      self.infoData = d.infoData;
-      console.log(d);
-      self.render();
-    });*/
 
   },
   render: function(){
+
+    this.renderInfo();
+    this.renderCloseField();
+    this.renderRangeField();
+    this.renderSiegeField();
+
+    return this;
+  },
+  renderInfo: function(){
     var d = this.infoData;
+    var l = this.leader;
     this.$info = this.$el.find(".game-info" + this.side);
     this.$info.find(".info-name").html(d.name);
     this.$info.find(".score").html(d.score);
     this.$info.find(".hand-card").html(d.hand);
     this.$info.find(".gwent-lives").html(this.lives(d.lives));
-    return this;
+    this.$info.find(".field-leader").html(this.template(l))
+
+    if(this.app.user.get("waiting") && this.side === ".player"){
+      this.$info.addClass("removeBackground");
+    }
+    if(!this.app.user.get("waiting") && this.side === ".foe"){
+      this.$info.addClass("removeBackground");
+    }
+
+  },
+  renderCloseField: function(){
+    if(!this.field.close) return;
+    this.$fields = this.$el.find(".battleside" + this.side);
+    var $field = this.$fields.find(".field-close").parent();
+    var cards = this.field.close._cards;
+    var score = this.field.close._score;
+
+    var html = this.templateCards(cards);
+
+    $field.find(".field-close").html(html)
+    $field.find(".large-field-counter").html(score)
+  },
+  renderRangeField: function(){
+    if(!this.field.ranged) return;
+    this.$fields = this.$el.find(".battleside" + this.side);
+    var $field = this.$fields.find(".field-range").parent();
+    var cards = this.field.ranged._cards;
+    var score = this.field.ranged._score;
+
+    var html = this.templateCards(cards);
+
+    $field.find(".field-range").html(html)
+    $field.find(".large-field-counter").html(score)
+  },
+  renderSiegeField: function(){
+    if(!this.field.siege) return;
+    this.$fields = this.$el.find(".battleside" + this.side);
+    var $field = this.$fields.find(".field-siege").parent();
+    var cards = this.field.siege._cards;
+    var score = this.field.siege._score;
+
+    var html = this.templateCards(cards);
+
+    $field.find(".field-siege").html(html)
+    $field.find(".large-field-counter").html(score)
   },
   lives: function(lives){
     var out = "";
@@ -178,6 +200,7 @@ var BattleView = Backbone.View.extend({
     $(this.el).prependTo('body');
 
     this.listenTo(user, "change:showPreview", this.render);
+    this.listenTo(user, "change:waiting", this.render);
 
     this.$hand = this.$el.find(".field-hand");
     this.$preview = this.$el.find(".card-preview");
@@ -193,6 +216,7 @@ var BattleView = Backbone.View.extend({
     app.receive("update:info", function(data){
       var _side = data._roomSide;
       var infoData = data.info;
+      var leader = data.leader;
 
 
       var side = yourSide;
@@ -201,8 +225,25 @@ var BattleView = Backbone.View.extend({
       }
       console.log(side);
       side.infoData = infoData;
+      side.leader = leader;
       side.render();
-      //app.trigger("update:info", {side: side, infoData: infoData});
+    });
+
+    app.receive("update:fields", function(data){
+      var close, ranged, siege;
+      var _side = data._roomSide;
+
+      var side = yourSide;
+      if(user.get("roomSide") != _side){
+        side = otherSide;
+      }
+
+
+      side.field.close = data.close;
+      side.field.ranged = data.ranged;
+      side.field.siege = data.siege;
+
+      side.render();
     })
 
     var interval = setInterval(function(){
@@ -221,7 +262,17 @@ var BattleView = Backbone.View.extend({
   },
   events: {
     "mouseover .card": "onMouseover",
-    "mouseleave .card": "onMouseleave"
+    "mouseleave .card": "onMouseleave",
+    "click .field-hand": "onClick"
+  },
+  onClick: function(e){
+    if(!!this.user.get("waiting")) return;
+    var $card = $(e.target).closest(".card");
+    var id = $card.data("id");
+    console.log("clicked id ", id);
+    this.app.send("play:cardFromHand", {
+      id: id
+    });
   },
   onMouseover: function(e){
     var target = $(e.target).closest(".card");
@@ -275,6 +326,12 @@ var User = Backbone.Model.extend({
     app.receive("response:joinRoom", function(roomID){
       self.set("room", roomID);
       console.log("room id", self.get("room"));
+    })
+
+    app.receive("set:waiting", function(data){
+      var waiting = data.waiting;
+      console.log("is waiting: ", waiting);
+      self.set("waiting", waiting);
     })
 
 
