@@ -34,8 +34,8 @@ $game-height: 800px;
   }
 }
 
-.passing {
-  display: none;
+.passing {/*
+  display: none;*/
 }
 
 .field-single {
@@ -80,6 +80,16 @@ $game-height: 800px;
   overflow: hidden;
   img {
     height: 120px;
+  }
+  span {
+    color: #00b000;
+    font-weight: bold;
+    font-size: 24px;
+    position: absolute;
+    text-shadow: 1px 1px #101010;
+    margin-top: 55px;
+    margin-left: 30px;
+    cursor: default;
   }
 }
 

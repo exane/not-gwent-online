@@ -8,10 +8,11 @@ module.exports = {
   },
   "morale_boost": {
     onAfterPlace: function(card) {
-      var field = this.getYourside().getField(card.getType());
-      var cards = field.getCards();
+      var field = this.field[card.getType()];
+      var cards = field.get();
 
       cards.forEach(function(_card) {
+        if(_card.getID() == card.getID()) return;
         _card.boost(1);
       })
     }
@@ -21,17 +22,17 @@ module.exports = {
       var name = card.getName();
       var self = this;
 
-      var cards = this.getDeck().find("name", name);
+      var cards = this.deck.find("name", name);
       cards.forEach(function(_card) {
-        self.getDeck().removeFromDeck(_card.getID());
-        this._placeCard(_card);
+        self.deck.removeFromDeck(_card);
+        this.placeCard(_card);
       })
     }
   },
   "tight_bond": {
     onAfterPlace: function(card){
-      var field = this.getYourside().getField(card.getType());
-      var cards = field.getCards();
+      var field = this.field[card.getType()];
+      var cards = field.get();
       var lastInsert = cards.length;
 
       if(lastInsert < 2) return;
@@ -45,15 +46,15 @@ module.exports = {
   "spy": {
     changeSide: true,
     onAfterPlace: function(card){
-      this.drawCards(2);
+      this.draw(2);
     }
   },
   "weather_fog": {
     onEachTurn: function(card) {
       var targetRow = card.constructor.TYPE.RANGED;
       var forcedPower = 1;
-      var field1 = this.getYourside().getField(targetRow).getCards();
-      var field2 = this.getOtherside().getField(targetRow).getCards();
+      var field1 = this.field[targetRow].get();
+      var field2 = this.foe.field[targetRow].get();
 
       var field = field1.concat(field2);
 
@@ -61,15 +62,27 @@ module.exports = {
         if(_card.getRawAbility() == "hero") return;
         _card.setForcedPower(forcedPower);
       });
+    },
+    onEachCardPlace: function(card) {
+      var targetRow = card.constructor.TYPE.RANGED;
+      var forcedPower = 1;
+      var field1 = this.field[targetRow].get();
+      var field2 = this.foe.field[targetRow].get();
 
+      var field = field1.concat(field2);
+
+      field.forEach(function(_card) {
+        if(_card.getRawAbility() == "hero") return;
+        _card.setForcedPower(forcedPower);
+      });
     }
   },
   "weather_rain": {
     onEachTurn: function(card) {
       var targetRow = card.constructor.TYPE.SIEGE;
       var forcedPower = 1;
-      var field1 = this.getYourside().getField(targetRow).getCards();
-      var field2 = this.getOtherside().getField(targetRow).getCards();
+      var field1 = this.field[targetRow].get();
+      var field2 = this.foe.field[targetRow].get();
 
       var field = field1.concat(field2);
 
@@ -84,8 +97,8 @@ module.exports = {
     onEachTurn: function(card) {
       var targetRow = card.constructor.TYPE.CLOSE_COMBAT;
       var forcedPower = 1;
-      var field1 = this.getYourside().getField(targetRow).getCards();
-      var field2 = this.getOtherside().getField(targetRow).getCards();
+      var field1 = this.field[targetRow].get();
+      var field2 = this.foe.field[targetRow].get();
 
       var field = field1.concat(field2);
 
@@ -99,7 +112,7 @@ module.exports = {
   "clear_weather": {
     onAfterPlace: function(card) {
       var targetRow = card.constructor.TYPE.WEATHER;
-      var field = this.getYourside().getField(targetRow).getCards();
+      var field = this.field[targetRow].get();
 
       //todo: remove weather cards
     }

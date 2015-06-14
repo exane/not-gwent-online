@@ -19,25 +19,47 @@ var Field = (function(){
   r._cards = null;
   r._score = 0;
 
-  r.add = function(card) {
+  r.add = function(card){
     this._cards.push(card);
     this.updateScore();
   }
 
-  r.get = function() {
+  r.get = function(){
     return this._cards;
   }
 
-  r.getScore = function() {
+  r.getScore = function(){
+    this.updateScore();
     return this._score;
   }
 
-  r.updateScore = function() {
+  r.updateScore = function(){
     this._score = 0;
-    for(var i=0; i<this._cards.length; i++) {
+    for(var i = 0; i < this._cards.length; i++) {
       var card = this._cards[i];
       this._score += card.getPower();
     }
+  }
+
+  r.getPosition = function(card){
+    for(var i = 0; i < this._cards.length; i++) {
+      if(this._cards[i].getID() === card.getID()) return i;
+    }
+    return -1;
+  }
+
+  r.replaceWith = function(oldCard, newCard){
+    var index = this.getPosition(oldCard);
+    this._cards[index] = newCard;
+    return oldCard;
+  }
+
+  r.getCard = function(id){
+    for(var i = 0; i < this._cards.length; i++) {
+      var card = this._cards[i];
+      if(card.getID() == id) return card;
+    }
+    return -1;
   }
 
 

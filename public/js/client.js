@@ -95,9 +95,12 @@ var App = Backbone.Router.extend({
 
 var SideView = Backbone.View.extend({
   el: ".container",
-  template: Handlebars.compile('<div class="card" data-key="{{_key}}"><img src="../assets/cards/{{_data.img}}.png"></div>'),
+  template: Handlebars.compile('<div class="card" data-key="{{_key}}" data-id="{{_id}}">' +
+  '<img src="../assets/cards/{{_data.img}}.png">' +
+  '</div>'),
   templateCards: Handlebars.compile('{{#each this}}' +
-  '<div class="card" data-key="{{_key}}">' +
+  '<div class="card" data-key="{{_key}}" data-id="{{_id}}">' +
+  '{{#if _boost}}<span>+{{_boost}}</span>{{/if}}' +
   '<img src="../assets/cards/{{_data.img}}.png">' +
   '</div>' +
   '{{/each}}'),
@@ -113,11 +116,11 @@ var SideView = Backbone.View.extend({
 
   },
   render: function(){
-
     this.renderInfo();
     this.renderCloseField();
     this.renderRangeField();
     this.renderSiegeField();
+    this.renderWeatherField();
 
     return this;
   },
@@ -137,6 +140,8 @@ var SideView = Backbone.View.extend({
     if(!this.app.user.get("waiting") && this.side === ".foe"){
       this.$info.addClass("removeBackground");
     }
+
+    this.$info.find(".passing").html(d.passing?"Passed":"");
 
   },
   renderCloseField: function(){
@@ -175,6 +180,14 @@ var SideView = Backbone.View.extend({
     $field.find(".field-siege").html(html)
     $field.find(".large-field-counter").html(score)
   },
+  renderWeatherField: function(){
+    if(!this.field.weather) return;
+    var $weatherField = this.$el.find(".field-weather");
+    var cards = this.field.weather._cards;
+    $weatherField.html(this.templateCards(cards));
+
+    return this;
+  },
   lives: function(lives){
     var out = "";
     for(var i = 0; i < 2; i++) {
@@ -201,12 +214,12 @@ var BattleView = Backbone.View.extend({
 
     this.listenTo(user, "change:showPreview", this.render);
     this.listenTo(user, "change:waiting", this.render);
+    this.listenTo(user, "change:passing", this.render);
 
     this.$hand = this.$el.find(".field-hand");
     this.$preview = this.$el.find(".card-preview");
 
     app.receive("update:hand", function(data){
-      console.log("update:hand", user.get("roomSide"), data._roomSide);
       if(user.get("roomSide") == data._roomSide){
         self.handCards = JSON.parse(data.cards);
         self.render();
@@ -223,7 +236,6 @@ var BattleView = Backbone.View.extend({
       if(user.get("roomSide") != _side){
         side = otherSide;
       }
-      console.log(side);
       side.infoData = infoData;
       side.leader = leader;
       side.render();
@@ -242,6 +254,7 @@ var BattleView = Backbone.View.extend({
       side.field.close = data.close;
       side.field.ranged = data.ranged;
       side.field.siege = data.siege;
+      side.field.weather = data.weather;
 
       side.render();
     })
@@ -263,16 +276,53 @@ var BattleView = Backbone.View.extend({
   events: {
     "mouseover .card": "onMouseover",
     "mouseleave .card": "onMouseleave",
-    "click .field-hand": "onClick"
+    "click .field-hand": "onClick",
+    "click .battleside.player": "onClickDecoy",
+    "click .button-pass": "onPassing"
+  },
+  onPassing: function(){
+    if(this.user.get("passing")) return;
+    if(this.user.get("waiting")) return;
+    this.user.set("passing", true);
+    this.user.get("app").send("set:passing");
   },
   onClick: function(e){
     if(!!this.user.get("waiting")) return;
+    if(!!this.user.get("passing")) return;
+    var self = this;
     var $card = $(e.target).closest(".card");
     var id = $card.data("id");
-    console.log("clicked id ", id);
+    var key = $card.data("key");
+
     this.app.send("play:cardFromHand", {
       id: id
     });
+
+    if(key === "decoy"){
+      console.log("its decoy!!!");
+      this.user.set("waitForDecoy", id);
+      /*
+            this.$el.find(".battleside.player").on("click", ".card", function(e) {
+              console.log("replacement card found: ");
+              var $card = $(e.target).closest(".card");
+              var _id = $card.data("id");
+              self.app.send("decoy:replaceWith", {
+                oldCard: id,
+                newCard: _id
+              })
+              self.$el.find(".battleside.player").off("click");
+            });*/
+    }
+  },
+  onClickDecoy: function(e){
+    if(!this.user.get("waitForDecoy")) return;
+    console.log("replacement card found: ");
+    var $card = $(e.target).closest(".card");
+    var _id = $card.data("id");
+    this.app.send("decoy:replaceWith", {
+      cardID: _id
+    })
+    this.user.set("waitForDecoy", false);
   },
   onMouseover: function(e){
     var target = $(e.target).closest(".card");
@@ -307,7 +357,6 @@ var User = Backbone.Model.extend({
     var self = this;
     var app = this.get("app");
 
-
     app.receive("response:name", function(data){
       self.set("name", data.name);
     });
@@ -330,7 +379,6 @@ var User = Backbone.Model.extend({
 
     app.receive("set:waiting", function(data){
       var waiting = data.waiting;
-      console.log("is waiting: ", waiting);
       self.set("waiting", waiting);
     })
 

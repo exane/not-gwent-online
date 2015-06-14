@@ -1,6 +1,7 @@
 /*var $ = require("jquery");*//*
 var CardManager = require("./CardManager");*//*
 var PubSub = require("./pubsub");*/
+var Card = require("./Card");
 
 
 var Hand = (function(){
@@ -40,6 +41,8 @@ var Hand = (function(){
 
   r.remove = function(id){
     var n = this.length();
+
+    id = id instanceof Card ? id.getID() : id;
 
     for(var i = 0; i < n; i++) {
       if(this._hand[i].getID() != id) continue;

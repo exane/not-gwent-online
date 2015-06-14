@@ -38,6 +38,7 @@ var Card = (function(){
     WEATHER: 5
   };
 
+
   r._init = function(){
     this._id = ++Card.__id;
   }
@@ -46,15 +47,15 @@ var Card = (function(){
     return this._data.name;
   }
   r.getPower = function(){
-    if(this._forcedPower > -1) {
+    if(this._forcedPower > -1){
       return this._forcedPower + this._boost;
     }
     return this._data.power + this._boost;
   }
-  r.setForcedPower = function(nr) {
+  r.setForcedPower = function(nr){
     this._forcedPower = nr;
   }
-  r.getRawAbility = function() {
+  r.getRawAbility = function(){
     return this._data.ability;
   }
   r.getAbility = function(){
@@ -77,7 +78,8 @@ var Card = (function(){
     return this._id;
   }
 
-  r.boost = function(nr) {
+  r.boost = function(nr){
+    this.getPower(); //to recalculate this._power;
     this._boost += nr;
   }
 
