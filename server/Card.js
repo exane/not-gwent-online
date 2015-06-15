@@ -9,6 +9,7 @@ var Card = (function(){
     /**
      * constructor here
      */
+    this.channel = {};
     this._key = key;
     this._data = CardData[key];
     this._boost = 0;
@@ -37,6 +38,8 @@ var Card = (function(){
     SPECIAL: 4,
     WEATHER: 5
   };
+
+  r.channel = null
 
 
   r._init = function(){

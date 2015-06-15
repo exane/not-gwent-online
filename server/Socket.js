@@ -6,9 +6,6 @@ var Battle = require("./Battle");
 var Npc = require("./Npc");
 var Room = require("./Room");
 
-/*
-var Matchmaker = require("./Matchmaker");
-*/
 
 var Socket = (function(){
   var Socket = function(){

@@ -2,12 +2,12 @@ var Battleside = require("./Battleside");
 var PubSub = require("pubsub-js");
 var Card = require("./Card");
 
-var io = global.io;
+/*var io = global.io;*/
 
 var Battle = (function(){
-  var Battle = function(id, p1, p2){
+  var Battle = function(id, p1, p2, socket){
     if(!(this instanceof Battle)){
-      return (new Battle(id, p1, p2));
+      return (new Battle(id, p1, p2, socket));
     }
     /**
      * constructor here
@@ -15,6 +15,8 @@ var Battle = (function(){
     this._id = id;
     this._user1 = p1;
     this._user2 = p2;
+    this.socket = socket;
+    this.channel = {};
   };
   var r = Battle.prototype;
   /**
@@ -29,20 +31,27 @@ var Battle = (function(){
   r._user2 = null;
   r.turn = 0;
 
+  r.socket = null;
+  r.channel = null;
 
   r._id = null;
 
 
   r.init = function(){
     PubSub.subscribe("update", this.update.bind(this));
+
+
+    this.channel = this.socket.subscribe(this._id);
     this.p1 = Battleside(this._user1.getName(), 0, this, this._user1);
     this.p2 = Battleside(this._user2.getName(), 1, this, this._user2);
     this.p1.foe = this.p2;
     this.p2.foe = this.p1;
     this.p1.setUpWeatherFieldWith(this.p2);
 
+
     this.start();
   }
+
 
   r.start = function(){
     this.p1.setLeadercard();
@@ -81,7 +90,7 @@ var Battle = (function(){
     var side = this.turn++ % 2 ? this.p1 : this.p2;
 
     if(side.isPassing()){
-      if(__flag) {
+      if(__flag){
         return this.startNextRound();
       }
       return this.switchTurn(1);
@@ -93,7 +102,7 @@ var Battle = (function(){
 
   }
 
-  r.startNextRound = function() {
+  r.startNextRound = function(){
 
   }
 
@@ -119,8 +128,22 @@ var Battle = (function(){
   }
 
   r.send = function(event, data){
-    io.to(this._id).emit(event, data);
+    this.channel.publish({
+      event: event,
+      data: data
+    });
   }
+
+  /*r._setUpChannel = function() {
+    var self = this;
+    this._abilityChannel.watch(function(d) {
+      var event = d.event, data = d.data;
+
+      if(event === "update") {
+        data();
+      }
+    })
+  }*/
 
   return Battle;
 })();

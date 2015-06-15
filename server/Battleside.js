@@ -174,19 +174,6 @@ Battleside = (function(){
   }
 
   r.update = function(){
-    /*
-      this.send("update:info", {
-        info: this.getInfo(),
-        leader: this.field[Card.TYPE.LEADER].get()[0]
-      })
-      this.send("update:hand", {
-        cards: JSON.stringify(this.hand.getCards())
-      });
-      this.send("update:fields", {
-        close: this.field[Card.TYPE.CLOSE_COMBAT],
-        ranged: this.field[Card.TYPE.RANGED],
-        siege: this.field[Card.TYPE.SIEGE]
-      })*/
     PubSub.publish("update");
   }
 

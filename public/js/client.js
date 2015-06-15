@@ -1,4 +1,5 @@
-var io = require("socket.io-client")/*("http://localhost:16918")*/;
+/*("http://localhost:16918")*/
+var socketCluster = require("socketcluster-client");
 var Backbone = require("backbone");
 var Handlebars = require("handlebars");
 var $ = require("jquery");
@@ -22,8 +23,9 @@ Handlebars.registerHelper("health", function(lives, options){
 var Config = {};
 
 Config.Server = {
-  "URL": "http://localhost",
-  "PORT": 16918
+  "hostname": "localhost",
+  "port": 16918,
+  secure: false
 }
 
 var App = Backbone.Router.extend({
@@ -40,14 +42,14 @@ var App = Backbone.Router.extend({
     Backbone.history.start();
   },
   connect: function(){
-    this.socket = io(Config.Server.URL + ":" + Config.Server.PORT);
+    this.socket = socketCluster.connect(Config.Server);
   },
   receive: function(event, cb){
     this.socket.on(event, cb);
-  },
+  }, /*
   receiveOnce: function(event, cb){
     this.socket.once(event, cb);
-  },
+  },*/
   send: function(event, data){
     data = data || null;
     var socket = this.socket;
@@ -141,7 +143,7 @@ var SideView = Backbone.View.extend({
       this.$info.addClass("removeBackground");
     }
 
-    this.$info.find(".passing").html(d.passing?"Passed":"");
+    this.$info.find(".passing").html(d.passing ? "Passed" : "");
 
   },
   renderCloseField: function(){
@@ -219,6 +221,8 @@ var BattleView = Backbone.View.extend({
     this.$hand = this.$el.find(".field-hand");
     this.$preview = this.$el.find(".card-preview");
 
+    /*//this.battleChannel = app.socket.subscribe()
+
     app.receive("update:hand", function(data){
       if(user.get("roomSide") == data._roomSide){
         self.handCards = JSON.parse(data.cards);
@@ -257,13 +261,14 @@ var BattleView = Backbone.View.extend({
       side.field.weather = data.weather;
 
       side.render();
-    })
+    })*/
 
     var interval = setInterval(function(){
       if(!user.get("room")) return;
+      this.setUpBattleEvents(user.get("room"));
       this.app.send("request:gameLoaded", {_roomID: user.get("room")});
       clearInterval(interval);
-    }.bind(this), 100);
+    }.bind(this), 10);
 
     this.render();
 
@@ -346,6 +351,48 @@ var BattleView = Backbone.View.extend({
     this.yourSide.render();
     this.otherSide.render();*/
     return this;
+  },
+  setUpBattleEvents: function(channelName){
+    this.battleChannel = this.app.socket.subscribe(channelName);
+    var self = this;
+    var user = this.user;
+
+    this.battleChannel.watch(function(d){
+      var event = d.event, data = d.data;
+
+      if(event === "update:hand"){
+        if(user.get("roomSide") == data._roomSide){
+          self.handCards = JSON.parse(data.cards);
+          self.render();
+        }
+      }
+      else if(event === "update:info"){
+        var _side = data._roomSide;
+        var infoData = data.info;
+        var leader = data.leader;
+
+        var side = self.yourSide;
+        if(user.get("roomSide") != _side){
+          side = self.otherSide;
+        }
+        side.infoData = infoData;
+        side.leader = leader;
+        side.render();
+      }
+      else if(event === "update:fields"){
+        var _side = data._roomSide;
+
+        var side = self.yourSide;
+        if(user.get("roomSide") != _side){
+          side = self.otherSide;
+        }
+        side.field.close = data.close;
+        side.field.ranged = data.ranged;
+        side.field.siege = data.siege;
+        side.field.weather = data.weather;
+        side.render();
+      }
+    })
   }
 });
 
@@ -357,6 +404,8 @@ var User = Backbone.Model.extend({
     var self = this;
     var app = this.get("app");
 
+    this.listenTo(this.attributes, "change:room", this.subscribeRoom);
+
     app.receive("response:name", function(data){
       self.set("name", data.name);
     });
@@ -364,6 +413,8 @@ var User = Backbone.Model.extend({
     app.receive("init:battle", function(data){
       console.log("opponent found!");
       self.set("roomSide", data.side);
+      /*
+            self.set("channel:battle", app.socket.subscribe(self.get("room")));*/
       app.navigate("battle", {trigger: true});
     })
 
@@ -395,6 +446,11 @@ var User = Backbone.Model.extend({
   },
   joinRoom: function(){
     this.get("app").send("request:joinRoom");
+  },
+  subscribeRoom: function(){
+    var room = this.get("room");
+    var app = this.get("app");
+    app.socket.subscribe(room);
   },
   setName: function(name){
     this.get("app").send("request:name", {name: name});

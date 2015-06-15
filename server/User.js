@@ -1,22 +1,18 @@
-var Entity = require("./Entity");
-
-
 var User = (function(){
   var User = function(socket){
     if(!(this instanceof User)){
       return (new User(socket));
     }
-    Entity.call(this);
     /**
      * constructor here
      */
 
 
     this.socket = socket;
+    this._rooms = [];
     this._id = socket.id;
     this.generateName();
   };
-  User.prototype = Object.create(Entity.prototype);
   var r = User.prototype;
   /**
    * methods && properties here
@@ -26,7 +22,7 @@ var User = (function(){
 
   r._id = null;
   r._name = null;
-  r._room = null;
+  r._rooms = null;
   r.socket = null;
 
   r.getID = function(){
@@ -34,7 +30,11 @@ var User = (function(){
   }
 
   r.joinRoom = function(roomid){
-    this.socket.join(roomid);
+    var self = this;
+    /*this.socket.on(roomid, function(d) {
+      var event = d.event, data = d.data;
+      self.socket.on(event, data);
+    });*/
   }
 
   r.send = function(event, data, room){
@@ -43,8 +43,12 @@ var User = (function(){
     if(!room){
       this.socket.emit(event, data);
     }
-    else {
-      this.socket.to(room).emit(event, data);
+    else {/*
+      this.socket.to(room).emit(event, data);*/
+      this.socket.global.publish(room, {
+        event: event,
+        data: data
+      })
     }
   }
 
@@ -63,10 +67,10 @@ var User = (function(){
     return this._name;
   }
   r.getRoom = function() {
-    return this._room;
+    return this._rooms[0];
   }
-  r.setRoom = function(room) {
-    this._room = room;
+  r.addRoom = function(room) {
+    this._rooms.push(room);
   }
 
   r.disconnect = function() {
