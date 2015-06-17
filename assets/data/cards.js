@@ -181,7 +181,7 @@ module.exports = {
   },
   "foltest_king_of_temeria": {
     name: "Foltest: King of Temeria",
-    power: 0,
+    power: -1,
     ability: "foltest_leader1",
     img: "foltest_king",
     faction: "Northern Realm",
@@ -189,7 +189,7 @@ module.exports = {
   },
   "decoy": {
     name: "Decoy",
-    power: 0,
+    power: -1,
     ability: "decoy",
     img: "decoy",
     faction: null,
@@ -197,7 +197,7 @@ module.exports = {
   },
   "impenetrable_fog": {
     name: "Impenetrable Fog",
-    power: 0,
+    power: -1,
     ability: "weather_fog",
     img: "fog",
     faction: null,

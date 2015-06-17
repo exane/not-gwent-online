@@ -432,6 +432,10 @@ var User = Backbone.Model.extend({
       var waiting = data.waiting;
       self.set("waiting", waiting);
     })
+    app.receive("set:passing", function(data){
+      var passing = data.passing;
+      self.set("passing", passing);
+    })
 
 
     app.on("createRoom", this.createRoom, this);

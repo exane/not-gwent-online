@@ -30,6 +30,7 @@ Battleside = (function(){
     this.battle = battle;
     this.hand = Hand();
     this.deck = Deck(DeckData["test"]);
+    this._discard = [];
 
     this.runEvent = this.battle.runEvent.bind(this.battle);
     this.on = this.battle.on.bind(this.battle);
@@ -48,14 +49,13 @@ Battleside = (function(){
       if(self._isWaiting) return;
       var card = self.findCardOnFieldByID(data.cardID);
       if(card === -1) throw new Error("decoy:replace | unknown card");
-      /*PubSub.publish("decoy:replaceWith", card);*/
       self.runEvent("Decoy:replaceWith", self, [card]);
     })
     this.receive("set:passing", function() {
       self.setPassing(true);
       self.update();/*
       PubSub.publish("nextTurn");*/
-      self.runEvent("NextTurn");
+      self.runEvent("NextTurn", null, [self.foe]);
     })
 
     /*PubSub.subscribe("turn/" + this.getID(), this.onTurnStart.bind(this));*/
@@ -74,7 +74,7 @@ Battleside = (function(){
   r._range = null;
   r._siege = null;
   r._field = null;*/
-  r._lives = 2;
+  r._rubies = 2;
   r._score = 0;
   r._isWaiting = null;
   r._passing = null;
@@ -108,6 +108,7 @@ Battleside = (function(){
 
   r.setPassing = function(b) {
     this._passing = b;
+    this.send("set:passing", {passing: this._passing}, true);
   }
 
   r.wait = function(){
@@ -154,11 +155,23 @@ Battleside = (function(){
   r.getInfo = function(){
     return {
       name: this.getName(),
-      lives: this._lives,
+      lives: this._rubies,
       score: this.calcScore(),
       hand: this.hand.length(),
       passing: this._passing
     }
+  }
+
+  r.getRubies = function() {
+    return this._rubies;
+  }
+
+  r.getScore = function() {
+    return +this.calcScore();
+  }
+
+  r.removeRuby = function() {
+    this._rubies--;
   }
 
   r.getName = function(){
@@ -203,8 +216,8 @@ Battleside = (function(){
 
     this.update();
 
-    //PubSub.publish("nextTurn");
-    this.runEvent("NextTurn");
+
+    this.runEvent("NextTurn", this, [this.foe]);
   }
 
   r.placeCard = function(card){
@@ -221,6 +234,8 @@ Battleside = (function(){
 
     this.checkAbilityOnAfterPlace(card);
 
+    this.update();
+
     return 1;
   }
 
@@ -236,29 +251,26 @@ Battleside = (function(){
       if(ability.replaceWith){
         obj._canclePlacement = true;
 
-        //var decoy = PubSub.subscribe("decoy:replaceWith", function(event, replaceCard){
         this.on("Decoy:replaceWith", function(replaceCard) {
           if(replaceCard.getType() == Card.TYPE.LEADER ||
           replaceCard.getType() == Card.TYPE.WEATHER ||
           replaceCard.getType() == Card.TYPE.SPECIAL){
             return;
           }
-          /*PubSub.unsubscribe(decoy);*/
+          if(replaceCard.getName() === card.getName()) return;
           self.off("Decoy:replaceWith");
           var field = self.field[replaceCard.getType()];
 
           field.replaceWith(replaceCard, card);
 
           self.hand.add(replaceCard);
+/*
+          self.update();*/
 
-          self.update();
-
-          /*PubSub.publish("nextTurn");*/
-          self.runEvent("NextTurn");
+          self.runEvent("NextTurn", null, [self.foe]);
         })
       }
       if(ability.onEachTurn){
-        //PubSub.subscribe("onEachTurn", ability.onEachTurn.bind(this, card));
         this.on("EachTurn", ability.onEachTurn, this, [card])
       }
       if(ability.onEachCardPlace){
@@ -278,6 +290,26 @@ Battleside = (function(){
     }
   }
 
+  r.clearMainFields = function() {
+    var cards1 = this.field[Card.TYPE.CLOSE_COMBAT].removeAll();
+    var cards2 = this.field[Card.TYPE.RANGED].removeAll();
+    var cards3 = this.field[Card.TYPE.SIEGE].removeAll();
+
+    var cards = cards1.concat(cards2.concat(cards3));
+    this.addToDiscard(cards);
+  }
+
+  r.addToDiscard = function(cards) {
+    var self = this;
+    cards.forEach(function(card) {
+      self._discard.push(card);
+    });
+  }
+
+  r.resetNewRound = function() {
+    this.clearMainFields();
+    this.setPassing(false);
+  }
 
   return Battleside;
 })();

@@ -50,10 +50,21 @@ var Card = (function(){
     return this._data.name;
   }
   r.getPower = function(){
+    if(this._data.power === -1) return 0;
     if(this._forcedPower > -1){
       return this._forcedPower + this._boost;
     }
     return this._data.power + this._boost;
+  }
+  r.getRawPower = function() {
+    return this._data.power;
+  }
+  r.calculateBoost = function() {
+    this._boost = 0;
+    for (var key in this._boosts) {
+      var boost = this._boosts[key];
+      this.boost(boost.getPower());
+    }
   }
   r.setForcedPower = function(nr){
     this._forcedPower = nr;
@@ -82,7 +93,7 @@ var Card = (function(){
   }
 
   r.boost = function(nr){
-    this.getPower(); //to recalculate this._power;
+    /*this.getPower(); //to recalculate this._power;*/
     this._boost += nr;
   }
 

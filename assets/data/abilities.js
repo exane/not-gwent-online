@@ -7,12 +7,13 @@ module.exports = {
 
   },
   "morale_boost": {
-    onAfterPlace: function(card) {
+      onAfterPlace: function(card) {
       var field = this.field[card.getType()];
       var cards = field.get();
 
       cards.forEach(function(_card) {
         if(_card.getID() == card.getID()) return;
+        if(_card.getRawPower() === -1) return;
         _card.boost(1);
       })
     }
@@ -50,7 +51,8 @@ module.exports = {
     }
   },
   "weather_fog": {
-    onEachTurn: function(card) {
+    onEachTurn: function(args) {
+      card = args[0]
       var targetRow = card.constructor.TYPE.RANGED;
       var forcedPower = 1;
       var field1 = this.field[targetRow].get();
@@ -64,6 +66,7 @@ module.exports = {
       });
     },
     onEachCardPlace: function(card) {
+      card = args[0]
       var targetRow = card.constructor.TYPE.RANGED;
       var forcedPower = 1;
       var field1 = this.field[targetRow].get();

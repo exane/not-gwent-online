@@ -1,8 +1,6 @@
 var Battleside = require("./Battleside");
-//var PubSub = require("pubsub-js");
 var Card = require("./Card");
 
-/*var io = global.io;*/
 
 var Battle = (function(){
   var Battle = function(id, p1, p2, socket){
@@ -72,31 +70,21 @@ var Battle = (function(){
     /*PubSub.subscribe("nextTurn", this.switchTurn.bind(this));*/
     this.on("NextTurn", this.switchTurn);
 
-    this.switchTurn();
+    this.switchTurn(Math.random() > .5 ? this.p1 : this.p2);
   }
 
-  r.switchTurn = function(__flag){
-    /*this.playerManager.renderInfos();
-    if(this.playerManager.bothPassed() && !this._roundCheck) {
-      //start new round
-      this._roundCheck = true;
-      this.checkRound();
-      return;
-    }
-    if(this.playerManager.bothPassed()) {
-      return;
-    }
-    var entity = this.playerManager.getNextPlayer();
-
-    this.playerManager.renderInfos();*/
+  r.switchTurn = function(side, __flag){
     __flag = typeof __flag == "undefined" ? 0 : 1;
-    var side = this.turn++ % 2 ? this.p1 : this.p2;
+    //var side = this.turn++ % 2 ? this.p1 : this.p2;
 
+    /*if(__flag instanceof  Battleside) {
+      side = __flag;
+    }*/
     if(side.isPassing()){
       if(__flag){
         return this.startNextRound();
       }
-      return this.switchTurn(1);
+      return this.switchTurn(side.foe, 1);
     }
 
     /*PubSub.publish("onEachTurn");*/
@@ -109,7 +97,19 @@ var Battle = (function(){
   }
 
   r.startNextRound = function(){
+    var loser = this.checkRubies();
+    if(this.checkIfIsOver()){
+      console.log("its over!");
+      return;
+    }
 
+    this.p1.resetNewRound();
+    this.p2.resetNewRound();
+
+    console.log("start new round!");
+
+    this.update();
+    this.switchTurn(loser);
   }
 
   r.update = function(){
@@ -140,17 +140,18 @@ var Battle = (function(){
     });
   }
 
-  r.runEvent = function(eventid, target, args){
-    target = target || this;
+  r.runEvent = function(eventid, ctx, args){
+    ctx = ctx || this;
     args = args || [];
     var event = "on" + eventid;
 
-    if(!this.events["on" + eventid]){
+    if(!this.events[event]){
       return;
     }
     this.events[event].forEach(function(e){
-      e.apply(target, args);
+      e.apply(ctx, args);
     });
+    this.update();
   }
 
   r.on = function(eventid, cb, ctx, args){
@@ -160,9 +161,9 @@ var Battle = (function(){
     if(!(event in this.events)){
       this.events[event] = [];
     }
-    /*if(!this.events[event]) {
-      this.events[event] = [];
-    }*/
+    if(typeof cb !== "function"){
+      throw new Error("cb not a function");
+    }
     if(args){
       this.events[event].push(cb.bind(ctx, args));
     }
@@ -177,6 +178,30 @@ var Battle = (function(){
       e = null;
     });
     delete this.events[event];
+  }
+
+  r.checkIfIsOver = function(){
+    return !(this.p1.getRubies() && this.p2.getRubies());
+  }
+
+
+  r.checkRubies = function(){
+    var scoreP1 = this.p1.getScore();
+    var scoreP2 = this.p2.getScore();
+
+    if(scoreP1 > scoreP2){
+      this.p2.removeRuby();
+      return this.p2;
+    }
+    if(scoreP2 > scoreP1){
+      this.p1.removeRuby();
+      return this.p1;
+    }
+
+    //tie
+    this.p1.removeRuby();
+    this.p2.removeRuby();
+    return 0;
   }
 
 

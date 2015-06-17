@@ -62,6 +62,11 @@ var Field = (function(){
     return -1;
   }
 
+  r.removeAll = function() {
+    var tmp = this._cards.slice();
+    this._cards = [];
+    return tmp;
+  }
 
   return Field;
 })();
