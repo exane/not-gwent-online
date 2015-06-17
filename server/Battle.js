@@ -1,5 +1,5 @@
 var Battleside = require("./Battleside");
-var PubSub = require("pubsub-js");
+//var PubSub = require("pubsub-js");
 var Card = require("./Card");
 
 /*var io = global.io;*/
@@ -12,6 +12,7 @@ var Battle = (function(){
     /**
      * constructor here
      */
+    this.events = {};
     this._id = id;
     this._user1 = p1;
     this._user2 = p2;
@@ -39,7 +40,8 @@ var Battle = (function(){
   r.events = null;
 
   r.init = function(){
-    PubSub.subscribe("update", this.update.bind(this));
+    /*PubSub.subscribe("update", this.update.bind(this));*/
+    this.on("Update", this.update);
 
 
     this.channel = this.socket.subscribe(this._id);
@@ -52,7 +54,6 @@ var Battle = (function(){
 
     this.start();
   }
-
 
   r.start = function(){
     this.p1.setLeadercard();
@@ -68,7 +69,8 @@ var Battle = (function(){
     this.update();
 
 
-    PubSub.subscribe("nextTurn", this.switchTurn.bind(this));
+    /*PubSub.subscribe("nextTurn", this.switchTurn.bind(this));*/
+    this.on("NextTurn", this.switchTurn);
 
     this.switchTurn();
   }
@@ -97,8 +99,11 @@ var Battle = (function(){
       return this.switchTurn(1);
     }
 
-    PubSub.publish("onEachTurn");
-    PubSub.publish("turn/" + side.getID());
+    /*PubSub.publish("onEachTurn");*/
+    this.runEvent("EachTurn");
+    /*
+        PubSub.publish("turn/" + side.getID());*/
+    this.runEvent("Turn" + side.getID());
     console.log("current Turn: ", side.getName());
 
   }
@@ -135,37 +140,45 @@ var Battle = (function(){
     });
   }
 
-  r.runEvent = function(eventid, target){
+  r.runEvent = function(eventid, target, args){
     target = target || this;
-    this.events["on" + eventid].forEach(function(event) {
-      event.call(target);
-    });
-  }
+    args = args || [];
+    var event = "on" + eventid;
 
-  r.on = function(eventid, cb){
-    if(!this.events["on" + eventid]) {
-      this.events["on" + eventid] = [];
+    if(!this.events["on" + eventid]){
+      return;
     }
-    this.events["on" + eventid].push(cb);
-  }
-
-  r.off = function(eventid) {
-    this.events["on" + eventid].forEach(function(event) {
-      event = null;
+    this.events[event].forEach(function(e){
+      e.apply(target, args);
     });
-    delete this.events["on" + eventid];
   }
 
-  /*r._setUpChannel = function() {
-    var self = this;
-    this._abilityChannel.watch(function(d) {
-      var event = d.event, data = d.data;
+  r.on = function(eventid, cb, ctx, args){
+    ctx = ctx || this;
+    args = args || null;
+    var event = "on" + eventid;
+    if(!(event in this.events)){
+      this.events[event] = [];
+    }
+    /*if(!this.events[event]) {
+      this.events[event] = [];
+    }*/
+    if(args){
+      this.events[event].push(cb.bind(ctx, args));
+    }
+    else {
+      this.events[event].push(cb.bind(ctx));
+    }
+  }
 
-      if(event === "update") {
-        data();
-      }
-    })
-  }*/
+  r.off = function(eventid){
+    var event = "on" + eventid;
+    this.events[event].forEach(function(e){
+      e = null;
+    });
+    delete this.events[event];
+  }
+
 
   return Battle;
 })();

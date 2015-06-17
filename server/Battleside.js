@@ -4,7 +4,7 @@ var Deck = require("./Deck");
 var Hand = require("./Hand");
 var Card = require("./Card");
 var Field = require("./Field");
-var PubSub = require("pubsub-js");
+//var PubSub = require("pubsub-js");
 
 
 var Battleside;
@@ -31,6 +31,10 @@ Battleside = (function(){
     this.hand = Hand();
     this.deck = Deck(DeckData["test"]);
 
+    this.runEvent = this.battle.runEvent.bind(this.battle);
+    this.on = this.battle.on.bind(this.battle);
+    this.off = this.battle.off.bind(this.battle);
+
 
     this.receive("play:cardFromHand", function(data){
       if(self._isWaiting) return;
@@ -43,16 +47,19 @@ Battleside = (function(){
     this.receive("decoy:replaceWith", function(data){
       if(self._isWaiting) return;
       var card = self.findCardOnFieldByID(data.cardID);
-      if(card === -1) throw "decoy:replace | unknown card";
-      PubSub.publish("decoy:replaceWith", card);
+      if(card === -1) throw new Error("decoy:replace | unknown card");
+      /*PubSub.publish("decoy:replaceWith", card);*/
+      self.runEvent("Decoy:replaceWith", self, [card]);
     })
     this.receive("set:passing", function() {
       self.setPassing(true);
-      self.update();
-      PubSub.publish("nextTurn");
+      self.update();/*
+      PubSub.publish("nextTurn");*/
+      self.runEvent("NextTurn");
     })
 
-    PubSub.subscribe("turn/" + this.getID(), this.onTurnStart.bind(this));
+    /*PubSub.subscribe("turn/" + this.getID(), this.onTurnStart.bind(this));*/
+    this.on("Turn" + this.getID(), this.onTurnStart, this);
   };
   var r = Battleside.prototype;
   /**
@@ -174,7 +181,8 @@ Battleside = (function(){
   }
 
   r.update = function(){
-    PubSub.publish("update");
+    //PubSub.publish("update");
+    this.runEvent("Update");
   }
 
   r.onTurnStart = function(){
@@ -195,7 +203,8 @@ Battleside = (function(){
 
     this.update();
 
-    PubSub.publish("nextTurn");
+    //PubSub.publish("nextTurn");
+    this.runEvent("NextTurn");
   }
 
   r.placeCard = function(card){
@@ -207,7 +216,8 @@ Battleside = (function(){
     var field = obj.targetSide.field[card.getType()];
     field.add(card);
 
-    PubSub.publish("onEachCardPlace");
+    //PubSub.publish("onEachCardPlace");
+    this.runEvent("OnEachCardPlace");
 
     this.checkAbilityOnAfterPlace(card);
 
@@ -226,13 +236,15 @@ Battleside = (function(){
       if(ability.replaceWith){
         obj._canclePlacement = true;
 
-        var decoy = PubSub.subscribe("decoy:replaceWith", function(event, replaceCard){
+        //var decoy = PubSub.subscribe("decoy:replaceWith", function(event, replaceCard){
+        this.on("Decoy:replaceWith", function(replaceCard) {
           if(replaceCard.getType() == Card.TYPE.LEADER ||
           replaceCard.getType() == Card.TYPE.WEATHER ||
           replaceCard.getType() == Card.TYPE.SPECIAL){
             return;
           }
-          PubSub.unsubscribe(decoy);
+          /*PubSub.unsubscribe(decoy);*/
+          self.off("Decoy:replaceWith");
           var field = self.field[replaceCard.getType()];
 
           field.replaceWith(replaceCard, card);
@@ -241,14 +253,17 @@ Battleside = (function(){
 
           self.update();
 
-          PubSub.publish("nextTurn");
+          /*PubSub.publish("nextTurn");*/
+          self.runEvent("NextTurn");
         })
       }
       if(ability.onEachTurn){
-        PubSub.subscribe("onEachTurn", ability.onEachTurn.bind(this, card));
+        //PubSub.subscribe("onEachTurn", ability.onEachTurn.bind(this, card));
+        this.on("EachTurn", ability.onEachTurn, this, [card])
       }
       if(ability.onEachCardPlace){
-        PubSub.subscribe("onEachCardPlace", ability.onEachCardPlace.bind(this, card));
+        //PubSub.subscribe("onEachCardPlace", ability.onEachCardPlace.bind(this, card));
+        this.on("EachCardPlace", ability.onEachCardPlace, this, [card]);
       }
 
     }
