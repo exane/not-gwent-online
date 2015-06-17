@@ -36,6 +36,7 @@ var Battle = (function(){
 
   r._id = null;
 
+  r.events = null;
 
   r.init = function(){
     PubSub.subscribe("update", this.update.bind(this));
@@ -132,6 +133,27 @@ var Battle = (function(){
       event: event,
       data: data
     });
+  }
+
+  r.runEvent = function(eventid, target){
+    target = target || this;
+    this.events["on" + eventid].forEach(function(event) {
+      event.call(target);
+    });
+  }
+
+  r.on = function(eventid, cb){
+    if(!this.events["on" + eventid]) {
+      this.events["on" + eventid] = [];
+    }
+    this.events["on" + eventid].push(cb);
+  }
+
+  r.off = function(eventid) {
+    this.events["on" + eventid].forEach(function(event) {
+      event = null;
+    });
+    delete this.events["on" + eventid];
   }
 
   /*r._setUpChannel = function() {
