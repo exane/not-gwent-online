@@ -1,4 +1,3 @@
-
 /**
  * types
  * 0 close combat
@@ -29,7 +28,7 @@ module.exports = {
   },
   "yarpen_zigrin": {
     name: "Yarpen Zigrin",
-    power: 1,
+    power: 2,
     ability: null,
     img: "yarpen",
     faction: "Northern Realm",
@@ -202,5 +201,224 @@ module.exports = {
     img: "fog",
     faction: null,
     type: 5
+  },
+
+
+
+  "francesca_pureblood_elf": {
+    name: "Francesca, Pureblood Elf",
+    power: -1,
+    ability: "francesca_leader1",
+    img: "francesca_pureblood",
+    faction: "Scoia'tael",
+    type: 3
+  },
+  "francesca_the_beautiful": {
+    name: "Francesca The Beautiful",
+    power: -1,
+    ability: "francesca_leader2",
+    img: "francesca_beatiful",
+    faction: "Scoia'tael",
+    type: 3
+  },
+  "francesca_daisy_of_the_valley": {
+    name: "Francesca, Daisy of The Valley",
+    power: -1,
+    ability: "francesca_leader3",
+    img: "francesca_daisy",
+    faction: "Scoia'tael",
+    type: 3
+  },
+  "francesca_queen_of_dol_blathanna": {
+    name: "Francesca, Queen of Dol Blathanna",
+    power: -1,
+    ability: "francesca_leader4",
+    img: "francesca_queen",
+    faction: "Scoia'tael",
+    type: 3
+  },
+  "saesenthessis": {
+    name: "Saesenthessis",
+    power: 10,
+    ability: "hero",
+    img: "saesenthessis",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "iorveth": {
+    name: "Iorveth",
+    power: 0,
+    ability: "hero",
+    img: "iorveth",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "isengrim_faoiltiarnah": {
+    name: "Isengrim Faoiltiarnah",
+    power: 10,
+    ability: ["hero", "morale_boost"],
+    img: "isengrim",
+    faction: "Scoia'tael",
+    type: 0
+  },
+  "eithne": {
+    name: "Eithne",
+    power: 10,
+    ability: "hero",
+    img: "eithne",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "havekar_healer": {
+    name: "Havekar Healer",
+    power: 0,
+    ability: "morale_boost",
+    img: "healerr",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "riordain": {
+    name: "Riordain",
+    power: 1,
+    ability: null,
+    img: "riordain",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "toruviel": {
+    name: "Toruviel",
+    power: 2,
+    ability: null,
+    img: "toruviel",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "elven_skirmisher": {
+    name: "Elven Skirmisher",
+    power: 2,
+    ability: "muster",
+    img: "elven_skirmisher2",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "dwarven_skirmisher": {
+    name: "Dwarven Skirmisher",
+    power: 3,
+    ability: "muster",
+    img: "skirmisher2",
+    faction: "Scoia'tael",
+    type: 0
+  },
+  "ciaran_aep_easnillien": {
+    name: "Ciaran aep Easnillien",
+    power: 3,
+    ability: "agile",
+    img: "easnillien",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "vrihedd_brigade_recruit": {
+    name: "Vrihedd Brigade Recruit",
+    power: 4,
+    ability: null,
+    img: "recruit",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "dol_blathanna_archer": {
+    name: "Dol Blathanna Archer",
+    power: 4,
+    ability: null,
+    img: "archer",
+    faction: "Scoia'tael",
+    type: 1
+  },/*
+  "hav_caaren_medic": {
+    name: "Hav’caaren Medic",
+    power: 5,
+    ability: null,
+    img: "", //missing image
+    faction: "Scoia'tael",
+    type: 0
+  },*/
+  "havekar_smuggler": {
+    name: "Havekar Smuggler",
+    power: 5,
+    ability: "spy",
+    img: "smuggler1",
+    faction: "Scoia'tael",
+    type: 0
+  },
+  "mahakaman_defender": {
+    name: "Mahakaman Defender",
+    power: 5,
+    ability: "muster",
+    img: "defender2",
+    faction: "Scoia'tael",
+    type: 0
+  },
+  "vrihedd_brigade_veteran": {
+    name: "Vrihedd Brigade Veteran",
+    power: 5,
+    ability: "agile",
+    img: "veteran1",
+    faction: "Scoia'tael",
+    type: 0
+  },
+  "dennis_cranmer": {
+    name: "Dennis Cranmer",
+    power: 6,
+    ability: null,
+    img: "cranmer",
+    faction: "Scoia'tael",
+    type: 0
+  },
+  "filavandrel_aen_fidhail": {
+    name: "Filavandrel aén Fidháil",
+    power: 6,
+    ability: "agile",
+    img: "fidhail",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "ida_emean_aep_sivney": {
+    name: "Ida Emean aep Sivney",
+    power: 6,
+    ability: null,
+    img: "sivney",
+    faction: "Scoia'tael",
+    type: 1
+  },
+  "yaevinn": {
+    name: "Yaevinn",
+    power: 6,
+    ability: "agile",
+    img: "yaevinn",
+    faction: "Scoia'tael",
+    type: 0
+  },
+  "barclay_els": {
+    name: "Barclay Els",
+    power: 6,
+    ability: "agile",
+    img: "barclay",
+    faction: "Scoia'tael",
+    type: 0
+  },
+  "dol_blathanna_scout": {
+    name: "Dol Blathanna Scout",
+    power: 6,
+    ability: "agile",
+    img: "scout2",
+    faction: "Scoia'tael",
+    type: 0
+  },
+  "milva": {
+    name: "Milva",
+    power: 10,
+    ability: "morale_boost",
+    img: "milva",
+    faction: "Scoia'tael",
+    type: 1
   }
 }
