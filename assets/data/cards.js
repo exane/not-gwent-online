@@ -247,7 +247,7 @@ module.exports = {
   },
   "iorveth": {
     name: "Iorveth",
-    power: 0,
+    power: 10,
     ability: "hero",
     img: "iorveth",
     faction: "Scoia'tael",
