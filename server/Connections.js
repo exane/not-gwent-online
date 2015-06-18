@@ -7,6 +7,7 @@ var Connections = (function(){
      * constructor here
      */
     this._connections = {};
+    this.roomCollection = {};
 
   };
   var r = Connections.prototype;
@@ -17,6 +18,7 @@ var Connections = (function(){
    */
 
   r._connections = null;
+  r.roomCollection = null;
 
   r.add = function(user) {
     this._connections[user.getID()] = user;

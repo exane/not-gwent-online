@@ -23,7 +23,9 @@ var User = (function(){
   r._id = null;
   r._name = null;
   r._rooms = null;
+  r._searching = false;
   r.socket = null;
+  r.disconnected = false;
 
   r.getID = function(){
     return this._id;
@@ -76,11 +78,30 @@ var User = (function(){
     this._rooms.push(room);
   }
 
+  r.cleanUp = function() {
+    for(var i=0; i<this._rooms.length; i++) {
+      var room = this._rooms[i];
+      if(room[i] === null) {
+        this._rooms.splice(i, 1);
+
+        return this.cleanUp();
+      }
+    }
+  }
+
   r.disconnect = function() {
     var self = this;
+    this.disconnected = true;
+
     this._rooms.forEach(function(room) {
       room.leave(self);
+      if(!room.hasUser()) {
+        console.log("Remove room: ", room.getID());
+        room = null;
+      }
     })
+
+    this.cleanUp();
   }
 
 

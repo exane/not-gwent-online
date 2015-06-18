@@ -16,6 +16,8 @@ var Room = (function(){
     this._ready = {};
     this.socket = scServer.global;
 
+
+    console.log("room created: " + this.getID());
   };
   var r = Room.prototype;
   /**
@@ -71,12 +73,27 @@ var Room = (function(){
     return !!this._ready[this._users[0].getID()] && !!this._ready[this._users[1].getID()];
   }
 
-  r.leave = function(user) {
+  r.leave = function(user){
     var p = "p2";
-    if(user.getID() === this._users[0].getID()) {
+    var i = 1;
+    if(user.getID() === this._users[0].getID()){
       p = "p1";
+      i = 0;
     }
-    this._battle.userLeft(p);
+
+    this._users.splice(i, 1);
+
+    if(this._battle){
+      this._battle.userLeft(p);
+    }
+
+    if(!this.hasUser()) {
+      connections.roomCollection[this.getID()] = null;
+    }
+  }
+
+  r.hasUser = function() {
+    return this._users.length;
   }
 
 

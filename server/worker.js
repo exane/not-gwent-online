@@ -20,8 +20,8 @@ module.exports.run = function(worker){
 
   httpServer.on('request', app);
 
-  var connections = Connections();
-  var roomCollection = {};
+  //var roomCollection = {};
+  global.connections = Connections(/*roomCollection*/);
 
   scServer.on('connection', function(socket){
     var user = User(socket);
@@ -37,25 +37,36 @@ module.exports.run = function(worker){
 
     socket.on("request:gameLoaded", function(data){
       console.log(data);
-      roomCollection[data._roomID].setReady(user);
+      connections.roomCollection[data._roomID].setReady(user);
     })
 
     socket.on("request:createRoom", function(){
+      if(user.getRoom()) return;
+      if(user._searching) return;
       var room = Room(worker.getSCServer());
-      roomCollection[room.getID()] = room;
+      connections.roomCollection[room.getID()] = room;
       room.join(user);
+      user._searching = true;
       console.log("room %s created by %s", room.getID(), user.getName());
       user.send("response:createRoom", room.getID());
     })
 
     socket.on("request:joinRoom", function(){
+      if(user._searching) return;
+      user._searching = true;
       console.log("joinroom");
       var interval = setInterval(function(){
-        for(var key in roomCollection) {
-          var room = roomCollection[key];
+        if(!user || user.disconnected) {
+          clearInterval(interval);
+          return;
+        }
+        for(var key in connections.roomCollection) {
+          var room = connections.roomCollection[key];
+          if(!room) continue;
           if(!room.isOpen()) continue;
           room.join(user);
           clearInterval(interval);
+          user._searching = false;
           console.log("user %s joined room %s", user.getName(), room.getID());
           user.send("response:joinRoom", room.getID());
         }
@@ -71,6 +82,8 @@ module.exports.run = function(worker){
     socket.on('disconnect', function(){
       connections.remove(user);
       user.disconnect();
+      console.log("user ", user.getName(), " disconnected");
+      user = null;
     });
   });
 };

@@ -225,6 +225,10 @@ var Battle = (function(){
 
   }
 
+  r.shutDown = function() {
+    this.channel = null;
+  }
+
   return Battle;
 })();
 
