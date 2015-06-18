@@ -256,12 +256,19 @@ Battleside = (function(){
     return 1;
   }
 
-  r.checkAbilities = function(card, obj){
+  r.checkAbilities = function(card, obj, __flag){
     var self = this;
     obj.targetSide = this;
+    var ability = Array.isArray(__flag) || card.getAbility();
+    if(Array.isArray(ability) && ability.length){
+      var ret = ability.slice();
+      ret = ret.splice(0, 1);
+      this.checkAbilities(card, obj, ret);
+      ability = ability[0];
+    }
 
-    if(card.getAbility()){
-      var ability = card.getAbility();
+    if(ability && !Array.isArray(ability)){/*
+      var ability = card.getAbility();*/
       if(ability.changeSide){
         obj.targetSide = this.foe;
       }

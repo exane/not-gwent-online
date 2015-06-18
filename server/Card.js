@@ -76,6 +76,13 @@ var Card = (function(){
     return this._data.ability;
   }
   r.getAbility = function(){
+    if(Array.isArray(this._data.ability)) {
+      var res = [];
+      this._data.ability.forEach(function(ability) {
+        res.push(AbilityData[ability]);
+      })
+      return res;
+    }
     return AbilityData[this._data.ability];
   }
   r.getImage = function(){
