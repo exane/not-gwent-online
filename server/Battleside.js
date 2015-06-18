@@ -4,7 +4,6 @@ var Deck = require("./Deck");
 var Hand = require("./Hand");
 var Card = require("./Card");
 var Field = require("./Field");
-//var PubSub = require("pubsub-js");
 
 
 var Battleside;
@@ -37,6 +36,22 @@ Battleside = (function(){
     this.off = this.battle.off.bind(this.battle);
 
 
+    this.receive("activate:leader", function(){
+      if(self._isWaiting) return;
+      if(self.isPassing()) return;
+
+      console.log("leader activated");
+
+      var leaderCard = self.getLeader();
+      if(leaderCard.isDisabled()) return;
+
+
+      var ability = leaderCard.getAbility();
+
+      ability.onActivate.apply(self);
+      leaderCard.setDisabled(true);
+      self.update();
+    })
     this.receive("play:cardFromHand", function(data){
       if(self._isWaiting) return;
       if(self.isPassing()) return;
@@ -51,14 +66,15 @@ Battleside = (function(){
       if(card === -1) throw new Error("decoy:replace | unknown card");
       self.runEvent("Decoy:replaceWith", self, [card]);
     })
-    this.receive("set:passing", function() {
+    this.receive("cancel:decoy", function(){
+      self.off("Decoy:replaceWith");
+    })
+    this.receive("set:passing", function(){
       self.setPassing(true);
-      self.update();/*
-      PubSub.publish("nextTurn");*/
+      self.update();
       self.runEvent("NextTurn", null, [self.foe]);
     })
 
-    /*PubSub.subscribe("turn/" + this.getID(), this.onTurnStart.bind(this));*/
     this.on("Turn" + this.getID(), this.onTurnStart, this);
   };
   var r = Battleside.prototype;
@@ -69,11 +85,7 @@ Battleside = (function(){
    */
   r._name = null;
   r._discard = null;
-  /*r.leaderField = null;
-  r.closeField = null;
-  r._range = null;
-  r._siege = null;
-  r._field = null;*/
+
   r._rubies = 2;
   r._score = 0;
   r._isWaiting = null;
@@ -89,7 +101,7 @@ Battleside = (function(){
   r.battle = null;
   r.deck = null;
 
-  r.isPassing = function() {
+  r.isPassing = function(){
     return this._passing;
   }
 
@@ -97,7 +109,7 @@ Battleside = (function(){
     this.field[Card.TYPE.WEATHER] = p2.field[Card.TYPE.WEATHER] = Field(Card.TYPE.WEATHER);
   }
 
-  r.findCardOnFieldByID = function(id) {
+  r.findCardOnFieldByID = function(id){
     for(var key in this.field) {
       var field = this.field[key];
       var card = field.getCard(id);
@@ -106,7 +118,7 @@ Battleside = (function(){
     return -1;
   }
 
-  r.setPassing = function(b) {
+  r.setPassing = function(b){
     this._passing = b;
     this.send("set:passing", {passing: this._passing}, true);
   }
@@ -127,6 +139,10 @@ Battleside = (function(){
     /*
         this.getYourside().setField("leader", leaderCard[0]);*/
     this.field[Card.TYPE.LEADER].add(leaderCard[0]);
+  }
+
+  r.getLeader = function(){
+    return this.field[Card.TYPE.LEADER].get()[0];
   }
 
   r.getID = function(){
@@ -158,19 +174,20 @@ Battleside = (function(){
       lives: this._rubies,
       score: this.calcScore(),
       hand: this.hand.length(),
+      discard: this.getDiscard(true),
       passing: this._passing
     }
   }
 
-  r.getRubies = function() {
+  r.getRubies = function(){
     return this._rubies;
   }
 
-  r.getScore = function() {
+  r.getScore = function(){
     return +this.calcScore();
   }
 
-  r.removeRuby = function() {
+  r.removeRuby = function(){
     this._rubies--;
   }
 
@@ -210,14 +227,14 @@ Battleside = (function(){
   r.playCard = function(card){
     if(card === null || card === -1) return;
 
-    this.hand.remove(card);
-
     if(!this.placeCard(card)) return;
+
+    this.hand.remove(card);
 
     this.update();
 
 
-    this.runEvent("NextTurn", this, [this.foe]);
+    this.runEvent("NextTurn", null, [this.foe]);
   }
 
   r.placeCard = function(card){
@@ -251,7 +268,7 @@ Battleside = (function(){
       if(ability.replaceWith){
         obj._canclePlacement = true;
 
-        this.on("Decoy:replaceWith", function(replaceCard) {
+        this.on("Decoy:replaceWith", function(replaceCard){
           if(replaceCard.getType() == Card.TYPE.LEADER ||
           replaceCard.getType() == Card.TYPE.WEATHER ||
           replaceCard.getType() == Card.TYPE.SPECIAL){
@@ -261,11 +278,12 @@ Battleside = (function(){
           self.off("Decoy:replaceWith");
           var field = self.field[replaceCard.getType()];
 
+
           field.replaceWith(replaceCard, card);
 
           self.hand.add(replaceCard);
-/*
-          self.update();*/
+          self.hand.remove(card);
+          self.update();
 
           self.runEvent("NextTurn", null, [self.foe]);
         })
@@ -278,6 +296,7 @@ Battleside = (function(){
         this.on("EachCardPlace", ability.onEachCardPlace, this, [card]);
       }
 
+      this.update();
     }
   }
 
@@ -290,7 +309,7 @@ Battleside = (function(){
     }
   }
 
-  r.clearMainFields = function() {
+  r.clearMainFields = function(){
     var cards1 = this.field[Card.TYPE.CLOSE_COMBAT].removeAll();
     var cards2 = this.field[Card.TYPE.RANGED].removeAll();
     var cards3 = this.field[Card.TYPE.SIEGE].removeAll();
@@ -299,14 +318,21 @@ Battleside = (function(){
     this.addToDiscard(cards);
   }
 
-  r.addToDiscard = function(cards) {
+  r.addToDiscard = function(cards){
     var self = this;
-    cards.forEach(function(card) {
+    cards.forEach(function(card){
       self._discard.push(card);
     });
   }
 
-  r.resetNewRound = function() {
+  r.getDiscard = function(json){
+    if(json){
+      return JSON.stringify(this._discard);
+    }
+    return this._discard;
+  }
+
+  r.resetNewRound = function(){
     this.clearMainFields();
     this.setPassing(false);
   }

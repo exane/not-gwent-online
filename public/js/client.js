@@ -1,6 +1,7 @@
 /*("http://localhost:16918")*/
 var socketCluster = require("socketcluster-client");
 var Backbone = require("backbone");
+require("./backbone.modal-min");
 var Handlebars = require("handlebars");
 var $ = require("jquery");
 //var Lobby = require("./client-lobby");
@@ -97,11 +98,11 @@ var App = Backbone.Router.extend({
 
 var SideView = Backbone.View.extend({
   el: ".container",
-  template: Handlebars.compile('<div class="card" data-key="{{_key}}" data-id="{{_id}}">' +
+  template: Handlebars.compile('<div class="card{{#if _disabled}} disabled{{/if}}" data-key="{{_key}}" data-id="{{_id}}">' +
   '<img src="../assets/cards/{{_data.img}}.png">' +
   '</div>'),
   templateCards: Handlebars.compile('{{#each this}}' +
-  '<div class="card" data-key="{{_key}}" data-id="{{_id}}">' +
+  '<div class="card{{#if _disabled}} disabled{{/if}}" data-key="{{_key}}" data-id="{{_id}}">' +
   '{{#if _boost}}<span>+{{_boost}}</span>{{/if}}' +
   '<img src="../assets/cards/{{_data.img}}.png">' +
   '</div>' +
@@ -206,6 +207,7 @@ var SideView = Backbone.View.extend({
 var BattleView = Backbone.View.extend({
   className: "container",
   template: Handlebars.compile($("#battle-template").html()),
+  templatePreview: Handlebars.compile($("#preview-template").html()),
   initialize: function(options){
     var self = this;
     var user = this.user = options.user;
@@ -214,54 +216,14 @@ var BattleView = Backbone.View.extend({
 
     $(this.el).prependTo('body');
 
-    this.listenTo(user, "change:showPreview", this.render);
+    this.listenTo(user, "change:showPreview", this.renderPreview);
     this.listenTo(user, "change:waiting", this.render);
     this.listenTo(user, "change:passing", this.render);
+    this.listenTo(user, "change:openDiscard", this.render);
 
     this.$hand = this.$el.find(".field-hand");
     this.$preview = this.$el.find(".card-preview");
 
-    /*//this.battleChannel = app.socket.subscribe()
-
-    app.receive("update:hand", function(data){
-      if(user.get("roomSide") == data._roomSide){
-        self.handCards = JSON.parse(data.cards);
-        self.render();
-      }
-    });
-
-    app.receive("update:info", function(data){
-      var _side = data._roomSide;
-      var infoData = data.info;
-      var leader = data.leader;
-
-
-      var side = yourSide;
-      if(user.get("roomSide") != _side){
-        side = otherSide;
-      }
-      side.infoData = infoData;
-      side.leader = leader;
-      side.render();
-    });
-
-    app.receive("update:fields", function(data){
-      var close, ranged, siege;
-      var _side = data._roomSide;
-
-      var side = yourSide;
-      if(user.get("roomSide") != _side){
-        side = otherSide;
-      }
-
-
-      side.field.close = data.close;
-      side.field.ranged = data.ranged;
-      side.field.siege = data.siege;
-      side.field.weather = data.weather;
-
-      side.render();
-    })*/
 
     var interval = setInterval(function(){
       if(!user.get("room")) return;
@@ -275,15 +237,15 @@ var BattleView = Backbone.View.extend({
     yourSide = this.yourSide = new SideView({side: ".player", app: this.app, battleView: this});
     otherSide = this.otherSide = new SideView({side: ".foe", app: this.app, battleView: this});
 
-    /*yourSide = this.yourSide = new SideView({side: ".player", app: app, battleView: this});
-    otherSide = this.otherSide = new SideView({side: ".foe", app: app, battleView: this});*/
   },
   events: {
     "mouseover .card": "onMouseover",
     "mouseleave .card": "onMouseleave",
     "click .field-hand": "onClick",
     "click .battleside.player": "onClickDecoy",
-    "click .button-pass": "onPassing"
+    "click .button-pass": "onPassing",
+    "click .field-discard": "openDiscard",
+    "click .field-leader": "clickLeader"
   },
   onPassing: function(){
     if(this.user.get("passing")) return;
@@ -294,10 +256,20 @@ var BattleView = Backbone.View.extend({
   onClick: function(e){
     if(!!this.user.get("waiting")) return;
     if(!!this.user.get("passing")) return;
+
     var self = this;
     var $card = $(e.target).closest(".card");
     var id = $card.data("id");
     var key = $card.data("key");
+
+    if(!!this.user.get("waitForDecoy")){
+      if(id === this.user.get("waitForDecoy")){
+        this.user.set("waitForDecoy", false);
+        this.app.send("cancel:decoy");
+        this.render();
+      }
+      return;
+    }
 
     this.app.send("play:cardFromHand", {
       id: id
@@ -306,17 +278,7 @@ var BattleView = Backbone.View.extend({
     if(key === "decoy"){
       console.log("its decoy!!!");
       this.user.set("waitForDecoy", id);
-      /*
-            this.$el.find(".battleside.player").on("click", ".card", function(e) {
-              console.log("replacement card found: ");
-              var $card = $(e.target).closest(".card");
-              var _id = $card.data("id");
-              self.app.send("decoy:replaceWith", {
-                oldCard: id,
-                newCard: _id
-              })
-              self.$el.find(".battleside.player").off("click");
-            });*/
+      this.render();
     }
   },
   onClickDecoy: function(e){
@@ -336,21 +298,53 @@ var BattleView = Backbone.View.extend({
   onMouseleave: function(e){
     this.user.set("showPreview", null);
   },
+  openDiscard: function(e){
+    var $discard = $(e.target).closest(".field-discard");
+    console.log("opened discard");
+    var side;
+    if($discard.parent().hasClass("player")){
+      side = this.yourSide;
+    } else {
+      side = this.otherSide;
+    }
+    this.user.set("openDiscard", {
+      discard: side.infoData.discard,
+      name: side.infoData.name
+    });
+  },
   render: function(){
     var self = this;
     this.$el.html(this.template({
-      cards: self.handCards,
-      preview: self.user.get("showPreview")
+      cards: self.handCards/*,
+      preview: self.user.get("showPreview")*/
     }));
     if(!(this.otherSide && this.yourSide)) return;
     this.otherSide.render();
     this.yourSide.render();
-    /* this.$el()
-    if(!(this.yourSide && this.otherSide))
-      return this;
-    this.yourSide.render();
-    this.otherSide.render();*/
+
+
+    if(this.user.get("openDiscard")){
+      var modal = new Modal({model: this.user});
+      this.$el.prepend(modal.render().el);
+    }
+
+    if(this.user.get("waitForDecoy")){
+      var id = this.user.get("waitForDecoy");
+      this.$el.find("[data-id='" + id + "']").addClass("activeCard");
+    }
     return this;
+  },
+  renderPreview: function(){
+    this.$el.find(".card-preview").html(this.templatePreview({src: this.user.get("showPreview")}))
+  },
+  clickLeader: function(e) {
+    var $card = $(e.target).closest(".field-leader");
+    console.log("click leader");
+    if(!$card.parent().hasClass("player")) return;
+    if($card.hasClass("disabled")) return;
+
+
+    this.app.send("activate:leader")
   },
   setUpBattleEvents: function(channelName){
     this.battleChannel = this.app.socket.subscribe(channelName);
@@ -363,6 +357,7 @@ var BattleView = Backbone.View.extend({
       if(event === "update:hand"){
         if(user.get("roomSide") == data._roomSide){
           self.handCards = JSON.parse(data.cards);
+          self.user.set("handCards", self.handCards);
           self.render();
         }
       }
@@ -377,6 +372,9 @@ var BattleView = Backbone.View.extend({
         }
         side.infoData = infoData;
         side.leader = leader;
+
+        side.infoData.discard = JSON.parse(side.infoData.discard);
+
         side.render();
       }
       else if(event === "update:fields"){
@@ -393,6 +391,14 @@ var BattleView = Backbone.View.extend({
         side.render();
       }
     })
+  }
+});
+
+var Modal = Backbone.Modal.extend({
+  template: Handlebars.compile($("#modal-template").html()),
+  cancelEl: ".bbm-close",
+  cancel: function(){
+    this.model.set("openDiscard", false);
   }
 });
 
@@ -432,6 +438,7 @@ var User = Backbone.Model.extend({
       var waiting = data.waiting;
       self.set("waiting", waiting);
     })
+
     app.receive("set:passing", function(data){
       var passing = data.passing;
       self.set("passing", passing);

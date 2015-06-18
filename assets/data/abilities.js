@@ -51,8 +51,7 @@ module.exports = {
     }
   },
   "weather_fog": {
-    onEachTurn: function(args) {
-      card = args[0]
+    onEachTurn: function(card) {
       var targetRow = card.constructor.TYPE.RANGED;
       var forcedPower = 1;
       var field1 = this.field[targetRow].get();
@@ -66,7 +65,6 @@ module.exports = {
       });
     },
     onEachCardPlace: function(card) {
-      card = args[0]
       var targetRow = card.constructor.TYPE.RANGED;
       var forcedPower = 1;
       var field1 = this.field[targetRow].get();
@@ -122,5 +120,13 @@ module.exports = {
   },
   "decoy": {
     replaceWith: true
+  },
+  "foltest_leader1": {
+    onActivate: function() {
+      var cards = this.deck.find("key", "impenetrable_fog")
+      if(!cards.length) return;
+      var card = this.deck.removeFromDeck(cards[0]);
+      this.placeCard(card);
+    }
   }
 }

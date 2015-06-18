@@ -56,23 +56,6 @@ var Room = (function(){
   r.isOpen = function(){
     return !(this._users.length >= 2);
   }
-/*
-
-  r.send = function(event, data){
-    */
-/*this.socket.publish(this._id + "|" + event, data);
-    this.socket.publish(this._id, {
-      event: event,
-      data: data
-    });
-    var subs = this.socket.subscriptions();
-    subs.forEach(function(sub) {
-
-    });*//*
-
-    this._channel.publish(event, data);
-  }
-*/
 
   r.getPlayers = function(){
     return this._users;
@@ -92,26 +75,13 @@ var Room = (function(){
     if(this.bothReady()){
       this._battle.init();
     }
-    /*
-    if(!this.checkIfReady()) return;
 
-    this._users[0].send("init:battle", {side: "p1"});
-    this._users[1].send("init:battle", {side: "p2"});
-    if(!this.checkIfReady()) return;
-    this._battle.init();*/
   }
 
   r.bothReady = function(){
     return !!this._ready[this._users[0].getID()] && !!this._ready[this._users[1].getID()];
   }
-  /*
-    r.checkIfReady = function(){
-      for(var i = 0; i < this._users.length; i++) {
-        if(!this._ready[this._users[i].getID()]) return false;
-      }
-      return true;
-    }*/
-
+  
 
   return Room;
 })();

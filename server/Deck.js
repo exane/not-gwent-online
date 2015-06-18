@@ -44,19 +44,12 @@ var Deck = (function(){
     return this._deck;
   }
 
-  r.draw = function(times){
+  r.draw = function(){
     if(!this._deck.length) return 0;
     var card = this.pop();
     return card;
   }
 
-  /*
-    r._loadCards = function(){
-      var n = this._originalDeck.length;
-      for(var i = 0; i < n; i++) {
-        this._deck.push(CardManager().add(this._originalDeck[i], this._owner));
-      }
-    }*/
 
   r._loadCards = function(){
     this._deck = this.getDeck().map(function(cardkey){
@@ -77,7 +70,6 @@ var Deck = (function(){
       if(card.getProperty(key) == val){
         res.push(card);
       }
-
     });
     return res;
   }
@@ -93,7 +85,7 @@ var Deck = (function(){
       }*/
       var c = this.getDeck()[i];
       if(c.getID() === card.getID()){
-        return this.getDeck().splice(i, 1);
+        return this.getDeck().splice(i, 1)[0];
       }
     }
     return -1;

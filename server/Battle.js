@@ -80,6 +80,10 @@ var Battle = (function(){
     /*if(__flag instanceof  Battleside) {
       side = __flag;
     }*/
+    if(!(side instanceof Battleside)){
+      console.trace("side is not a battleside!");
+      return
+    }
     if(side.isPassing()){
       if(__flag){
         return this.startNextRound();
@@ -87,10 +91,7 @@ var Battle = (function(){
       return this.switchTurn(side.foe, 1);
     }
 
-    /*PubSub.publish("onEachTurn");*/
     this.runEvent("EachTurn");
-    /*
-        PubSub.publish("turn/" + side.getID());*/
     this.runEvent("Turn" + side.getID());
     console.log("current Turn: ", side.getName());
 
@@ -100,6 +101,7 @@ var Battle = (function(){
     var loser = this.checkRubies();
     if(this.checkIfIsOver()){
       console.log("its over!");
+      this.update();
       return;
     }
 
@@ -153,6 +155,7 @@ var Battle = (function(){
       obj.cb = obj.cb.bind(ctx)
       obj.cb.apply(ctx, obj.onArgs.concat(args));
     });
+    this.update();
   }
 
   r.on = function(eventid, cb, ctx, args){
@@ -161,9 +164,10 @@ var Battle = (function(){
     var event = "on" + eventid;
 
     var obj = {};
-    if(!ctx) {
+    if(!ctx){
       obj.cb = cb;
-    } else {
+    }
+    else {
       obj.cb = cb.bind(ctx);
     }
     obj.onArgs = args;
@@ -187,6 +191,7 @@ var Battle = (function(){
 
   r.off = function(eventid){
     var event = "on" + eventid;
+    if(!this.events[event]) return;
     this.events[event].forEach(function(e){
       e = null;
     });
@@ -215,7 +220,7 @@ var Battle = (function(){
     //tie
     this.p1.removeRuby();
     this.p2.removeRuby();
-    return 0;
+    return Math.random() > 0.5 ? this.p1 : this.p2;
   }
 
 

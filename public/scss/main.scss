@@ -1,3 +1,7 @@
+//@import "style";
+@import "backbone.modal";
+@import "backbone.modal.theme";
+
 $height: 600px;
 $game-height: 800px;
 
@@ -91,12 +95,22 @@ $game-height: 800px;
     margin-left: 30px;
     cursor: default;
   }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+
+  &.activeCard {
+    position: relative;
+    z-index: 11;
+    transform: scale(1.5,1.5) !important;
+  }
 }
 
 .card-preview {
   position: absolute;/*
   display: none;*/
-  z-index: 10;
+  z-index: 110;
 }
 
 i {

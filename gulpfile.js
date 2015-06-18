@@ -26,7 +26,7 @@ gulp.task('browserify', function(){
 });
 
 gulp.task('sass', function(){
-  gulp.src('./public/scss/*.scss')
+  gulp.src('./public/scss/main.scss')
   .pipe(sass({
     outputStyle: 'compressed'
   }).on("error", function(err){

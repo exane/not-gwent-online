@@ -1,0 +1,130 @@
+.bbm-wrapper
+  background: rgba(0,0,0,.75)
+  -webkit-transition: background-color .3s
+
+.bbm-modal
+  background: white
+  box-shadow: 0 0px 6px rgba(0,0,0,.6), 0 1px 2px rgba(0,0,0,.9)
+
+
+/* BLOCKS */
+.bbm-modal__topbar,
+.bbm-modal__bottombar
+  padding: 0 30px
+
+.bbm-modal__topbar
+  border-bottom: 1px solid rgba(0,0,0,.1)
+  margin:
+    bottom: 30px
+
+  >ul
+    list-style: none
+    text-align: center
+    padding: 0
+    margin: 0
+
+.bbm-modal__tab
+  display: inline-block
+  padding: 15px 10px
+
+  a
+    font:
+      size: 16px
+      weight: bold
+    color: #999
+
+    &:hover,
+    &.active
+      color: #222
+
+.bbm-modal__title
+  padding: 20px 0 19px
+  margin: 0
+  font:
+    weight: normal
+    size: 22px
+  line-height: 1em
+  color: #312D3A
+
+.bbm-modal__section
+  padding: 0 30px
+  margin-top: 0px
+  font:
+    size: 16px
+  line-height: 26px
+  color: #575656
+
+  p
+    font:
+      size: 16px
+    line-height: 26px
+    color: #575656
+
+    &:last-child
+      padding: 0
+      margin-bottom: 0
+
+  a
+    color: #FF643C
+
+  h3
+    margin: 0
+    font-size: 20px
+    line-height: 1em
+
+.bbm-modal__bottombar
+  border-top: 1px solid rgba(0,0,0,.1)
+  padding: 18px
+  text-align: right
+  margin-top: 30px
+
+
+/* MODULES */
+.bbm-group
+  content: ""
+  display: table
+  clear: both
+
+.bbm-button
+  display: inline-block
+  color: rgba(49,45,58,.8)
+  text-decoration: none
+  font:
+    size: 14px
+    weight: 500
+  position: relative
+  line-height: 1em
+  padding: 10px 14px
+  border-radius: 3px
+  background: #FCFCFC
+  cursor: default
+
+  background-image: -o-linear-gradient(rgba(70,30,170,0) 0%, rgba(65,61,75,.15) 100%)
+  background-image: -moz-linear-gradient(rgba(70,30,170,0) 0%, rgba(65,61,75,.15) 100%)
+  background-image: -webkit-linear-gradient(rgba(70,30,170,0) 0%, rgba(65,61,75,.15) 100%)
+  background-image: -ms-linear-gradient(rgba(70,30,170,0) 0%, rgba(65,61,75,.15) 100%)
+  background-image: linear-gradient(rgba(70,30,170,0) 0%, rgba(65,61,75,.15) 100%)
+
+  -moz-box-shadow:    0px 1px 1px 0px rgba(0,0,0,0.10), inset 0px 0px 0px 1px rgba(0,0,0,0.20)
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.10), inset 0px 0px 0px 1px rgba(0,0,0,0.20)
+  box-shadow:         0px 1px 1px 0px rgba(0,0,0,0.10), inset 0px 0px 0px 1px rgba(0,0,0,0.20)
+
+  &.inactive
+    opacity: .5
+    pointer-events: none
+
+  &:active
+    background-image: -o-linear-gradient(rgba(70,30,170,0) 0%, rgba(65,61,75,.25) 100%)
+    background-image: -moz-linear-gradient(rgba(70,30,170,0) 0%, rgba(65,61,75,.25) 100%)
+    background-image: -webkit-linear-gradient(rgba(70,30,170,0) 0%, rgba(65,61,75,.25) 100%)
+    background-image: -ms-linear-gradient(rgba(70,30,170,0) 0%, rgba(65,61,75,.25) 100%)
+    background-image: linear-gradient(rgba(70,30,170,0) 0%, rgba(65,61,75,.25) 100%)
+
+    -moz-box-shadow:    inset 0px 1px 2px 0px rgba(0,0,0,0.50), inset 0px 0px 0px 1px rgba(0,0,0,0.20)
+    -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0,0,0,0.50), inset 0px 0px 0px 1px rgba(0,0,0,0.20)
+    box-shadow:         inset 0px 1px 2px 0px rgba(0,0,0,0.50), inset 0px 0px 0px 1px rgba(0,0,0,0.20)
+
+
+/* ANIMATIONS */
+
+/* Open modal */

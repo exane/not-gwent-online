@@ -42,6 +42,7 @@ var Hand = (function(){
   r.remove = function(id){
     var n = this.length();
 
+    //console.trace(id);
     id = id instanceof Card ? id.getID() : id;
 
     for(var i = 0; i < n; i++) {

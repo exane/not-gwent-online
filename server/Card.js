@@ -9,9 +9,11 @@ var Card = (function(){
     /**
      * constructor here
      */
+    this.setDisabled(false);
     this.channel = {};
     this._key = key;
     this._data = CardData[key];
+    this._data.key = key;
     this._boost = 0;
     this._forcedPower = -1;
     this._init();
@@ -29,6 +31,7 @@ var Card = (function(){
   r._owner = null;
   r._boost = null;
   r._forcedPower = null;
+  r._disabled = null;
   Card.__id = 0;
   Card.TYPE = {
     CLOSE_COMBAT: 0,
@@ -95,6 +98,14 @@ var Card = (function(){
   r.boost = function(nr){
     /*this.getPower(); //to recalculate this._power;*/
     this._boost += nr;
+  }
+
+  r.isDisabled = function() {
+    return this._disabled;
+  }
+
+  r.setDisabled = function(b) {
+    this._disabled = b;
   }
 
   r.getProperty = function(prop){

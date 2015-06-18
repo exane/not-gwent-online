@@ -131,11 +131,9 @@
     </div>
   </div>
   <div class="col-xs-3">
-    {{#if preview}}
     <div class="col-xs-12 card-preview">
-      <img src="{{preview}}">
+      <!--<img src="{{preview}}">-->
     </div>
-    {{/if}}
     <div class="col-xs-12 right-side right-side-foe foe">
       <div class="col-xs-5 field-discard field-single">
         discard deck
@@ -199,6 +197,24 @@
   <div class="col-xs-12">
     <button class="button-pass">Pass</button>
   </div>
+</script>
+<script type="text/template" id="modal-template">
+  <div class="bbm-modal__topbar">
+    <h3 class="bbm-modal__title">Discard of {{openDiscard.name}}</h3>
+  </div>
+  <div class="bbm-modal__section">
+    {{#each openDiscard.discard}}
+    <div class="card" data-key="{{_key}}" data-id="{{_id}}">
+      <img src="../assets/cards/{{_data.img}}.png">
+    </div>
+    {{/each}}
+  </div>
+  <div class="bbm-modal__bottombar">
+    <div class="bbm-button bbm-close">close</div>
+  </div>
+</script>
+<script type="text/template" id="preview-template">
+  <img src="{{src}}">
 </script>
 <script src="../build/app.js"></script>
 </body>
