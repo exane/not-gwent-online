@@ -420,5 +420,312 @@ module.exports = {
     img: "milva",
     faction: "Scoia'tael",
     type: 1
+  },
+
+
+
+  "eredin_commander_of_the_red_riders": {
+    name: "Eredin, Commander of the Red Riders",
+    power: -1,
+    ability: "eredin_leader1",
+    img: "eredin_commander",
+    faction: "Monster",
+    type: 3
+  },
+  "eredin_bringer_of_death": {
+    name: "Eredin, Bringer of Death",
+    power: -1,
+    ability: "eredin_leader2",
+    img: "eredin_bringer",
+    faction: "Monster",
+    type: 3
+  },
+  "eredin_destroyer_of_worlds": {
+    name: "Eredin, Destroyer of Worlds",
+    power: -1,
+    ability: "eredin_leader3",
+    img: "eredin_destroyer",
+    faction: "Monster",
+    type: 3
+  },
+  "eredin_king_of_the_wild_hunt": {
+    name: "Eredin, King of The Wild Hunt",
+    power: -1,
+    ability: "eredin_leader4",
+    img: "eredin_king",
+    faction: "Monster",
+    type: 3
+  },
+  "kayran": {
+    name: "Kayran",
+    power: 8,
+    ability: ["hero", "morale_boost"],
+    img: "kayran",
+    faction: "Monster",
+    type: 1
+  },
+  "leshen": {
+    name: "Leshen",
+    power: 10,
+    ability: "hero",
+    img: "leshen",
+    faction: "Monster",
+    type: 1
+  },
+  "imlerith": {
+    name: "Imlerith",
+    power: 10,
+    ability: "hero",
+    img: "imlerith",
+    faction: "Monster",
+    type: 0
+  },
+  "draug": {
+    name: "Draug",
+    power: 10,
+    ability: "hero",
+    img: "draug",
+    faction: "Monster",
+    type: 0
+  },
+  "ghoul": {
+    name: "Ghoul",
+    power: 1,
+    ability: "muster",
+    img: "ghoul1",
+    faction: "Monster",
+    type: 0
+  },
+  "nekker": {
+    name: "Nekker",
+    power: 2,
+    ability: "muster",
+    img: "nekker",
+    faction: "Monster",
+    type: 0
+  },
+  "wyvern": {
+    name: "Wyvern",
+    power: 2,
+    ability: null,
+    img: "wyvern",
+    faction: "Monster",
+    type: 1
+  },
+  "foglet": {
+    name: "Foglet",
+    power: 2,
+    ability: null,
+    img: "foglet",
+    faction: "Monster",
+    type: 0
+  },
+  "celaeno_harpy": {
+    name: "Celaeno Harpy",
+    power: 2,
+    ability: null,
+    img: "celaeno_harpy",
+    faction: "Monster",
+    type: 1
+  },
+  "gargoyle": {
+    name: "Gargoyle",
+    power: 2,
+    ability: null,
+    img: "gargoyle",
+    faction: "Monster",
+    type: 1
+  },
+  "cockatrice": {
+    name: "Cockatrice",
+    power: 2,
+    ability: null,
+    img: "cockatrice",
+    faction: "Monster",
+    type: 1
+  },
+  "harpy": {
+    name: "Harpy",
+    power: 2,
+    ability: "agile",
+    img: "harpy",
+    faction: "Monster",
+    type: 1
+  },
+  "endrega": {
+    name: "Endrega",
+    power: 2,
+    ability: null,
+    img: "endrega",
+    faction: "Monster",
+    type: 1
+  },
+  "vampire_bruxa": {
+    name: "Vampire: Bruxa",
+    power: 4,
+    ability: "muster",
+    img: "vampire_bruxa",
+    faction: "Monster",
+    type: 0
+  },
+  "vampire_fleder": {
+    name: "Vampire: Fleder",
+    power: 4,
+    ability: "muster",
+    img: "vampire_fleder",
+    faction: "Monster",
+    type: 0
+  },
+  "vampire_garkain": {
+    name: "Vampire: Garkain",
+    power: 4,
+    ability: "muster",
+    img: "vampire_garkain",
+    faction: "Monster",
+    type: 0
+  },
+  "vampire_ekimmara": {
+    name: "Vampire: Ekimmara",
+    power: 4,
+    ability: "muster",
+    img: "vampire_ekimmara",
+    faction: "Monster",
+    type: 0
+  },
+  "arachas": {
+    name: "Arachas",
+    power: 4,
+    ability: "muster",
+    img: "arachas1",
+    faction: "Monster",
+    type: 0
+  },
+  "botchling": {
+    name: "Botchling",
+    power: 4,
+    ability: null,
+    img: "botchling",
+    faction: "Monster",
+    type: 0
+  },
+  "forktail": {
+    name: "Forktail",
+    power: 5,
+    ability: null,
+    img: "forktail",
+    faction: "Monster",
+    type: 0
+  },
+  "plague_maiden": {
+    name: "Plague Maiden",
+    power: 5,
+    ability: null,
+    img: "forktail",
+    faction: "Monster",
+    type: 0
+  },
+  "griffin": {
+    name: "Griffin",
+    power: 5,
+    ability: null,
+    img: "griffin",
+    faction: "Monster",
+    type: 0
+  },
+  "werewolf": {
+    name: "Werewolf",
+    power: 5,
+    ability: null,
+    img: "werewolf",
+    faction: "Monster",
+    type: 0
+  },
+  "frightener": {
+    name: "Frightener",
+    power: 5,
+    ability: null,
+    img: "frightener",
+    faction: "Monster",
+    type: 0
+  },
+  "ice_giant": {
+    name: "Ice Giant",
+    power: 5,
+    ability: null,
+    img: "ice_giant",
+    faction: "Monster",
+    type: 2
+  },
+  "grave_hag": {
+    name: "Grave Hag",
+    power: 5,
+    ability: null,
+    img: "grave_hag",
+    faction: "Monster",
+    type: 1
+  },
+  /*"vampire_katakan": {
+    name: "Vampire: Katakan",
+    power: 5,
+    ability: "muster",
+    img: "vampire_katakan",
+    faction: "Monster",
+    type: 0
+  },*/
+  "crone_whispess": {
+    name: "Crone: Whispess",
+    power: 6,
+    ability: "muster",
+    img: "crone_whispess",
+    faction: "Monster",
+    type: 0
+  },
+  "crone_brewess": {
+    name: "Crone: Brewess",
+    power: 6,
+    ability: "muster",
+    img: "crone_brewess",
+    faction: "Monster",
+    type: 0
+  },
+  "crone_weavess": {
+    name: "Crone: Weavess",
+    power: 6,
+    ability: "muster",
+    img: "crone_weavess",
+    faction: "Monster",
+    type: 0
+  },
+  "arachas_behemoth": {
+    name: "Arachas Behemoth",
+    power: 6,
+    ability: "muster",
+    img: "arachas_behemoth",
+    faction: "Monster",
+    type: 2
+  },
+  "fire_elemental": {
+    name: "Fire Elemental",
+    power: 6,
+    ability: null,
+    img: "fire_elemental",
+    faction: "Monster",
+    type: 2
+  },
+  "fiend": {
+    name: "Fiend",
+    power: 6,
+    ability: null,
+    img: "fiend",
+    faction: "Monster",
+    type: 0
+  },
+  "earth_elemental": {
+    name: "Earth Elemental",
+    power: 6,
+    ability: null,
+    img: "earth_elemental",
+    faction: "Monster",
+    type: 2
   }
 }
