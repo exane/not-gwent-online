@@ -149,26 +149,39 @@ var Battle = (function(){
       return;
     }
     this.events[event].forEach(function(e){
-      e.apply(ctx, args);
+      var obj = e;
+      obj.cb = obj.cb.bind(ctx)
+      obj.cb.apply(ctx, obj.onArgs.concat(args));
     });
-    this.update();
   }
 
   r.on = function(eventid, cb, ctx, args){
-    ctx = ctx || this;
-    args = args || null;
+    ctx = ctx || null;
+    args = args || [];
     var event = "on" + eventid;
+
+    var obj = {};
+    if(!ctx) {
+      obj.cb = cb;
+    } else {
+      obj.cb = cb.bind(ctx);
+    }
+    obj.onArgs = args;
+
     if(!(event in this.events)){
       this.events[event] = [];
     }
+
     if(typeof cb !== "function"){
       throw new Error("cb not a function");
     }
+
     if(args){
-      this.events[event].push(cb.bind(ctx, args));
+      this.events[event].push(obj);
     }
+
     else {
-      this.events[event].push(cb.bind(ctx));
+      this.events[event].push(obj);
     }
   }
 
@@ -179,6 +192,7 @@ var Battle = (function(){
     });
     delete this.events[event];
   }
+
 
   r.checkIfIsOver = function(){
     return !(this.p1.getRubies() && this.p2.getRubies());
