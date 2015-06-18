@@ -75,11 +75,8 @@ var Battle = (function(){
 
   r.switchTurn = function(side, __flag){
     __flag = typeof __flag == "undefined" ? 0 : 1;
-    //var side = this.turn++ % 2 ? this.p1 : this.p2;
 
-    /*if(__flag instanceof  Battleside) {
-      side = __flag;
-    }*/
+
     if(!(side instanceof Battleside)){
       console.trace("side is not a battleside!");
       return
@@ -198,11 +195,9 @@ var Battle = (function(){
     delete this.events[event];
   }
 
-
   r.checkIfIsOver = function(){
     return !(this.p1.getRubies() && this.p2.getRubies());
   }
-
 
   r.checkRubies = function(){
     var scoreP1 = this.p1.getScore();
@@ -223,6 +218,12 @@ var Battle = (function(){
     return Math.random() > 0.5 ? this.p1 : this.p2;
   }
 
+  r.userLeft = function(sideName) {
+    var side = this[sideName];
+
+    side.foe.send("foe:left", null, true);
+
+  }
 
   return Battle;
 })();

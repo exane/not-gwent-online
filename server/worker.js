@@ -23,8 +23,6 @@ module.exports.run = function(worker){
   var connections = Connections();
   var roomCollection = {};
 
-
-
   scServer.on('connection', function(socket){
     var user = User(socket);
     connections.add(user);
@@ -61,7 +59,7 @@ module.exports.run = function(worker){
           console.log("user %s joined room %s", user.getName(), room.getID());
           user.send("response:joinRoom", room.getID());
         }
-      }, 1000);
+      }, 500);
     })
 
     socket.on("request:roomData", function(){

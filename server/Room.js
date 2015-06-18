@@ -15,14 +15,6 @@ var Room = (function(){
     this._users = [];
     this._ready = {};
     this.socket = scServer.global;
-/*
-    this._channel = this.socket.subscribe(this._id);*/
-
-    /*this._channel.watch(function(data) {
-      *//*self._users.forEach(function(user) {
-
-      })*//*
-    });*/
 
   };
   var r = Room.prototype;
@@ -46,7 +38,6 @@ var Room = (function(){
     if(this._users.length >= 2) return;
     this._users.push(user);
     user.addRoom(this);
-    /*user.joinRoom(this.getID());*/
 
     if(!this.isOpen()){
       this.initBattle();
@@ -62,8 +53,6 @@ var Room = (function(){
   }
 
   r.initBattle = function(){
-    var self = this;
-    var side = 0;
     this._battle = Battle(this._id, this._users[0], this._users[1], this.socket);
     this._users[0].send("init:battle", {side: "p1"});
     this._users[1].send("init:battle", {side: "p2"});
@@ -81,7 +70,15 @@ var Room = (function(){
   r.bothReady = function(){
     return !!this._ready[this._users[0].getID()] && !!this._ready[this._users[1].getID()];
   }
-  
+
+  r.leave = function(user) {
+    var p = "p2";
+    if(user.getID() === this._users[0].getID()) {
+      p = "p1";
+    }
+    this._battle.userLeft(p);
+  }
+
 
   return Room;
 })();

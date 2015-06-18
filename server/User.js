@@ -63,18 +63,24 @@ var User = (function(){
     console.log("user name changed from %s to %s", this._name, name);
     this._name = name;
   }
+
   r.getName = function() {
     return this._name;
   }
+
   r.getRoom = function() {
     return this._rooms[0];
   }
+
   r.addRoom = function(room) {
     this._rooms.push(room);
   }
 
   r.disconnect = function() {
-
+    var self = this;
+    this._rooms.forEach(function(room) {
+      room.leave(self);
+    })
   }
 
 

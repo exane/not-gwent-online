@@ -444,6 +444,11 @@ var User = Backbone.Model.extend({
       self.set("passing", passing);
     })
 
+    app.receive("foe:left", function() {
+      console.log("your foe left the room");
+      $(".container").prepend('<div class="alert alert-danger">Your foe left the battle!</div>')
+    })
+
 
     app.on("createRoom", this.createRoom, this);
     app.on("joinRoom", this.joinRoom, this);
