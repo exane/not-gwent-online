@@ -18,6 +18,7 @@ var Card = (function(){
     this._forcedPower = -1;
     this._init();
 
+
   };
   var r = Card.prototype;
   /**
@@ -96,7 +97,7 @@ var Card = (function(){
     return this._data.musterType || null;
   }
   r.getType = function(){
-    return typeof this._changedType === "undefined" ? this._data.type : this._changedType;
+    return this._changedType == null ? this._data.type : this._changedType;
   }
   r.changeType = function(type) {
     this._changedType = type;
