@@ -1,7 +1,7 @@
 {
-  "name": "gwent",
+  "name": "Gwent-online",
   "version": "0.0.1",
-  "description": "",
+  "description": "A standalone multiplayer version of Gwent (The Witcher 3)",
   "main": "gulpfile.js",
   "dependencies": {
     "socketcluster": "2.2.x",

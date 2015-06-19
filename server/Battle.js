@@ -60,8 +60,8 @@ var Battle = (function(){
     this.p1.draw(10);
     this.p2.draw(10);
 
-    this.p1.hand.add(Card("harpy"));
-    this.p2.hand.add(Card("harpy"));
+    this.p1.hand.add(Card("kaedweni_siege_expert"));
+    this.p2.hand.add(Card("kaedweni_siege_expert"));
     /*
     this.p1.hand.add(Card("dun_banner_medic"));
     this.p2.hand.add(Card("dun_banner_medic"));
