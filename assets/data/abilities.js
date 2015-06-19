@@ -31,7 +31,6 @@ module.exports = {
     }
   },
   "morale_boost": {
-
     onEachCardPlace: function(card){
       var field = this.field[card.getType()];
       var id = card.getID();
@@ -174,13 +173,37 @@ module.exports = {
       this.placeCard(card);
     }
   },
-  "francesca_leader1": {},
-  "francesca_leader2": {},
-  "francesca_leader3": {},
-  "francesca_leader4": {},
-  "eredin_leader1": {},
-  "eredin_leader2": {},
-  "eredin_leader3": {},
-  "eredin_leader4": {},
+  "francesca_leader1": {
+    onActivate: function(){
+    }
+  },
+  "francesca_leader2": {
+    onActivate: function(){
+    }
+  },
+  "francesca_leader3": {
+    onActivate: function(){
+    }
+  },
+  "francesca_leader4": {
+    onActivate: function(){
+    }
+  },
+  "eredin_leader1": {
+    onActivate: function(){
+    }
+  },
+  "eredin_leader2": {
+    onActivate: function(){
+    }
+  },
+  "eredin_leader3": {
+    onActivate: function(){
+    }
+  },
+  "eredin_leader4": {
+    onActivate: function(){
+    }
+  },
   "hero": {}
 }

@@ -66,13 +66,6 @@ var Card = (function(){
   r.getRawPower = function(){
     return this._data.power;
   }
-  /*r.calculateBoost = function(){
-    this._boost = 0;
-    for(var key in this._boosts) {
-      var boost = this._boosts[key];
-      this.boost(boost.getPower());
-    }
-  }*/
   r.setForcedPower = function(nr){
     this._forcedPower = nr;
   }
