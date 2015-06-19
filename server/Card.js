@@ -57,16 +57,16 @@ var Card = (function(){
   r.getPower = function(){
     if(this._data.power === -1) return 0;
     if(this._forcedPower > -1){
-      return this._forcedPower + this._boost;
+      return (this._forcedPower > this._data.power ? this._data.power : this._forcedPower) + this._boost;
     }
     return this._data.power + this._boost;
   }
-  r.getRawPower = function() {
+  r.getRawPower = function(){
     return this._data.power;
   }
-  r.calculateBoost = function() {
+  r.calculateBoost = function(){
     this._boost = 0;
-    for (var key in this._boosts) {
+    for(var key in this._boosts) {
       var boost = this._boosts[key];
       this.boost(boost.getPower());
     }
@@ -78,9 +78,9 @@ var Card = (function(){
     return this._data.ability;
   }
   r.getAbility = function(){
-    if(Array.isArray(this._data.ability)) {
+    if(Array.isArray(this._data.ability)){
       var res = [];
-      this._data.ability.forEach(function(ability) {
+      this._data.ability.forEach(function(ability){
         res.push(AbilityData[ability]);
       })
       return res;
@@ -93,13 +93,13 @@ var Card = (function(){
   r.getFaction = function(){
     return this._data.faction;
   }
-  r.getMusterType = function() {
+  r.getMusterType = function(){
     return this._data.musterType || null;
   }
   r.getType = function(){
     return this._changedType == null ? this._data.type : this._changedType;
   }
-  r.changeType = function(type) {
+  r.changeType = function(type){
     this._changedType = type;
   }
   r.getKey = function(){
@@ -115,11 +115,11 @@ var Card = (function(){
     this._boost += nr;
   }
 
-  r.isDisabled = function() {
+  r.isDisabled = function(){
     return this._disabled;
   }
 
-  r.setDisabled = function(b) {
+  r.setDisabled = function(b){
     this._disabled = b;
   }
 
@@ -128,7 +128,7 @@ var Card = (function(){
     return this._data[prop];
   }
 
-  r.resetBoost = function() {
+  r.resetBoost = function(){
     this._changedType = null;
     this._boost = 0;
   }
