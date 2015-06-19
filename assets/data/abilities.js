@@ -85,6 +85,7 @@ module.exports = {
       if(cards[lastInsert - 2].getName() == cards[lastInsert - 1].getName()){
         cards[lastInsert - 2].boost(+cards[lastInsert - 2].getPower());
         cards[lastInsert - 1].boost(+cards[lastInsert - 1].getPower());
+        //todo: boost fixen
       }
     }
   },

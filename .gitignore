@@ -2,6 +2,7 @@ node_modules
 .idea
 public/build
 public/index.html
+test/spec
 
 /site/.idea
 /site/server/vendor
