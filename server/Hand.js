@@ -49,6 +49,7 @@ var Hand = (function(){
       if(this._hand[i].getID() != id) continue;
       return this._hand.splice(i, 1);
     }
+
     return -1;
   }
 
@@ -63,6 +64,16 @@ var Hand = (function(){
 
   r.length = function(){
     return this._hand.length;
+  }
+
+  r.find = function(key, val) {
+    var res = [];
+    this._hand.forEach(function(card){
+      if(card.getProperty(key) == val){
+        res.push(card);
+      }
+    });
+    return res;
   }
 
 

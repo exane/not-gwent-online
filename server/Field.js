@@ -51,6 +51,7 @@ var Field = (function(){
   r.replaceWith = function(oldCard, newCard){
     var index = this.getPosition(oldCard);
     this._cards[index] = newCard;
+    oldCard.resetBoost();
     return oldCard;
   }
 
@@ -64,6 +65,9 @@ var Field = (function(){
 
   r.removeAll = function() {
     var tmp = this._cards.slice();
+    tmp.forEach(function(card) {
+      card.resetBoost();
+    })
     this._cards = [];
     return tmp;
   }

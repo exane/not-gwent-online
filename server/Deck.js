@@ -78,11 +78,6 @@ var Deck = (function(){
     var n = this.length();
 
     for(var i = 0; i < n; i++) {
-      /*var cardID = this.getDeck()[i];
-      if(id == cardID){
-        this.getDeck().splice(i, 1);
-        return id;
-      }*/
       var c = this.getDeck()[i];
       if(c.getID() === card.getID()){
         return this.getDeck().splice(i, 1)[0];

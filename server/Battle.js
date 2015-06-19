@@ -39,7 +39,8 @@ var Battle = (function(){
 
   r.init = function(){
     /*PubSub.subscribe("update", this.update.bind(this));*/
-    this.on("Update", this.update);
+    this.on("Update", this.update);/*
+    this.on("AfterPlace", this.checkAbilityOnAfterPlace)*/
 
 
     this.channel = this.socket.subscribe(this._id);
@@ -56,13 +57,20 @@ var Battle = (function(){
   r.start = function(){
     this.p1.setLeadercard();
     this.p2.setLeadercard();
-    this.p1.draw(10);
-    this.p2.draw(10);
+    this.p1.draw(5);
+    this.p2.draw(5);
+    this.p1.hand.add(Card("dun_banner_medic"));
+    this.p2.hand.add(Card("dun_banner_medic"));
+    this.p1.hand.add(Card("isengrim_faoiltiarnah"));
+    this.p2.hand.add(Card("isengrim_faoiltiarnah"));
 
+    this.p1.addToDiscard([Card("kaedweni_siege_expert")]);
+    this.p2.addToDiscard([Card("kaedweni_siege_expert")]);
+/*
     this.p1.hand.add(Card("decoy"));
     this.p1.hand.add(Card("impenetrable_fog"));
     this.p2.hand.add(Card("decoy"));
-    this.p2.hand.add(Card("impenetrable_fog"));
+    this.p2.hand.add(Card("impenetrable_fog"));*/
 
     this.update();
 

@@ -35,6 +35,13 @@ module.exports.run = function(worker){
       socket.emit("response:name", {name: user.getName()});
     })
 
+    socket.on("set:deck", function(data) {
+      console.log(data);
+      if(data && data.deck){
+        user.setDeck(data.deck);
+      }
+    })
+
     socket.on("request:gameLoaded", function(data){
       console.log(data);
       connections.roomCollection[data._roomID].setReady(user);

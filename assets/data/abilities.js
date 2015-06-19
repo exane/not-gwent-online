@@ -4,7 +4,19 @@ module.exports = {
 
   },
   "medic": {
+    waitResponse: true,
+    onAfterPlace: function(card) {
+      var discard = this.getDiscard();
 
+      discard = this.filter(discard, {
+        "ability": "hero",
+        "type": card.constructor.TYPE.SPECIAL
+      })
+
+      this.send("played:medic", {
+        cards: JSON.stringify(discard)
+      }, true);
+    }
   },
   "morale_boost": {
       onAfterPlace: function(card) {
@@ -19,14 +31,25 @@ module.exports = {
     }
   },
   "muster": {
+    name: "muster",
     onAfterPlace: function(card){
-      var name = card.getName();
+      var musterType = card.getMusterType();
       var self = this;
 
-      var cards = this.deck.find("name", name);
-      cards.forEach(function(_card) {
+      var cardsDeck = this.deck.find("musterType", musterType);
+      var cardsHand = this.hand.find("musterType", musterType);
+
+      cardsDeck.forEach(function(_card) {
         self.deck.removeFromDeck(_card);
-        this.placeCard(_card);
+        self.placeCard(_card, {
+          suppress: "muster"
+        });
+      })
+      cardsHand.forEach(function(_card) {
+        self.hand.remove(_card);
+        self.placeCard(_card, {
+          suppress: "muster"
+        });
       })
     }
   },
@@ -128,5 +151,32 @@ module.exports = {
       var card = this.deck.removeFromDeck(cards[0]);
       this.placeCard(card);
     }
+  },
+  "francesca_leader1": {
+
+  },
+  "francesca_leader2": {
+
+  },
+  "francesca_leader3": {
+
+  },
+  "francesca_leader4": {
+
+  },
+  "eredin_leader1": {
+
+  },
+  "eredin_leader2": {
+
+  },
+  "eredin_leader3": {
+
+  },
+  "eredin_leader4": {
+
+  },
+  "hero": {
+
   }
 }

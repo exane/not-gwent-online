@@ -18,10 +18,12 @@ var Lobby = Backbone.View.extend({
   events: {
     "click .create-room": "createRoom",
     "click .join-room": "joinRoom",
-    "blur .name-input": "changeName"
+    "blur .name-input": "changeName",
+    "change #deckChoice": "setDeck"
   },
   render: function(){
     this.$el.html(this.template(this.app.user.attributes));
+    //this.$el.find("#deckChoice option[value='" + this.app.user.get("setDeck") + "']").attr("selected", "selected")
     return this;
   },
   createRoom: function(){
@@ -29,6 +31,10 @@ var Lobby = Backbone.View.extend({
   },
   joinRoom: function(){
     this.app.send("request:joinRoom");
+  },
+  setDeck: function(e){
+    var val = $(e.target).val();
+    this.app.user.setDeck(val);
   },
   changeName: function(e){
     var name = $(e.target).val();

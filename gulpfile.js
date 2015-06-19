@@ -40,9 +40,24 @@ gulp.task('sass', function(){
   }));
 });
 
+gulp.task("unit tests", function(){
+  browserify('./test/spec/mainSpec.js', {standalone: "app", debug: true})
+  .transform(babelify)
+  .bundle().on("error", function(err){
+    console.log(err);
+  })
+  .pipe(source('spec.js').on("error", function(err){
+    console.log(err);
+  }))
+  .pipe(gulp.dest('./test/spec/').on("error", function(err){
+    console.log(err);
+  }));
+})
+
 gulp.task("watch", function(){
   gulp.watch("./public/js/*", ["browserify"]);
   gulp.watch("./public/scss/*", ["sass"]);
+  gulp.watch("./test/spec/*", ["unit tests"]);
 })
 
-gulp.task("default", ["watch", "browserify", "sass"]);
+gulp.task("default", ["watch", "browserify", "sass", "unit tests"]);

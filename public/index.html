@@ -160,6 +160,11 @@
         <div class="row">
           <div class="col-xs-12">
             <input type="text" class="name-input" value="{{name}}">
+            <select id="deckChoice">
+              <option value="northern_realm">Deck: Northern Realms</option>
+              <option value="scoiatael">Deck: Scoia'tael</option>
+              <option value="monster">Deck: Monster</option>
+            </select>
           </div>
         </div>
         <div class="row">
@@ -204,6 +209,21 @@
   </div>
   <div class="bbm-modal__section">
     {{#each openDiscard.discard}}
+    <div class="card" data-key="{{_key}}" data-id="{{_id}}">
+      <img src="../assets/cards/{{_data.img}}.png">
+    </div>
+    {{/each}}
+  </div>
+  <div class="bbm-modal__bottombar">
+    <div class="bbm-button bbm-close">close</div>
+  </div>
+</script>
+<script type="text/template" id="modal-medic-template">
+  <div class="bbm-modal__topbar">
+    <h3 class="bbm-modal__title">Choose one card from your discard</h3>
+  </div>
+  <div class="bbm-modal__section">
+    {{#each medicDiscard.cards}}
     <div class="card" data-key="{{_key}}" data-id="{{_id}}">
       <img src="../assets/cards/{{_data.img}}.png">
     </div>

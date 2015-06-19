@@ -74,6 +74,15 @@ var User = (function(){
     return this._rooms[0];
   }
 
+  r.setDeck = function(deck) {
+    console.log("set deck: ", deck);
+    this._deck = deck;
+  }
+
+  r.getDeck = function() {
+    return this._deck || "northern_realm";
+  }
+
   r.addRoom = function(room) {
     this._rooms.push(room);
   }

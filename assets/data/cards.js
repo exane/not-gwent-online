@@ -204,7 +204,6 @@ module.exports = {
   },
 
 
-
   "francesca_pureblood_elf": {
     name: "Francesca, Pureblood Elf",
     power: -1,
@@ -273,7 +272,7 @@ module.exports = {
     name: "Havekar Healer",
     power: 0,
     ability: "morale_boost",
-    img: "healerr",
+    img: "healer",
     faction: "Scoia'tael",
     type: 1
   },
@@ -297,6 +296,7 @@ module.exports = {
     name: "Elven Skirmisher",
     power: 2,
     ability: "muster",
+    musterType: "skirmisher",
     img: "elven_skirmisher2",
     faction: "Scoia'tael",
     type: 1
@@ -305,6 +305,7 @@ module.exports = {
     name: "Dwarven Skirmisher",
     power: 3,
     ability: "muster",
+    musterType: "skirmisher",
     img: "skirmisher2",
     faction: "Scoia'tael",
     type: 0
@@ -332,7 +333,7 @@ module.exports = {
     img: "archer",
     faction: "Scoia'tael",
     type: 1
-  },/*
+  }, /*
   "hav_caaren_medic": {
     name: "Hav’caaren Medic",
     power: 5,
@@ -353,6 +354,7 @@ module.exports = {
     name: "Mahakaman Defender",
     power: 5,
     ability: "muster",
+    musterType: "defender",
     img: "defender2",
     faction: "Scoia'tael",
     type: 0
@@ -423,13 +425,12 @@ module.exports = {
   },
 
 
-
   "eredin_commander_of_the_red_riders": {
     name: "Eredin, Commander of the Red Riders",
     power: -1,
     ability: "eredin_leader1",
     img: "eredin_commander",
-    faction: "Monster",
+    faction: "monster",
     type: 3
   },
   "eredin_bringer_of_death": {
@@ -437,7 +438,7 @@ module.exports = {
     power: -1,
     ability: "eredin_leader2",
     img: "eredin_bringer",
-    faction: "Monster",
+    faction: "monster",
     type: 3
   },
   "eredin_destroyer_of_worlds": {
@@ -445,7 +446,7 @@ module.exports = {
     power: -1,
     ability: "eredin_leader3",
     img: "eredin_destroyer",
-    faction: "Monster",
+    faction: "monster",
     type: 3
   },
   "eredin_king_of_the_wild_hunt": {
@@ -453,7 +454,7 @@ module.exports = {
     power: -1,
     ability: "eredin_leader4",
     img: "eredin_king",
-    faction: "Monster",
+    faction: "monster",
     type: 3
   },
   "kayran": {
@@ -461,7 +462,7 @@ module.exports = {
     power: 8,
     ability: ["hero", "morale_boost"],
     img: "kayran",
-    faction: "Monster",
+    faction: "monster",
     type: 1
   },
   "leshen": {
@@ -469,7 +470,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "leshen",
-    faction: "Monster",
+    faction: "monster",
     type: 1
   },
   "imlerith": {
@@ -477,7 +478,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "imlerith",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "draug": {
@@ -485,23 +486,25 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "draug",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "ghoul": {
     name: "Ghoul",
     power: 1,
     ability: "muster",
+    musterType: "ghoul",
     img: "ghoul1",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "nekker": {
     name: "Nekker",
     power: 2,
     ability: "muster",
+    musterType: "nekker",
     img: "nekker",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "wyvern": {
@@ -509,7 +512,7 @@ module.exports = {
     power: 2,
     ability: null,
     img: "wyvern",
-    faction: "Monster",
+    faction: "monster",
     type: 1
   },
   "foglet": {
@@ -517,7 +520,7 @@ module.exports = {
     power: 2,
     ability: null,
     img: "foglet",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "celaeno_harpy": {
@@ -525,7 +528,7 @@ module.exports = {
     power: 2,
     ability: null,
     img: "celaeno_harpy",
-    faction: "Monster",
+    faction: "monster",
     type: 1
   },
   "gargoyle": {
@@ -533,7 +536,7 @@ module.exports = {
     power: 2,
     ability: null,
     img: "gargoyle",
-    faction: "Monster",
+    faction: "monster",
     type: 1
   },
   "cockatrice": {
@@ -541,7 +544,7 @@ module.exports = {
     power: 2,
     ability: null,
     img: "cockatrice",
-    faction: "Monster",
+    faction: "monster",
     type: 1
   },
   "harpy": {
@@ -549,7 +552,7 @@ module.exports = {
     power: 2,
     ability: "agile",
     img: "harpy",
-    faction: "Monster",
+    faction: "monster",
     type: 1
   },
   "endrega": {
@@ -557,47 +560,52 @@ module.exports = {
     power: 2,
     ability: null,
     img: "endrega",
-    faction: "Monster",
+    faction: "monster",
     type: 1
   },
   "vampire_bruxa": {
     name: "Vampire: Bruxa",
     power: 4,
     ability: "muster",
+    musterType: "vampire",
     img: "vampire_bruxa",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "vampire_fleder": {
     name: "Vampire: Fleder",
     power: 4,
     ability: "muster",
+    musterType: "vampire",
     img: "vampire_fleder",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "vampire_garkain": {
     name: "Vampire: Garkain",
     power: 4,
     ability: "muster",
+    musterType: "vampire",
     img: "vampire_garkain",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "vampire_ekimmara": {
     name: "Vampire: Ekimmara",
     power: 4,
     ability: "muster",
+    musterType: "vampire",
     img: "vampire_ekimmara",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "arachas": {
     name: "Arachas",
     power: 4,
     ability: "muster",
+    musterType: "arachas",
     img: "arachas1",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "botchling": {
@@ -605,7 +613,7 @@ module.exports = {
     power: 4,
     ability: null,
     img: "botchling",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "forktail": {
@@ -613,7 +621,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "forktail",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "plague_maiden": {
@@ -621,7 +629,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "forktail",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "griffin": {
@@ -629,7 +637,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "griffin",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "werewolf": {
@@ -637,7 +645,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "werewolf",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "frightener": {
@@ -645,7 +653,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "frightener",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "ice_giant": {
@@ -653,7 +661,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "ice_giant",
-    faction: "Monster",
+    faction: "monster",
     type: 2
   },
   "grave_hag": {
@@ -661,47 +669,52 @@ module.exports = {
     power: 5,
     ability: null,
     img: "grave_hag",
-    faction: "Monster",
+    faction: "monster",
     type: 1
   },
   /*"vampire_katakan": {
     name: "Vampire: Katakan",
     power: 5,
     ability: "muster",
+ musterType: "vampire",
     img: "vampire_katakan",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },*/
   "crone_whispess": {
     name: "Crone: Whispess",
     power: 6,
     ability: "muster",
+    musterType: "crone",
     img: "crone_whispess",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "crone_brewess": {
     name: "Crone: Brewess",
     power: 6,
     ability: "muster",
+    musterType: "crone",
     img: "crone_brewess",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "crone_weavess": {
     name: "Crone: Weavess",
     power: 6,
     ability: "muster",
+    musterType: "crone",
     img: "crone_weavess",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "arachas_behemoth": {
     name: "Arachas Behemoth",
     power: 6,
     ability: "muster",
+    musterType: "arachas",
     img: "arachas_behemoth",
-    faction: "Monster",
+    faction: "monster",
     type: 2
   },
   "fire_elemental": {
@@ -709,7 +722,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "fire_elemental",
-    faction: "Monster",
+    faction: "monster",
     type: 2
   },
   "fiend": {
@@ -717,7 +730,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "fiend",
-    faction: "Monster",
+    faction: "monster",
     type: 0
   },
   "earth_elemental": {
@@ -725,7 +738,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "earth_elemental",
-    faction: "Monster",
+    faction: "monster",
     type: 2
   }
 }

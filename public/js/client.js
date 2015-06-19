@@ -304,7 +304,8 @@ var BattleView = Backbone.View.extend({
     var side;
     if($discard.parent().hasClass("player")){
       side = this.yourSide;
-    } else {
+    }
+    else {
       side = this.otherSide;
     }
     this.user.set("openDiscard", {
@@ -327,6 +328,10 @@ var BattleView = Backbone.View.extend({
       var modal = new Modal({model: this.user});
       this.$el.prepend(modal.render().el);
     }
+    if(this.user.get("medicDiscard")){
+      var modal = new MedicModal({model: this.user});
+      this.$el.prepend(modal.render().el);
+    }
 
     if(this.user.get("waitForDecoy")){
       var id = this.user.get("waitForDecoy");
@@ -337,7 +342,7 @@ var BattleView = Backbone.View.extend({
   renderPreview: function(){
     this.$el.find(".card-preview").html(this.templatePreview({src: this.user.get("showPreview")}))
   },
-  clickLeader: function(e) {
+  clickLeader: function(e){
     var $card = $(e.target).closest(".field-leader");
     console.log("click leader");
     if(!$card.parent().hasClass("player")) return;
@@ -402,9 +407,29 @@ var Modal = Backbone.Modal.extend({
   }
 });
 
+var MedicModal = Modal.extend({
+  template: Handlebars.compile($("#modal-medic-template").html()),
+  events: {
+    "click .card": "onCardClick"
+  },
+  onCardClick: function(e){
+    console.log($(e.target).closest(".card"));
+    var id = $(e.target).closest(".card").data().id;
+    this.model.get("app").send("medic:chooseCardFromDiscard", {
+      cardID: id
+    })
+    this.model.set("medicDiscard", false);
+  },
+  cancel: function(){
+    this.model.get("app").send("medic:chooseCardFromDiscard")
+    this.model.set("medicDiscard", false);
+  }
+});
+
 var User = Backbone.Model.extend({
   defaults: {
-    name: ""
+    name: "",
+    deckKey: "northern_realm"
   },
   initialize: function(){
     var self = this;
@@ -444,15 +469,24 @@ var User = Backbone.Model.extend({
       self.set("passing", passing);
     })
 
-    app.receive("foe:left", function() {
+    app.receive("foe:left", function(){
       console.log("your foe left the room");
       $(".container").prepend('<div class="alert alert-danger">Your foe left the battle!</div>')
+    })
+
+    app.receive("played:medic", function(data){
+      var cards = JSON.parse(data.cards);
+      console.log("played medic");
+      self.set("medicDiscard", {
+        cards: cards
+      });
     })
 
 
     app.on("createRoom", this.createRoom, this);
     app.on("joinRoom", this.joinRoom, this);
     app.on("setName", this.setName, this);
+    app.on("setDeck", this.setDeck, this);
 
 
     app.send("request:name", this.get("name") == "unnamed" ? null : {name: this.get("name")});
@@ -470,6 +504,11 @@ var User = Backbone.Model.extend({
   },
   setName: function(name){
     this.get("app").send("request:name", {name: name});
+  },
+  setDeck: function(deckKey){
+    console.log("deck: ", deckKey);
+    this.set("deckKey", deckKey);
+    this.get("app").send("set:deck", {deck: deckKey});
   }
 });
 
@@ -490,10 +529,12 @@ var Lobby = Backbone.View.extend({
   events: {
     "click .create-room": "createRoom",
     "click .join-room": "joinRoom",
-    "blur .name-input": "changeName"
+    "blur .name-input": "changeName",
+    "change #deckChoice": "setDeck"
   },
   render: function(){
     this.$el.html(this.template(this.user.attributes));
+    /*this.$el.find("#deckChoice option[value='" + this.app.user.get("setDeck") + "']").attr("selected", "selected")*/
     return this;
   },
   createRoom: function(){
@@ -501,6 +542,11 @@ var Lobby = Backbone.View.extend({
   },
   joinRoom: function(){
     this.app.trigger("joinRoom");
+  },
+  setDeck: function(e){
+    var val = $(e.target).val();
+    this.app.trigger("setDeck", val);
+    this.$el.find("#deckChoice option[value='" + val + "']").attr("selected", "selected")
   },
   changeName: function(e){
     var name = $(e.target).val();

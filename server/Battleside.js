@@ -1,9 +1,9 @@
-var io = global.io;
 var DeckData = require("../assets/data/deck");
 var Deck = require("./Deck");
 var Hand = require("./Hand");
 var Card = require("./Card");
 var Field = require("./Field");
+var _ = require("underscore");
 
 
 var Battleside;
@@ -16,6 +16,7 @@ Battleside = (function(){
      * constructor here
      */
 
+    var deck = user.getDeck();
     var self = this;
     this._isWaiting = true;
     this.socket = user.socket;
@@ -28,7 +29,7 @@ Battleside = (function(){
     this._name = name;
     this.battle = battle;
     this.hand = Hand();
-    this.deck = Deck(DeckData["test"]);
+    this.deck = Deck(DeckData[deck]);
     this._discard = [];
 
     this.runEvent = this.battle.runEvent.bind(this.battle);
@@ -74,6 +75,20 @@ Battleside = (function(){
       self.update();
       self.runEvent("NextTurn", null, [self.foe]);
     })
+    this.receive("medic:chooseCardFromDiscard", function(data){
+      if(!data){
+        self.runEvent("NextTurn", null, [self.foe]);
+        return;
+      }
+      var cardID = data.cardID;
+      var card = self.getCardFromDiscard(cardID);
+      if(card === -1) throw new Error("medic:chooseCardFromDiscard | unknown card: ", card);
+
+      self.removeFromDiscard(card);
+
+      self.playCard(card);
+    })
+
 
     this.on("Turn" + this.getID(), this.onTurnStart, this);
   };
@@ -114,6 +129,19 @@ Battleside = (function(){
       var field = this.field[key];
       var card = field.getCard(id);
       if(card !== -1) return card;
+    }
+    /*
+        for(var i = 0; i < this._discard.length; i++) {
+          var c = this._discard[i];
+          if(c.getID() === id) return c;
+        }*/
+    return -1;
+  }
+
+  r.getCardFromDiscard = function(id){
+    for(var i = 0; i < this._discard.length; i++) {
+      var c = this._discard[i];
+      if(c.getID() === id) return c;
     }
     return -1;
   }
@@ -237,8 +265,8 @@ Battleside = (function(){
     this.runEvent("NextTurn", null, [this.foe]);
   }
 
-  r.placeCard = function(card){
-    var obj = {};
+  r.placeCard = function(card, obj){
+    obj = _.extend({}, obj);
 
     this.checkAbilities(card, obj);
     if(obj._canclePlacement) return 0;
@@ -246,12 +274,20 @@ Battleside = (function(){
     var field = obj.targetSide.field[card.getType()];
     field.add(card);
 
-    //PubSub.publish("onEachCardPlace");
-    this.runEvent("OnEachCardPlace");
 
-    this.checkAbilityOnAfterPlace(card);
+    this.runEvent("EachCardPlace");
+
+    this.checkAbilityOnAfterPlace(card, obj);
+    /*
+        this.runEvent("AfterPlace", this, [card, obj]);*/
 
     this.update();
+
+    if(obj._waitResponse){
+      this.hand.remove(card);
+      this.update();
+      return 0;
+    }
 
     return 1;
   }
@@ -260,6 +296,7 @@ Battleside = (function(){
     var self = this;
     obj.targetSide = this;
     var ability = Array.isArray(__flag) || card.getAbility();
+
     if(Array.isArray(ability) && ability.length){
       var ret = ability.slice();
       ret = ret.splice(0, 1);
@@ -267,8 +304,14 @@ Battleside = (function(){
       ability = ability[0];
     }
 
-    if(ability && !Array.isArray(ability)){/*
-      var ability = card.getAbility();*/
+    if(ability && ability.name === obj.suppress){
+      this.update();
+    }
+
+    if(ability && !Array.isArray(ability)){
+      if(ability.waitResponse){
+        obj._waitResponse = true;
+      }
       if(ability.changeSide){
         obj.targetSide = this.foe;
       }
@@ -307,9 +350,13 @@ Battleside = (function(){
     }
   }
 
-  r.checkAbilityOnAfterPlace = function(card){
+  r.checkAbilityOnAfterPlace = function(card, obj){
     var ability = card.getAbility();
     if(ability){
+      if(ability.name && ability.name === obj.suppress){
+        this.update();
+        return;
+      }
       if(ability.onAfterPlace){
         ability.onAfterPlace.call(this, card)
       }
@@ -332,6 +379,17 @@ Battleside = (function(){
     });
   }
 
+  r.removeFromDiscard = function(card){
+    for(var i = 0; i < this._discard.length; i++) {
+      var c = this._discard[i];
+      if(c.getID() === card.getID()){
+
+        this._discard.splice(i, 1);
+        return
+      }
+    }
+  }
+
   r.getDiscard = function(json){
     if(json){
       return JSON.stringify(this._discard);
@@ -342,6 +400,38 @@ Battleside = (function(){
   r.resetNewRound = function(){
     this.clearMainFields();
     this.setPassing(false);
+  }
+
+  r.filter = function(arrCards, opt){
+    var arr = arrCards.slice();
+
+    for(var key in opt) {
+      var res = [];
+      var prop = key, val = opt[key];
+
+
+      arrCards.forEach(function(card){
+        var property = card.getProperty(prop);
+        if(_.isArray(property)){
+          var _f = false;
+          for(var i = 0; i < property.length; i++) {
+            if(property[i] === val) {
+              _f = true;
+              break;
+            }
+          }
+          if(!_f){
+            res.push(card);
+          }
+        }
+        else if(card.getProperty(prop) !== val){
+          res.push(card);
+        }
+      })
+      arr = _.intersection(arr, res);
+    }
+
+    return arr;
   }
 
   return Battleside;

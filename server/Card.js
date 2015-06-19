@@ -91,6 +91,9 @@ var Card = (function(){
   r.getFaction = function(){
     return this._data.faction;
   }
+  r.getMusterType = function() {
+    return this._data.musterType || null;
+  }
   r.getType = function(){
     return this._data.type;
   }
@@ -116,7 +119,12 @@ var Card = (function(){
   }
 
   r.getProperty = function(prop){
+    if(!this._data[prop]) return {};
     return this._data[prop];
+  }
+
+  r.resetBoost = function() {
+    this._boost = 0;
   }
 
   return Card;
