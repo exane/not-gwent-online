@@ -10,6 +10,7 @@
     "shortid": "^2.2.2",
     "serve-static": "1.8.0",
     "minimist": "1.1.0",
+    "underscore": "^1.8.3",
     "socketcluster-client": "2.2.x"
   },
   "devDependencies": {
@@ -21,7 +22,6 @@
     "handlebars": "^3.0.3",
     "jquery": "^2.1.4",
     "promise": "^7.0.1",
-    "underscore": "^1.8.3",
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {

@@ -32,6 +32,7 @@ var Card = (function(){
   r._boost = null;
   r._forcedPower = null;
   r._disabled = null;
+  r._changedType = null;
   Card.__id = 0;
   Card.TYPE = {
     CLOSE_COMBAT: 0,
@@ -95,7 +96,10 @@ var Card = (function(){
     return this._data.musterType || null;
   }
   r.getType = function(){
-    return this._data.type;
+    return typeof this._changedType === "undefined" ? this._data.type : this._changedType;
+  }
+  r.changeType = function(type) {
+    this._changedType = type;
   }
   r.getKey = function(){
     return this._key;
@@ -124,6 +128,7 @@ var Card = (function(){
   }
 
   r.resetBoost = function() {
+    this._changedType = null;
     this._boost = 0;
   }
 

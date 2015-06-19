@@ -220,6 +220,7 @@ var BattleView = Backbone.View.extend({
     this.listenTo(user, "change:waiting", this.render);
     this.listenTo(user, "change:passing", this.render);
     this.listenTo(user, "change:openDiscard", this.render);
+    this.listenTo(user, "change:setAgile", this.render);
 
     this.$hand = this.$el.find(".field-hand");
     this.$preview = this.$el.find(".card-preview");
@@ -242,7 +243,7 @@ var BattleView = Backbone.View.extend({
     "mouseover .card": "onMouseover",
     "mouseleave .card": "onMouseleave",
     "click .field-hand": "onClick",
-    "click .battleside.player": "onClickDecoy",
+    "click .battleside.player": "onClickFieldCard",
     "click .button-pass": "onPassing",
     "click .field-discard": "openDiscard",
     "click .field-leader": "clickLeader"
@@ -262,6 +263,14 @@ var BattleView = Backbone.View.extend({
     var id = $card.data("id");
     var key = $card.data("key");
 
+    if(!!this.user.get("setAgile")){
+      if(id === this.user.get("setAgile")){
+        this.user.set("setAgile", false);
+        this.app.send("cancel:agile");
+        this.render();
+      }
+      return;
+    }
     if(!!this.user.get("waitForDecoy")){
       if(id === this.user.get("waitForDecoy")){
         this.user.set("waitForDecoy", false);
@@ -281,15 +290,25 @@ var BattleView = Backbone.View.extend({
       this.render();
     }
   },
-  onClickDecoy: function(e){
-    if(!this.user.get("waitForDecoy")) return;
-    console.log("replacement card found: ");
-    var $card = $(e.target).closest(".card");
-    var _id = $card.data("id");
-    this.app.send("decoy:replaceWith", {
-      cardID: _id
-    })
-    this.user.set("waitForDecoy", false);
+  onClickFieldCard: function(e){
+    if(this.user.get("waitForDecoy")){
+      var $card = $(e.target).closest(".card");
+      var _id = $card.data("id");
+      this.app.send("decoy:replaceWith", {
+        cardID: _id
+      })
+      this.user.set("waitForDecoy", false);
+    }
+    if(this.user.get("setAgile")) {
+      var $field = $(e.target).closest(".field.active").find(".field-close, .field-range");
+
+      console.log($field);
+      var target = $field.hasClass("field-close") ? 0 : 1;
+      this.app.send("agile:field", {
+        field: target
+      });
+      this.user.set("setAgile", false);
+    }
   },
   onMouseover: function(e){
     var target = $(e.target).closest(".card");
@@ -316,8 +335,8 @@ var BattleView = Backbone.View.extend({
   render: function(){
     var self = this;
     this.$el.html(this.template({
-      cards: self.handCards/*,
-      preview: self.user.get("showPreview")*/
+      cards: self.handCards,
+      agile: self.user.get("setAgile")
     }));
     if(!(this.otherSide && this.yourSide)) return;
     this.otherSide.render();
@@ -332,7 +351,10 @@ var BattleView = Backbone.View.extend({
       var modal = new MedicModal({model: this.user});
       this.$el.prepend(modal.render().el);
     }
-
+    if(this.user.get("setAgile")){
+      var id = this.user.get("setAgile");
+      this.$el.find("[data-id='" + id + "']").addClass("activeCard");
+    }
     if(this.user.get("waitForDecoy")){
       var id = this.user.get("waitForDecoy");
       this.$el.find("[data-id='" + id + "']").addClass("activeCard");
@@ -482,6 +504,10 @@ var User = Backbone.Model.extend({
       });
     })
 
+    app.receive("played:agile", function(data){
+      console.log("played agile");
+      self.set("setAgile", data.cardID);
+    })
 
     app.on("createRoom", this.createRoom, this);
     app.on("joinRoom", this.joinRoom, this);

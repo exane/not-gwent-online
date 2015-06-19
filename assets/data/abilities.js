@@ -1,7 +1,19 @@
 module.exports = {
 
   "agile": {
-
+    cancelPlacement: true,
+    onBeforePlace: function(card) {
+      var self = this;
+      this.send("played:agile", {cardID: card.getID()}, true);
+      this.on("agile:setField", function(type) {
+        self.off("agile:setField");
+        card.changeType(type)
+        self.placeCard(card, {
+          disabled: true
+        });
+        self.hand.remove(card);
+      })
+    }
   },
   "medic": {
     waitResponse: true,

@@ -88,6 +88,14 @@ Battleside = (function(){
 
       self.playCard(card);
     })
+    this.receive("agile:field", function(data) {
+      var fieldType = data.field;
+      self.runEvent("agile:setField", null, [fieldType]);
+      self.runEvent("NextTurn", null, [self.foe]);
+    })
+    this.receive("cancel:agile", function(){
+      self.off("agile:setField");
+    })
 
 
     this.on("Turn" + this.getID(), this.onTurnStart, this);
@@ -269,7 +277,7 @@ Battleside = (function(){
     obj = _.extend({}, obj);
 
     this.checkAbilities(card, obj);
-    if(obj._canclePlacement) return 0;
+    if(obj._cancelPlacement) return 0;
 
     var field = obj.targetSide.field[card.getType()];
     field.add(card);
@@ -295,6 +303,7 @@ Battleside = (function(){
   r.checkAbilities = function(card, obj, __flag){
     var self = this;
     obj.targetSide = this;
+    if(obj.disabled) return;
     var ability = Array.isArray(__flag) || card.getAbility();
 
     if(Array.isArray(ability) && ability.length){
@@ -309,6 +318,12 @@ Battleside = (function(){
     }
 
     if(ability && !Array.isArray(ability)){
+      if(ability.onBeforePlace) {
+        ability.onBeforePlace.apply(this, [card]);
+      }
+      if(ability.cancelPlacement) {
+        obj._cancelPlacement = true;
+      }
       if(ability.waitResponse){
         obj._waitResponse = true;
       }
@@ -316,7 +331,7 @@ Battleside = (function(){
         obj.targetSide = this.foe;
       }
       if(ability.replaceWith){
-        obj._canclePlacement = true;
+        obj._cancelPlacement = true;
 
         this.on("Decoy:replaceWith", function(replaceCard){
           if(replaceCard.getType() == Card.TYPE.LEADER ||

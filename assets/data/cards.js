@@ -353,8 +353,7 @@ module.exports = {
   "mahakaman_defender": {
     name: "Mahakaman Defender",
     power: 5,
-    ability: "muster",
-    musterType: "defender",
+    ability: null,
     img: "defender2",
     faction: "Scoia'tael",
     type: 0
