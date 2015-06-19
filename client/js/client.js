@@ -105,7 +105,7 @@ var SideView = Backbone.View.extend({
   '</div>'),
   templateCards: Handlebars.compile('{{#each this}}' +
   '<div class="card{{#if _disabled}} disabled{{/if}}" data-key="{{_key}}" data-id="{{_id}}">' +
-  '{{#if _boost}}<span>+{{_boost}}</span>{{/if}}' +
+  '{{#if boost}}<span>+{{boost}}</span>{{/if}}' +
   '<img src="../assets/cards/{{_data.img}}.png">' +
   '</div>' +
   '{{/each}}'),

@@ -2,10 +2,10 @@ module.exports = {
 
   "agile": {
     cancelPlacement: true,
-    onBeforePlace: function(card) {
+    onBeforePlace: function(card){
       var self = this;
       this.send("played:agile", {cardID: card.getID()}, true);
-      this.on("agile:setField", function(type) {
+      this.on("agile:setField", function(type){
         self.off("agile:setField");
         card.changeType(type)
         self.placeCard(card, {
@@ -17,7 +17,7 @@ module.exports = {
   },
   "medic": {
     waitResponse: true,
-    onAfterPlace: function(card) {
+    onAfterPlace: function(card){
       var discard = this.getDiscard();
 
       discard = this.filter(discard, {
@@ -31,14 +31,24 @@ module.exports = {
     }
   },
   "morale_boost": {
-      onAfterPlace: function(card) {
-      var field = this.field[card.getType()];
-      var cards = field.get();
 
-      cards.forEach(function(_card) {
-        if(_card.getID() == card.getID()) return;
-        if(_card.getRawPower() === -1) return;
-        _card.boost(1);
+    onEachCardPlace: function(card){
+      var field = this.field[card.getType()];
+      var id = card.getID();
+      if(!field.isOnField(card)){
+        field.get().forEach(function(_card){
+          if(_card.getID() == id) return;
+          if(_card.getType() != card.getType()) return;
+          _card.setBoost(id, 0);
+        })
+        this.off("EachCardPlace", card.getUidEvents("EachCardPlace"));
+        return;
+      }
+
+      field.get().forEach(function(_card){
+        if(_card.getID() == id) return;
+        if(_card.getType() != card.getType()) return;
+        _card.setBoost(id, 1);
       })
     }
   },
@@ -51,13 +61,13 @@ module.exports = {
       var cardsDeck = this.deck.find("musterType", musterType);
       var cardsHand = this.hand.find("musterType", musterType);
 
-      cardsDeck.forEach(function(_card) {
+      cardsDeck.forEach(function(_card){
         self.deck.removeFromDeck(_card);
         self.placeCard(_card, {
           suppress: "muster"
         });
       })
-      cardsHand.forEach(function(_card) {
+      cardsHand.forEach(function(_card){
         self.hand.remove(_card);
         self.placeCard(_card, {
           suppress: "muster"
@@ -86,7 +96,7 @@ module.exports = {
     }
   },
   "weather_fog": {
-    onEachTurn: function(card) {
+    onEachTurn: function(card){
       var targetRow = card.constructor.TYPE.RANGED;
       var forcedPower = 1;
       var field1 = this.field[targetRow].get();
@@ -94,12 +104,12 @@ module.exports = {
 
       var field = field1.concat(field2);
 
-      field.forEach(function(_card) {
+      field.forEach(function(_card){
         if(_card.getRawAbility() == "hero") return;
         _card.setForcedPower(forcedPower);
       });
     },
-    onEachCardPlace: function(card) {
+    onEachCardPlace: function(card){
       var targetRow = card.constructor.TYPE.RANGED;
       var forcedPower = 1;
       var field1 = this.field[targetRow].get();
@@ -107,14 +117,14 @@ module.exports = {
 
       var field = field1.concat(field2);
 
-      field.forEach(function(_card) {
+      field.forEach(function(_card){
         if(_card.getRawAbility() == "hero") return;
         _card.setForcedPower(forcedPower);
       });
     }
   },
   "weather_rain": {
-    onEachTurn: function(card) {
+    onEachTurn: function(card){
       var targetRow = card.constructor.TYPE.SIEGE;
       var forcedPower = 1;
       var field1 = this.field[targetRow].get();
@@ -122,7 +132,7 @@ module.exports = {
 
       var field = field1.concat(field2);
 
-      field.forEach(function(_card) {
+      field.forEach(function(_card){
         if(_card.getRawAbility() == "hero") return;
         _card.setForcedPower(forcedPower);
       });
@@ -130,7 +140,7 @@ module.exports = {
     }
   },
   "weather_frost": {
-    onEachTurn: function(card) {
+    onEachTurn: function(card){
       var targetRow = card.constructor.TYPE.CLOSE_COMBAT;
       var forcedPower = 1;
       var field1 = this.field[targetRow].get();
@@ -138,7 +148,7 @@ module.exports = {
 
       var field = field1.concat(field2);
 
-      field.forEach(function(_card) {
+      field.forEach(function(_card){
         if(_card.getRawAbility() == "hero") return;
         _card.setForcedPower(forcedPower);
       });
@@ -146,7 +156,7 @@ module.exports = {
     }
   },
   "clear_weather": {
-    onAfterPlace: function(card) {
+    onAfterPlace: function(card){
       var targetRow = card.constructor.TYPE.WEATHER;
       var field = this.field[targetRow].get();
 
@@ -157,38 +167,20 @@ module.exports = {
     replaceWith: true
   },
   "foltest_leader1": {
-    onActivate: function() {
+    onActivate: function(){
       var cards = this.deck.find("key", "impenetrable_fog")
       if(!cards.length) return;
       var card = this.deck.removeFromDeck(cards[0]);
       this.placeCard(card);
     }
   },
-  "francesca_leader1": {
-
-  },
-  "francesca_leader2": {
-
-  },
-  "francesca_leader3": {
-
-  },
-  "francesca_leader4": {
-
-  },
-  "eredin_leader1": {
-
-  },
-  "eredin_leader2": {
-
-  },
-  "eredin_leader3": {
-
-  },
-  "eredin_leader4": {
-
-  },
-  "hero": {
-
-  }
+  "francesca_leader1": {},
+  "francesca_leader2": {},
+  "francesca_leader3": {},
+  "francesca_leader4": {},
+  "eredin_leader1": {},
+  "eredin_leader2": {},
+  "eredin_leader3": {},
+  "eredin_leader4": {},
+  "hero": {}
 }

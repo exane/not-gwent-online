@@ -9,15 +9,14 @@ var Card = (function(){
     /**
      * constructor here
      */
+    this._uidEvents = {};
     this.setDisabled(false);
-    this.channel = {};
     this._key = key;
     this._data = CardData[key];
     this._data.key = key;
-    this._boost = 0;
+    this._boost = {};
     this._forcedPower = -1;
     this._init();
-
 
   };
   var r = Card.prototype;
@@ -44,8 +43,11 @@ var Card = (function(){
     WEATHER: 5
   };
 
-  r.channel = null
+  r._uidEvents = null;
 
+  r.getUidEvents = function(key) {
+    return this._uidEvents[key];
+  }
 
   r._init = function(){
     this._id = ++Card.__id;
@@ -57,20 +59,20 @@ var Card = (function(){
   r.getPower = function(){
     if(this._data.power === -1) return 0;
     if(this._forcedPower > -1){
-      return (this._forcedPower > this._data.power ? this._data.power : this._forcedPower) + this._boost;
+      return (this._forcedPower > this._data.power ? this._data.power : this._forcedPower) + this.getBoost();
     }
-    return this._data.power + this._boost;
+    return this._data.power + this.getBoost();
   }
   r.getRawPower = function(){
     return this._data.power;
   }
-  r.calculateBoost = function(){
+  /*r.calculateBoost = function(){
     this._boost = 0;
     for(var key in this._boosts) {
       var boost = this._boosts[key];
       this.boost(boost.getPower());
     }
-  }
+  }*/
   r.setForcedPower = function(nr){
     this._forcedPower = nr;
   }
@@ -110,9 +112,23 @@ var Card = (function(){
     return this._id;
   }
 
-  r.boost = function(nr){
-    /*this.getPower(); //to recalculate this._power;*/
+  /*r.boost = function(nr){
+    this.getPower(); //to recalculate this._power;
     this._boost += nr;
+  }*/
+
+  r.getBoost = function() {
+    var res = 0;
+    for(var key in this._boost) {
+      res += this._boost[key];
+    }
+    this.boost = res;
+    return res;
+  }
+
+  r.setBoost = function(key, val) {
+    this._boost[key] = val;
+    this.getBoost(); //to recalculate this.boost
   }
 
   r.isDisabled = function(){
@@ -128,9 +144,10 @@ var Card = (function(){
     return this._data[prop];
   }
 
-  r.resetBoost = function(){
+  r.reset = function(){
     this._changedType = null;
-    this._boost = 0;
+    this._boost = {};
+    this.boost = 0;
   }
 
   return Card;

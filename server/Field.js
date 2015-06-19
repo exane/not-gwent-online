@@ -48,10 +48,14 @@ var Field = (function(){
     return -1;
   }
 
+  r.isOnField = function(card){
+    return this.getPosition(card) >= 0;
+  }
+
   r.replaceWith = function(oldCard, newCard){
     var index = this.getPosition(oldCard);
     this._cards[index] = newCard;
-    oldCard.resetBoost();
+    oldCard.reset();
     return oldCard;
   }
 
@@ -63,10 +67,10 @@ var Field = (function(){
     return -1;
   }
 
-  r.removeAll = function() {
+  r.removeAll = function(){
     var tmp = this._cards.slice();
-    tmp.forEach(function(card) {
-      card.resetBoost();
+    tmp.forEach(function(card){
+      card.reset();
     })
     this._cards = [];
     return tmp;

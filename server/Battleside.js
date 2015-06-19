@@ -330,9 +330,11 @@ Battleside = (function(){
       if(ability.changeSide){
         obj.targetSide = this.foe;
       }
+      if(ability.onReset){
+        this.on("Reset", ability.onReset, this, [card])
+      }
       if(ability.replaceWith){
         obj._cancelPlacement = true;
-
         this.on("Decoy:replaceWith", function(replaceCard){
           if(replaceCard.getType() == Card.TYPE.LEADER ||
           replaceCard.getType() == Card.TYPE.WEATHER ||
@@ -345,6 +347,7 @@ Battleside = (function(){
 
 
           field.replaceWith(replaceCard, card);
+          self.runEvent("EachCardPlace");
 
           self.hand.add(replaceCard);
           self.hand.remove(card);
@@ -354,11 +357,12 @@ Battleside = (function(){
         })
       }
       if(ability.onEachTurn){
-        this.on("EachTurn", ability.onEachTurn, this, [card])
+        var uid = this.on("EachTurn", ability.onEachTurn, this, [card])
+        card._uidEvents["EachTurn"] = uid;
       }
       if(ability.onEachCardPlace){
-        //PubSub.subscribe("onEachCardPlace", ability.onEachCardPlace.bind(this, card));
-        this.on("EachCardPlace", ability.onEachCardPlace, this, [card]);
+        var uid = this.on("EachCardPlace", ability.onEachCardPlace, this, [card]);
+        card._uidEvents["EachCardPlace"] = uid;
       }
 
       this.update();

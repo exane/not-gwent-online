@@ -1,5 +1,6 @@
 var Battleside = require("./Battleside");
 var Card = require("./Card");
+var shortid = require("shortid");
 
 
 var Battle = (function(){
@@ -39,8 +40,9 @@ var Battle = (function(){
 
   r.init = function(){
     /*PubSub.subscribe("update", this.update.bind(this));*/
-    this.on("Update", this.update);/*
-    this.on("AfterPlace", this.checkAbilityOnAfterPlace)*/
+    this.on("Update", this.update);
+    /*
+        this.on("AfterPlace", this.checkAbilityOnAfterPlace)*/
 
 
     this.channel = this.socket.subscribe(this._id);
@@ -57,11 +59,23 @@ var Battle = (function(){
   r.start = function(){
     this.p1.setLeadercard();
     this.p2.setLeadercard();
-    this.p1.draw(10);
-    this.p2.draw(10);
+    this.p1.draw(5);
+    this.p2.draw(5);
 
     this.p1.hand.add(Card("kaedweni_siege_expert"));
     this.p2.hand.add(Card("kaedweni_siege_expert"));
+    this.p1.hand.add(Card("ballista"));
+    this.p2.hand.add(Card("ballista"));
+    this.p1.hand.add(Card("ballista"));
+    this.p2.hand.add(Card("ballista"));
+    this.p1.hand.add(Card("ballista"));
+    this.p2.hand.add(Card("ballista"));
+    this.p1.hand.add(Card("ballista"));
+    this.p2.hand.add(Card("ballista"));
+    this.p1.hand.add(Card("ballista"));
+    this.p2.hand.add(Card("ballista"));
+    this.p1.hand.add(Card("decoy"));
+    this.p2.hand.add(Card("decoy"));
     /*
     this.p1.hand.add(Card("dun_banner_medic"));
     this.p2.hand.add(Card("dun_banner_medic"));
@@ -70,11 +84,11 @@ var Battle = (function(){
 
     /*this.p1.addToDiscard([Card("kaedweni_siege_expert")]);
     this.p2.addToDiscard([Card("kaedweni_siege_expert")]);*/
-/*
-    this.p1.hand.add(Card("decoy"));
-    this.p1.hand.add(Card("impenetrable_fog"));
-    this.p2.hand.add(Card("decoy"));
-    this.p2.hand.add(Card("impenetrable_fog"));*/
+    /*
+        this.p1.hand.add(Card("decoy"));
+        this.p1.hand.add(Card("impenetrable_fog"));
+        this.p2.hand.add(Card("decoy"));
+        this.p2.hand.add(Card("impenetrable_fog"));*/
 
     this.update();
 
@@ -151,19 +165,28 @@ var Battle = (function(){
     });
   }
 
-  r.runEvent = function(eventid, ctx, args){
+  r.runEvent = function(eventid, ctx, args, uid){
     ctx = ctx || this;
+    uid = uid || null;
     args = args || [];
     var event = "on" + eventid;
 
     if(!this.events[event]){
       return;
     }
-    this.events[event].forEach(function(e){
-      var obj = e;
+
+    if(uid){
+      var obj = this.events[event][uid];
       obj.cb = obj.cb.bind(ctx)
       obj.cb.apply(ctx, obj.onArgs.concat(args));
-    });
+    }
+    else {
+      for(var _uid in this.events[event]) {
+        var obj = this.events[event][_uid];
+        obj.cb = obj.cb.bind(ctx)
+        obj.cb.apply(ctx, obj.onArgs.concat(args));
+      }
+    }
     this.update();
   }
 
@@ -171,6 +194,7 @@ var Battle = (function(){
     ctx = ctx || null;
     args = args || [];
     var event = "on" + eventid;
+    var uid_event = shortid.generate();
 
     var obj = {};
     if(!ctx){
@@ -182,29 +206,32 @@ var Battle = (function(){
     obj.onArgs = args;
 
     if(!(event in this.events)){
-      this.events[event] = [];
+      /*this.events[event] = [];*/
+      this.events[event] = {};
     }
 
     if(typeof cb !== "function"){
       throw new Error("cb not a function");
     }
 
-    if(args){
-      this.events[event].push(obj);
-    }
+    this.events[event][uid_event] = obj;
 
-    else {
-      this.events[event].push(obj);
-    }
+    return uid_event;
   }
 
-  r.off = function(eventid){
+  r.off = function(eventid, uid){
+    uid = uid || null;
     var event = "on" + eventid;
     if(!this.events[event]) return;
-    this.events[event].forEach(function(e){
-      e = null;
-    });
-    delete this.events[event];
+    if(uid){
+      this.events[event][uid] = null;
+      delete this.events[event][uid];
+      return;
+    }
+    for(var _uid in this.events[event]){
+      this.events[event][_uid] = null;
+      delete this.events[event][_uid];
+    }
   }
 
   r.checkIfIsOver = function(){
@@ -230,14 +257,14 @@ var Battle = (function(){
     return Math.random() > 0.5 ? this.p1 : this.p2;
   }
 
-  r.userLeft = function(sideName) {
+  r.userLeft = function(sideName){
     var side = this[sideName];
 
     side.foe.send("foe:left", null, true);
 
   }
 
-  r.shutDown = function() {
+  r.shutDown = function(){
     this.channel = null;
   }
 
