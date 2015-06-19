@@ -21,6 +21,7 @@ Handlebars.registerHelper("health", function(lives, options){
   return out;
 });
 
+/*
 var Config = {};
 
 Config.Server = {
@@ -28,6 +29,7 @@ Config.Server = {
   "port": 16918,
   secure: false
 }
+*/
 
 var App = Backbone.Router.extend({
   routes: {

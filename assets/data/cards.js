@@ -271,7 +271,7 @@ module.exports = {
   "havekar_healer": {
     name: "Havekar Healer",
     power: 0,
-    ability: "morale_boost",
+    ability: "medic",
     img: "healer",
     faction: "Scoia'tael",
     type: 1

@@ -12,7 +12,7 @@ livereload({start: true});
 
 
 gulp.task('browserify', function(){
-  browserify('./public/js/main.js', {standalone: "app", debug: true})
+  browserify('./client/js/main.js', {standalone: "app", debug: true})
   .transform(babelify)
   .bundle().on("error", function(err){
     console.log(err);
@@ -20,19 +20,20 @@ gulp.task('browserify', function(){
   .pipe(source('app.js').on("error", function(err){
     console.log(err);
   }))
-  .pipe(gulp.dest('./build/').on("error", function(err){
+  .pipe(gulp.dest('./public/build/').on("error", function(err){
     console.log(err);
   }));
+
 });
 
 gulp.task('sass', function(){
-  gulp.src('./public/scss/main.scss')
+  gulp.src('./client/scss/main.scss')
   .pipe(sass({
     outputStyle: 'compressed'
   }).on("error", function(err){
     console.log(err);
   }))
-  .pipe(gulp.dest('./build/').on("error", function(err){
+  .pipe(gulp.dest('./public/build/').on("error", function(err){
     console.log(err);
   }))
   .pipe(livereload().on("error", function(err){
@@ -41,7 +42,7 @@ gulp.task('sass', function(){
 });
 
 gulp.task("unit tests", function(){
-  browserify('./test/spec/mainSpec.js', {standalone: "app", debug: true})
+  browserify('./test/src/mainSpec.js', {standalone: "app", debug: true})
   .transform(babelify)
   .bundle().on("error", function(err){
     console.log(err);
@@ -55,9 +56,17 @@ gulp.task("unit tests", function(){
 })
 
 gulp.task("watch", function(){
-  gulp.watch("./public/js/*", ["browserify"]);
-  gulp.watch("./public/scss/*", ["sass"]);
-  gulp.watch("./test/spec/*", ["unit tests"]);
+  gulp.watch("./client/js/*", ["browserify"]);
+  gulp.watch("./client/scss/*", ["sass"]);
+  gulp.watch("./test/src/*", ["unit tests"]);
 })
 
-gulp.task("default", ["watch", "browserify", "sass", "unit tests"]);
+gulp.task("index", function() {
+  gulp.src("./client/index.html")
+  .pipe(gulp.dest("./public/"));
+
+  gulp.src("./client/css/bootstrap.css")
+  .pipe(gulp.dest("./public/build"));
+})
+
+gulp.task("default", ["watch", "browserify", "sass", "unit tests", "index"]);
