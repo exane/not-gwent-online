@@ -2,3 +2,8 @@ node_modules
 .idea
 public/build
 public/index.html
+
+/site/.idea
+/site/server/vendor
+/site/server/.env
+/site/client/node_modules
