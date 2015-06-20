@@ -156,10 +156,13 @@ var SideView = Backbone.View.extend({
     var cards = this.field.close._cards;
     var score = this.field.close._score;
 
+
     var html = this.templateCards(cards);
 
     $field.find(".field-close").html(html)
     $field.find(".large-field-counter").html(score)
+
+    calculateCardMargin($field.find(".card"), 433, 70, cards.length);
   },
   renderRangeField: function(){
     if(!this.field.ranged) return;
@@ -172,6 +175,7 @@ var SideView = Backbone.View.extend({
 
     $field.find(".field-range").html(html)
     $field.find(".large-field-counter").html(score)
+    calculateCardMargin($field.find(".card"), 433, 70, cards.length);
   },
   renderSiegeField: function(){
     if(!this.field.siege) return;
@@ -184,6 +188,7 @@ var SideView = Backbone.View.extend({
 
     $field.find(".field-siege").html(html)
     $field.find(".large-field-counter").html(score)
+    calculateCardMargin($field.find(".card"), 433, 70, cards.length);
   },
   renderWeatherField: function(){
     if(!this.field.weather) return;
@@ -205,6 +210,18 @@ var SideView = Backbone.View.extend({
     return out;
   }
 });
+
+var calculateCardMargin = function($selector, totalWidth, cardWidth, n){
+  var w = totalWidth, c = cardWidth;
+  var res;
+  if(n < 7)
+    res = 0;
+  else {
+    res = -((w - c) / (n - 1) - c) + 1
+  }
+
+  $selector.css("margin-left", -res);
+}
 
 var BattleView = Backbone.View.extend({
   className: "container",
@@ -301,7 +318,7 @@ var BattleView = Backbone.View.extend({
       })
       this.user.set("waitForDecoy", false);
     }
-    if(this.user.get("setAgile")) {
+    if(this.user.get("setAgile")){
       var $field = $(e.target).closest(".field.active").find(".field-close, .field-range");
 
       console.log($field);
@@ -344,6 +361,7 @@ var BattleView = Backbone.View.extend({
     this.otherSide.render();
     this.yourSide.render();
 
+    calculateCardMargin(this.$el.find(".field-hand .card"), 538, 70, this.handCards.length);
 
     if(this.user.get("openDiscard")){
       var modal = new Modal({model: this.user});
