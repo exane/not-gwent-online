@@ -31,6 +31,11 @@
   height: 48px;
 
   @include mainGradient();
+  @include transition(box-shadow);
+
+  &:hover {
+    box-shadow: 0 0 10px 0 rgba($main, .8);
+  }
 }
 
 .btn-action {
@@ -60,15 +65,36 @@
   text-decoration: none;
 
   @include secondGradient();
+  @include transition();
+}
+
+.btn-second {
+
+  &:hover {
+    box-shadow: 0 0 10px 0 rgba(#fff, .1);
+  }
 }
 
 .btn-none {
   background: transparent;
   color: #8798ac;
 
-  @include transition(color);
-
   &:hover {
     color: #fff;
   }
+}
+
+::-webkit-input-placeholder {
+  color: darken(#8798ac, 10%);
+}
+:-moz-placeholder {
+  color: darken(#8798ac, 10%);
+  opacity:  1;
+}
+::-moz-placeholder {
+  color: darken(#8798ac, 10%);
+  opacity:  1;
+}
+:-ms-input-placeholder {
+  color: darken(#8798ac, 10%);
 }
