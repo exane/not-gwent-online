@@ -1,0 +1,51 @@
+body.landing {
+  background: url(../img/landing-bg.jpg) center top no-repeat;
+  background-size: cover;
+}
+
+.wrap-landing {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.logo-big {
+  margin: 0 auto;
+  display: block;
+}
+
+.container-landing {
+  float: left;
+  width: 100%;
+  margin: 12% 0 0 0;
+
+  //tablet: 9%
+}
+
+.teaser-landing {
+  text-align: center;
+  font-size: 21px;
+  font-weight: 300;
+  text-shadow: 0 0 10px rgba(#fff, .6);
+  color: #8798ac;
+  line-height: 29pt;
+  cursor: default;
+}
+
+.choose {
+  float: left;
+  color: #8798ac;
+  margin: 10px 30px;
+  cursor: default;
+}
+
+.container-form-landing {
+  margin: 40px 0;
+  opacity: 0;
+
+  &.active {
+    transition: all .4s ease-in-out .2s;
+
+    margin: 60px 0;
+    opacity: 1;
+  }
+}

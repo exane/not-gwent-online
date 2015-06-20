@@ -1,0 +1,34 @@
+* {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+::-moz-selection {
+  background: rgba($main, .99);
+  color: #fff;
+  text-shadow: none;
+}
+
+::selection {
+  background: rgba($main, .99);
+  color: #fff;
+  text-shadow: none;
+}
+
+input, textarea {
+  font-family: 'Titillium Web', sans-serif;
+  outline: 0;
+}
+
+a { text-decoration: none; }
+ul { list-style: none; }

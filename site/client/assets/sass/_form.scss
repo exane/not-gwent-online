@@ -1,0 +1,74 @@
+.icon-load {
+  background: url(../img/load.gif) #ca5a07 no-repeat;
+  width: 16px;
+  height: 16px;
+  float: right;
+  margin: 5px -7px 0 7px;
+  display: none;
+}
+
+.form-session {
+  float: left;
+}
+
+.field-session {
+  float: left;
+  padding: 10px 20px;
+  border: 0;
+  color: #8798ac;
+  font-size: 16px;
+  margin: 0 10px 0 0;
+  height: 48px;
+  width: 220px;
+
+  @include secondGradient();
+}
+
+.wrap-btn-action {
+  float: left;
+  padding: 10px 20px;
+  cursor: pointer;
+  height: 48px;
+
+  @include mainGradient();
+}
+
+.btn-action {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  float: left;
+  text-transform: uppercase;
+}
+
+.btn-second,
+.btn-none {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  border: 0;
+  padding: 10px 20px;
+  float: left;
+  position: relative;
+  cursor: pointer;
+  height: 48px;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  @include secondGradient();
+}
+
+.btn-none {
+  background: transparent;
+  color: #8798ac;
+
+  @include transition(color);
+
+  &:hover {
+    color: #fff;
+  }
+}

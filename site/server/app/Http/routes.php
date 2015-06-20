@@ -1,5 +1,6 @@
 <?php
 
   get('/', function() {
-    return 'hi gwent';
+    return view('tpl.landing')
+      ->withSection('landing');
   });

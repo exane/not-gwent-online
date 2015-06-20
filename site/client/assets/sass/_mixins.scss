@@ -1,0 +1,27 @@
+$main: #d96f1f;
+
+@mixin mainGradient() {
+  background: #da7020;
+  background: -moz-linear-gradient(left, #da7020 0%, #ca5907 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#da7020), color-stop(100%,#ca5907));
+  background: -webkit-linear-gradient(left, #da7020 0%,#ca5907 100%);
+  background: -o-linear-gradient(left, #da7020 0%,#ca5907 100%);
+  background: -ms-linear-gradient(left, #da7020 0%,#ca5907 100%);
+  background: linear-gradient(to right, #da7020 0%,#ca5907 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#da7020', endColorstr='#ca5907',GradientType=1 );
+}
+
+@mixin secondGradient() {
+  background: #243141;
+  background: -moz-linear-gradient(left, #243141 0%, #334152 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#243141), color-stop(100%,#334152));
+  background: -webkit-linear-gradient(left, #243141 0%,#334152 100%);
+  background: -o-linear-gradient(left, #243141 0%,#334152 100%);
+  background: -ms-linear-gradient(left, #243141 0%,#334152 100%);
+  background: linear-gradient(to right, #243141 0%,#334152 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#243141', endColorstr='#334152',GradientType=1 );
+}
+
+@mixin transition($type: all) {
+  transition: $type .3s ease-in-out 0s;
+}
