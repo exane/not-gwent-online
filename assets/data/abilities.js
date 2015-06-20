@@ -61,12 +61,14 @@ module.exports = {
       var cardsHand = this.hand.find("musterType", musterType);
 
       cardsDeck.forEach(function(_card){
+        if(_card.getID() === card.getID()) return;
         self.deck.removeFromDeck(_card);
         self.placeCard(_card, {
           suppress: "muster"
         });
       })
       cardsHand.forEach(function(_card){
+        if(_card.getID() === card.getID()) return;
         self.hand.remove(_card);
         self.placeCard(_card, {
           suppress: "muster"
@@ -83,9 +85,8 @@ module.exports = {
       if(lastInsert < 2) return;
 
       if(cards[lastInsert - 2].getName() == cards[lastInsert - 1].getName()){
-        cards[lastInsert - 2].boost(+cards[lastInsert - 2].getPower());
-        cards[lastInsert - 1].boost(+cards[lastInsert - 1].getPower());
-        //todo: boost fixen
+        cards[lastInsert - 2].setBoost(cards[lastInsert - 2].getID(), +cards[lastInsert - 2].getPower());
+        cards[lastInsert - 1].setBoost(cards[lastInsert - 1].getID(), +cards[lastInsert - 1].getPower());
       }
     }
   },

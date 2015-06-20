@@ -46,6 +46,10 @@ var Hand = (function(){
     id = id instanceof Card ? id.getID() : id;
 
     for(var i = 0; i < n; i++) {
+      if(!this._hand[i]) {
+        console.trace(this._hand[i]);
+        continue;
+      }
       if(this._hand[i].getID() != id) continue;
       return this._hand.splice(i, 1);
     }

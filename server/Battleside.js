@@ -286,8 +286,6 @@ Battleside = (function(){
     this.runEvent("EachCardPlace");
 
     this.checkAbilityOnAfterPlace(card, obj);
-    /*
-        this.runEvent("AfterPlace", this, [card, obj]);*/
 
     this.update();
 
@@ -329,10 +327,10 @@ Battleside = (function(){
       }
       if(ability.changeSide){
         obj.targetSide = this.foe;
-      }
+      }/*
       if(ability.onReset){
         this.on("Reset", ability.onReset, this, [card])
-      }
+      }*/
       if(ability.replaceWith){
         obj._cancelPlacement = true;
         this.on("Decoy:replaceWith", function(replaceCard){

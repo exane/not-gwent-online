@@ -502,7 +502,7 @@ module.exports = {
     power: 2,
     ability: "muster",
     musterType: "nekker",
-    img: "nekker",
+    img: "nekker1",
     faction: "monster",
     type: 0
   },
