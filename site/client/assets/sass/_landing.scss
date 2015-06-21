@@ -18,7 +18,9 @@ body.landing {
   width: 100%;
   margin: 12% 0 0 0;
 
-  //tablet: 9%
+  @include mq(medium) {
+    margin: 9% 0 0 0;
+  }
 }
 
 .teaser-landing {
@@ -43,7 +45,7 @@ body.landing {
   opacity: 0;
 
   &.active {
-    transition: all .4s ease-in-out .2s;
+    transition: all .4s ease-in-out 0s;
 
     margin: 60px 0;
     opacity: 1;

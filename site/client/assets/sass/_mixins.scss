@@ -25,3 +25,15 @@ $main: #d96f1f;
 @mixin transition($type: all) {
   transition: $type .3s ease-in-out 0s;
 }
+
+@mixin mq($point) {
+  @if $point == big {
+    @media (max-width: 1600px) { @content; }
+  }
+  @else if $point == medium {
+    @media (max-width: 1450px) { @content; }
+  }
+  @else if $point == small {
+    @media (max-width: 600px)  { @content; }
+  }
+}
