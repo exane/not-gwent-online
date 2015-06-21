@@ -14,7 +14,13 @@ body.inner {
 
 main {
   float: left;
+  clear: both;
   width: 70%;
+}
+
+.container-content {
+  float: left;
+  width: 100%;
   padding: 20px;
   height: calc(100vh - 300px);
   min-height: 400px;

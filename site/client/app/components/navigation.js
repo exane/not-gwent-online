@@ -1,5 +1,4 @@
-var Router = require('director').Router;
-var router = new Router();
+var router = require('./../routes');
 
 module.exports = {
 
@@ -7,7 +6,7 @@ module.exports = {
 
   methods: {
     changeView: function(view) {
-      router.setRoute('test');
+      router.changeRoute(view);
     }
   }
 

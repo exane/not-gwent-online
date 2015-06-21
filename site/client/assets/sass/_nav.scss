@@ -21,6 +21,7 @@ nav {
     padding: 12px 25px;
     float: left;
     cursor: pointer;
+    height: 55px;
 
     @include transition(color);
 
