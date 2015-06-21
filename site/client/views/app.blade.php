@@ -23,7 +23,7 @@
       // todo: extract to vue
       setTimeout(function() {
         $('.container-form-landing').addClass('active')
-      }, 400);
+      }, 300);
 
       // todo: extract to vue
       $('.btn-guest').on('click', function() {

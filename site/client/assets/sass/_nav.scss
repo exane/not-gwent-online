@@ -20,6 +20,7 @@ nav {
     font-weight: 300;
     padding: 12px 25px;
     float: left;
+    cursor: pointer;
 
     @include transition(color);
 
@@ -30,7 +31,7 @@ nav {
     &.active {
       color: $main;
       text-shadow: none;
-      background: rgba(#080d14, .9);
+      background: #080d14;
     }
   }
 }
