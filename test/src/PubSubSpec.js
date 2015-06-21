@@ -94,7 +94,7 @@ describe("pubsub", function(){
     expect(battle.events).toEqual({});*/
   })
 
-  it("should give binded ctx", function() {
+  it("should give bound ctx", function() {
     var obj = {}, otherCtx = { key: "test"};
     var card = Card("biting_frost");
     var ability = card.getAbility();
