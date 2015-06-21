@@ -15,8 +15,8 @@ var app = new Vue({
   },
 
   components: {
-    'landing': require('./components/landing'),
-    'lobby': require('./components/lobby')
+    landing: require('./components/landing'),
+    lobby: require('./components/lobby')
   }
 
 });

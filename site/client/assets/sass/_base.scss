@@ -13,11 +13,6 @@ body {
   font-family: 'Titillium Web', sans-serif;
 }
 
-body.inner {
-  background: url(../img/inner-bg.jpg) center top no-repeat;
-  background-size: cover;
-}
-
 ::-moz-selection {
   background: rgba($main, .99);
   color: #fff;
