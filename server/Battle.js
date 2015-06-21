@@ -61,10 +61,11 @@ var Battle = (function(){
     this.p2.setLeadercard();
     this.p1.draw(10);
     this.p2.draw(10);
+    /*
     this.p1.hand.add(Card("commanders_horn"));
     this.p2.hand.add(Card("commanders_horn"));
     this.p1.hand.add(Card("commanders_horn"));
-    this.p2.hand.add(Card("commanders_horn"));
+    this.p2.hand.add(Card("commanders_horn"));*/
     /*
     this.p1.hand.add(Card("biting_frost"));
     this.p2.hand.add(Card("biting_frost"));

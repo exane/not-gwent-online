@@ -29,11 +29,15 @@ module.exports = {
     "torrential_rain",
     "clear_weather",
     "impenetrable_fog",
+    "commanders_horn",
+    "commanders_horn",
     "decoy"
   ],
 
   "scoiatael": [
     "francesca_daisy_of_the_valley",
+    "commanders_horn",
+    "commanders_horn",
     "saesenthessis",
     "iorveth",
     "isengrim_faoiltiarnah",
@@ -75,7 +79,6 @@ module.exports = {
     "draug",
     "ghoul",
     "decoy",
-    "decoy",
     "nekker",
     "nekker",
     "wyvern",
@@ -96,6 +99,8 @@ module.exports = {
     "vampire_garkain",
     "vampire_garkain",
     "vampire_ekimmara",
+    "commanders_horn",
+    "commanders_horn",
     "vampire_ekimmara",
     "arachas",
     "botchling",
