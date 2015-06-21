@@ -1,0 +1,36 @@
+nav {
+  float: left;
+  margin: 30px 0 0 0;
+  clear: both;
+
+  ul {
+    float: left;
+    margin: 0;
+  }
+
+  li {
+    float: left;
+  }
+
+  a {
+    color: #8798ac;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    font-size: 19px;
+    text-transform: uppercase;
+    font-weight: 300;
+    padding: 12px 25px;
+    float: left;
+
+    @include transition(color);
+
+    &:hover {
+      color: #c5cfda;
+    }
+
+    &.active {
+      color: $main;
+      text-shadow: none;
+      background: rgba(#080d14, .9);
+    }
+  }
+}

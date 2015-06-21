@@ -42,7 +42,7 @@
     public function render($request, Exception $e)
     {
       if($e instanceof NotFoundHttpException) {
-        //return redirect('/');
+        return redirect('/');
       }
 
       return parent::render($request, $e);

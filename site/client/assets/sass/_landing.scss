@@ -3,6 +3,15 @@ body.landing {
   background-size: cover;
 }
 
+.icon-guest-load {
+  background: url(../img/guest-load.gif) #ca5a07 no-repeat;
+  width: 16px;
+  height: 16px;
+  float: right;
+  margin: 5px -7px 0 7px;
+  display: none;
+}
+
 .wrap-landing {
   max-width: 900px;
   margin: 0 auto;
