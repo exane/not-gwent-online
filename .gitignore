@@ -8,3 +8,4 @@ test/spec
 /site/server/vendor
 /site/server/.env
 /site/client/node_modules
+/site/public/assets/js/bundle.js

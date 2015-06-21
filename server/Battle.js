@@ -61,11 +61,17 @@ var Battle = (function(){
     this.p2.setLeadercard();
     this.p1.draw(10);
     this.p2.draw(10);
-    this.p1.hand.add(Card("blue_stripes_commando"));
-    this.p2.hand.add(Card("blue_stripes_commando"));
-    this.p1.hand.add(Card("blue_stripes_commando"));
-    this.p2.hand.add(Card("blue_stripes_commando"));
-/*
+    this.p1.hand.add(Card("commanders_horn"));
+    this.p2.hand.add(Card("commanders_horn"));
+    this.p1.hand.add(Card("commanders_horn"));
+    this.p2.hand.add(Card("commanders_horn"));
+    /*
+    this.p1.hand.add(Card("biting_frost"));
+    this.p2.hand.add(Card("biting_frost"));
+    this.p1.hand.add(Card("torrential_rain"));
+    this.p2.hand.add(Card("torrential_rain"));
+    this.p1.hand.add(Card("clear_weather"));
+    this.p2.hand.add(Card("clear_weather"));*//*
     this.p1.hand.add(Card("kaedweni_siege_expert"));
     this.p2.hand.add(Card("kaedweni_siege_expert"));
     this.p1.hand.add(Card("ballista"));
@@ -77,8 +83,8 @@ var Battle = (function(){
     this.p1.hand.add(Card("ballista"));
     this.p2.hand.add(Card("ballista"));
     this.p1.hand.add(Card("ballista"));
-    this.p2.hand.add(Card("ballista"));
-    this.p1.hand.add(Card("decoy"));
+    this.p2.hand.add(Card("ballista"));*/
+    /*this.p1.hand.add(Card("decoy"));
     this.p2.hand.add(Card("decoy"));*/
     /*
     this.p1.hand.add(Card("dun_banner_medic"));
@@ -86,8 +92,8 @@ var Battle = (function(){
     this.p1.hand.add(Card("isengrim_faoiltiarnah"));
     this.p2.hand.add(Card("isengrim_faoiltiarnah"));*/
 
-    this.p1.addToDiscard([Card("kaedweni_siege_expert")]);
-    this.p2.addToDiscard([Card("kaedweni_siege_expert")]);
+    /*this.p1.addToDiscard([Card("kaedweni_siege_expert")]);
+    this.p2.addToDiscard([Card("kaedweni_siege_expert")]);*/
     /*
         this.p1.hand.add(Card("decoy"));
         this.p1.hand.add(Card("impenetrable_fog"));
@@ -155,10 +161,10 @@ var Battle = (function(){
       cards: JSON.stringify(p.hand.getCards())
     });
     p.send("update:fields", {
-      close: p.field[Card.TYPE.CLOSE_COMBAT],
-      ranged: p.field[Card.TYPE.RANGED],
-      siege: p.field[Card.TYPE.SIEGE],
-      weather: p.field[Card.TYPE.WEATHER]
+      close: p.field[Card.TYPE.CLOSE_COMBAT].getInfo(),
+      ranged: p.field[Card.TYPE.RANGED].getInfo(),
+      siege: p.field[Card.TYPE.SIEGE].getInfo(),
+      weather: p.field[Card.TYPE.WEATHER].getInfo()
     })
   }
 

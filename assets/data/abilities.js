@@ -97,6 +97,7 @@ module.exports = {
     }
   },
   "weather_fog": {
+    weather: 1/*,
     onEachTurn: function(card){
       var targetRow = card.constructor.TYPE.RANGED;
       var forcedPower = 1;
@@ -122,10 +123,11 @@ module.exports = {
         if(_card.getRawAbility() == "hero") return;
         _card.setForcedPower(forcedPower);
       });
-    }
+    }*/
   },
   "weather_rain": {
-    onEachTurn: function(card){
+    weather: 2
+    /*onEachTurn: function(card){
       var targetRow = card.constructor.TYPE.SIEGE;
       var forcedPower = 1;
       var field1 = this.field[targetRow].get();
@@ -137,12 +139,9 @@ module.exports = {
         if(_card.getRawAbility() == "hero") return;
         _card.setForcedPower(forcedPower);
       });
-
-    }
-  },
-  "weather_frost": {
-    onEachTurn: function(card){
-      var targetRow = card.constructor.TYPE.CLOSE_COMBAT;
+    },
+    onEachCardPlace: function(card){
+      var targetRow = card.constructor.TYPE.SIEGE;
       var forcedPower = 1;
       var field1 = this.field[targetRow].get();
       var field2 = this.foe.field[targetRow].get();
@@ -153,19 +152,115 @@ module.exports = {
         if(_card.getRawAbility() == "hero") return;
         _card.setForcedPower(forcedPower);
       });
-
-    }
+    }*/
   },
-  "clear_weather": {
-    onAfterPlace: function(card){
-      var targetRow = card.constructor.TYPE.WEATHER;
-      var field = this.field[targetRow].get();
+  "weather_frost": {
+    weather: 0
+    /*
+      onEachTurn: function(card){
+        var targetRow = card.constructor.TYPE.CLOSE_COMBAT;
+        var forcedPower = 1;
+        var field1 = this.field[targetRow].get();
+        var field2 = this.foe.field[targetRow].get();
 
-      //todo: remove weather cards
-    }
+        var field = field1.concat(field2);
+
+        field.forEach(function(_card){
+          if(_card.getRawAbility() == "hero") return;
+          _card.setForcedPower(forcedPower);
+        });
+      },
+      onEachCardPlace: function(card){
+        var targetRow = card.constructor.TYPE.CLOSE_COMBAT;
+        var forcedPower = 1;
+        var field1 = this.field[targetRow].get();
+        var field2 = this.foe.field[targetRow].get();
+
+        var field = field1.concat(field2);
+
+        field.forEach(function(_card){
+          if(_card.getRawAbility() == "hero") return;
+          _card.setForcedPower(forcedPower);
+        });
+      }*/
+  },
+  "weather_clear": {
+    weather: 5
+    /*onAfterPlace: function(card){
+      var targetRow = card.constructor.TYPE.WEATHER;
+      var field = this.field[targetRow];
+      field.removeAll();
+
+      for(var i = card.constructor.TYPE.CLOSE_COMBAT; i < card.constructor.TYPE.SIEGE; i++) {
+        var _field1, _field2, _field;
+        _field1 = this.field[i].get();
+        _field2 = this.foe.field[i].get();
+        _field = _field1.concat(_field2);
+
+        _field.forEach(function(_card){
+          if(_card.getRawAbility() == "hero") return;
+          _card.setForcedPower(-1);
+        });
+      }
+
+    }*/
   },
   "decoy": {
     replaceWith: true
+  },
+  "commanders_horn": {
+    commandersHorn: true/*,
+    onEachCardPlace: function(card){
+      var field = this.field[card.getType()];
+      var id = "commanders_horn";
+
+      if(!field.isOnField(card)){
+        field.get().forEach(function(_card){
+          if(_card.getID() == id) return;
+          if(_card.getType() != card.getType()) return;
+          if(_card.hasAbility("hero")) return;
+          _card.setBoost(id, 0);
+        })
+        this.off("EachCardPlace", card.getUidEvents("EachCardPlace"));
+        return;
+      }
+
+      field.get().forEach(function(_card){
+        if(_card.getID() == id) return;
+        if(_card.getType() != card.getType()) return;
+        if(_card.hasAbility("hero")) return;
+        _card.setBoost(id, 0);
+        _card.setBoost(id, _card.getPower());
+      })
+    }*/
+  },
+  "commanders_horn_card": {
+    cancelPlacement: true,
+    commandersHorn: true,
+    isCommandersHornCard: true/*,
+    onEachCardPlace: function(card){
+      var field = this.field[card.getType()];
+      var id = "commanders_horn";
+
+      if(!field.isOnField(card)){
+        field.get().forEach(function(_card){
+          if(_card.getID() == id) return;
+          if(_card.getType() != card.getType()) return;
+          if(_card.hasAbility("hero")) return;
+          _card.setBoost(id, 0);
+        })
+        this.off("EachCardPlace", card.getUidEvents("EachCardPlace"));
+        return;
+      }
+
+      field.get().forEach(function(_card){
+        if(_card.getID() == id) return;
+        if(_card.getType() != card.getType()) return;
+        if(_card.hasAbility("hero")) return;
+        _card.setBoost(id, 0);
+        _card.setBoost(id, _card.getPower());
+      })
+    }*/
   },
   "foltest_leader1": {
     onActivate: function(){
@@ -173,6 +268,26 @@ module.exports = {
       if(!cards.length) return;
       var card = this.deck.removeFromDeck(cards[0]);
       this.placeCard(card);
+    }
+  },
+  "foltest_leader2": {
+    onActivate: function(){
+      this.setWeather(5);
+    }
+  },
+  "foltest_leader3": {
+    onActivate: function(){
+      var siegeCards = this.field[2].get();
+
+      //todo: unless there is commanders horn active
+      siegeCards.forEach(function(card){
+        card.setBoost("foltest_leader3", card.getPower());
+      })
+    }
+  },
+  "foltest_leader4": {
+    onActivate: function(){
+
     }
   },
   "francesca_leader1": {

@@ -186,6 +186,30 @@ module.exports = {
     faction: "Northern Realm",
     type: 3
   },
+  "foltest_lord_commander": {
+    name: "Foltest: Lord Commander",
+    power: -1,
+    ability: "foltest_leader2",
+    img: "foltest_commander",
+    faction: "Northern Realm",
+    type: 3
+  },
+  "foltest_siegemaster": {
+    name: "Foltest: The Siegemaster",
+    power: -1,
+    ability: "foltest_leader3",
+    img: "foltest_siege",
+    faction: "Northern Realm",
+    type: 3
+  },
+  "foltest_forged": {
+    name: "Foltest: The Steel-Forged",
+    power: -1,
+    ability: "foltest_leader4",
+    img: "foltest_forged",
+    faction: "Northern Realm",
+    type: 3
+  },
   "decoy": {
     name: "Decoy",
     power: -1,
@@ -194,11 +218,44 @@ module.exports = {
     faction: null,
     type: 4
   },
+  "commanders_horn": {
+    name: "Commander's Horn",
+    power: -1,
+    ability: "commanders_horn_card",
+    img: "horn",
+    faction: null,
+    type: 4
+  },
+
   "impenetrable_fog": {
     name: "Impenetrable Fog",
     power: -1,
     ability: "weather_fog",
     img: "fog",
+    faction: null,
+    type: 5
+  },
+  "biting_frost": {
+    name: "Biting Frost",
+    power: -1,
+    ability: "weather_frost",
+    img: "frost",
+    faction: null,
+    type: 5
+  },
+  "torrential_rain": {
+    name: "Torrential Rain",
+    power: -1,
+    ability: "weather_rain",
+    img: "rain",
+    faction: null,
+    type: 5
+  },
+  "clear_weather": {
+    name: "Clear Weather",
+    power: -1,
+    ability: "weather_clear",
+    img: "clear",
     faction: null,
     type: 5
   },

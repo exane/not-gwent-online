@@ -94,5 +94,37 @@ describe("pubsub", function(){
     expect(battle.events).toEqual({});*/
   })
 
+  it("should give binded ctx", function() {
+    var obj = {}, otherCtx = { key: "test"};
+    var card = Card("biting_frost");
+    var ability = card.getAbility();
+
+    obj.setWeather = function(weatherType) {
+      expect(weatherType).toEqual(0);
+      expect(this).toBe(otherCtx);
+    }
+
+    spyOn(obj, "setWeather").and.callThrough();
+
+    expect(ability.weather).toBeDefined();
+
+    ability.onEachTurn = obj.setWeather.bind(otherCtx, ability.weather);
+    ability.onEachCardPlace = obj.setWeather.bind(otherCtx, ability.weather);
+
+    if(ability.onEachTurn){
+      var uid = battle.on("EachTurn", ability.onEachTurn, battle, [card])
+      card._uidEvents["EachTurn"] = uid;
+    }
+    if(ability.onEachCardPlace){
+      var uid = battle.on("EachCardPlace", ability.onEachCardPlace, battle, [card]);
+      card._uidEvents["EachCardPlace"] = uid;
+    }
+
+    battle.runEvent("EachCardPlace");
+    battle.runEvent("EachTurn");
+
+    expect(obj.setWeather).toHaveBeenCalled();
+  })
+
 
 });

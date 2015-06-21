@@ -21,16 +21,6 @@ Handlebars.registerHelper("health", function(lives, options){
   return out;
 });
 
-/*
-var Config = {};
-
-Config.Server = {
-  "hostname": "localhost",
-  "port": 16918,
-  secure: false
-}
-*/
-
 var App = Backbone.Router.extend({
   routes: {
     "lobby": "lobbyRoute",
@@ -137,7 +127,9 @@ var SideView = Backbone.View.extend({
     this.$info.find(".score").html(d.score);
     this.$info.find(".hand-card").html(d.hand);
     this.$info.find(".gwent-lives").html(this.lives(d.lives));
-    this.$info.find(".field-leader").html(this.template(l))
+    if(l._key){
+      this.$info.find(".field-leader").html(this.template(l))
+    }
 
     if(this.app.user.get("waiting") && this.side === ".player"){
       this.$info.addClass("removeBackground");
@@ -153,47 +145,61 @@ var SideView = Backbone.View.extend({
     if(!this.field.close) return;
     this.$fields = this.$el.find(".battleside" + this.side);
     var $field = this.$fields.find(".field-close").parent();
-    var cards = this.field.close._cards;
-    var score = this.field.close._score;
+    var cards = this.field.close.cards;
+    var score = this.field.close.score;
+    var horn = this.field.close.horn;
 
 
     var html = this.templateCards(cards);
 
     $field.find(".field-close").html(html)
     $field.find(".large-field-counter").html(score)
+    if(horn){
+      this.$fields.find(".field-horn-close").html(this.template(horn));
+    }
 
-    calculateCardMargin($field.find(".card"), 433, 70, cards.length);
+    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
   },
   renderRangeField: function(){
     if(!this.field.ranged) return;
     this.$fields = this.$el.find(".battleside" + this.side);
     var $field = this.$fields.find(".field-range").parent();
-    var cards = this.field.ranged._cards;
-    var score = this.field.ranged._score;
+    var cards = this.field.ranged.cards;
+    var score = this.field.ranged.score;
+    var horn = this.field.ranged.horn;
 
     var html = this.templateCards(cards);
 
     $field.find(".field-range").html(html)
     $field.find(".large-field-counter").html(score)
-    calculateCardMargin($field.find(".card"), 433, 70, cards.length);
+    if(horn){
+      this.$fields.find(".field-horn-range").html(this.template(horn));
+    }
+
+    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
   },
   renderSiegeField: function(){
     if(!this.field.siege) return;
     this.$fields = this.$el.find(".battleside" + this.side);
     var $field = this.$fields.find(".field-siege").parent();
-    var cards = this.field.siege._cards;
-    var score = this.field.siege._score;
+    var cards = this.field.siege.cards;
+    var score = this.field.siege.score;
+    var horn = this.field.siege.horn;
 
     var html = this.templateCards(cards);
 
     $field.find(".field-siege").html(html)
     $field.find(".large-field-counter").html(score)
-    calculateCardMargin($field.find(".card"), 433, 70, cards.length);
+    if(horn){
+      this.$fields.find(".field-horn-siege").html(this.template(horn));
+    }
+
+    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
   },
   renderWeatherField: function(){
     if(!this.field.weather) return;
     var $weatherField = this.$el.find(".field-weather");
-    var cards = this.field.weather._cards;
+    var cards = this.field.weather.cards;
     $weatherField.html(this.templateCards(cards));
 
     return this;
@@ -214,7 +220,7 @@ var SideView = Backbone.View.extend({
 var calculateCardMargin = function($selector, totalWidth, cardWidth, n){
   var w = totalWidth, c = cardWidth;
   var res;
-  if(n < 7)
+  if(n < 6)
     res = 0;
   else {
     res = -((w - c) / (n - 1) - c) + 1
@@ -240,6 +246,7 @@ var BattleView = Backbone.View.extend({
     this.listenTo(user, "change:passing", this.render);
     this.listenTo(user, "change:openDiscard", this.render);
     this.listenTo(user, "change:setAgile", this.render);
+    this.listenTo(user, "change:setHorn", this.render);
 
     this.$hand = this.$el.find(".field-hand");
     this.$preview = this.$el.find(".card-preview");
@@ -290,6 +297,14 @@ var BattleView = Backbone.View.extend({
       }
       return;
     }
+    if(!!this.user.get("setHorn")){
+      if(id === this.user.get("setHorn")){
+        this.user.set("setHorn", false);
+        this.app.send("cancel:horn");
+        this.render();
+      }
+      return;
+    }
     if(!!this.user.get("waitForDecoy")){
       if(id === this.user.get("waitForDecoy")){
         this.user.set("waitForDecoy", false);
@@ -313,6 +328,9 @@ var BattleView = Backbone.View.extend({
     if(this.user.get("waitForDecoy")){
       var $card = $(e.target).closest(".card");
       var _id = $card.data("id");
+
+      if($card.parent().hasClass("field-horn")) return;
+
       this.app.send("decoy:replaceWith", {
         cardID: _id
       })
@@ -327,6 +345,16 @@ var BattleView = Backbone.View.extend({
         field: target
       });
       this.user.set("setAgile", false);
+    }
+    if(this.user.get("setHorn")){
+      var $field = $(e.target).closest(".field.active").find(".field-close, .field-range, .field-siege");
+
+      console.log($field);
+      var target = $field.hasClass("field-close") ? 0 : ($field.hasClass("field-range") ? 1 : 2);
+      this.app.send("horn:field", {
+        field: target
+      });
+      this.user.set("setHorn", false);
     }
   },
   onMouseover: function(e){
@@ -355,13 +383,20 @@ var BattleView = Backbone.View.extend({
     var self = this;
     this.$el.html(this.template({
       cards: self.handCards,
-      agile: self.user.get("setAgile")
+      active: {
+        close: self.user.get("setAgile") || self.user.get("setHorn"),
+        range: self.user.get("setAgile") || self.user.get("setHorn"),
+        siege: self.user.get("setHorn")
+      }
     }));
     if(!(this.otherSide && this.yourSide)) return;
     this.otherSide.render();
     this.yourSide.render();
 
-    calculateCardMargin(this.$el.find(".field-hand .card"), 538, 70, this.handCards.length);
+
+    if(this.handCards){
+      calculateCardMargin(this.$el.find(".field-hand .card"), 538, 70, this.handCards.length);
+    }
 
     if(this.user.get("openDiscard")){
       var modal = new Modal({model: this.user});
@@ -373,6 +408,10 @@ var BattleView = Backbone.View.extend({
     }
     if(this.user.get("setAgile")){
       var id = this.user.get("setAgile");
+      this.$el.find("[data-id='" + id + "']").addClass("activeCard");
+    }
+    if(this.user.get("setHorn")){
+      var id = this.user.get("setHorn");
       this.$el.find("[data-id='" + id + "']").addClass("activeCard");
     }
     if(this.user.get("waitForDecoy")){
@@ -527,6 +566,11 @@ var User = Backbone.Model.extend({
     app.receive("played:agile", function(data){
       console.log("played agile");
       self.set("setAgile", data.cardID);
+    })
+
+    app.receive("played:horn", function(data){
+      console.log("played horn");
+      self.set("setHorn", data.cardID);
     })
 
     app.on("createRoom", this.createRoom, this);

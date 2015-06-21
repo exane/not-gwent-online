@@ -23,7 +23,8 @@ var Hand = (function(){
    */
   r._hand = null;
 
-  r.add = function(card){
+  r.add = function(card){/*
+    console.log(card.getID(), card.getName());*/
     this._hand.push(card);
   }
 
@@ -45,6 +46,8 @@ var Hand = (function(){
     //console.trace(id);
     id = id instanceof Card ? id.getID() : id;
 
+    if(!n) return -1;
+
     for(var i = 0; i < n; i++) {
       if(!this._hand[i]) {
         console.trace(this._hand[i]);
@@ -59,6 +62,7 @@ var Hand = (function(){
 
   r.getRandomCard = function(){
     var rnd = (Math.random() * this._hand.length) | 0;
+    if(!this._hand.length) return -1;
     return this._hand[rnd];
   }
 

@@ -24,9 +24,12 @@ module.exports = {
     "ballista",
     "trebuchet",
     "thaler",
-    "foltest_king_of_temeria",
-    "decoy",
-    "impenetrable_fog"
+    "foltest_siegemaster",
+    "biting_frost",
+    "torrential_rain",
+    "clear_weather",
+    "impenetrable_fog",
+    "decoy"
   ],
 
   "scoiatael": [
@@ -40,6 +43,9 @@ module.exports = {
     "toruviel",
     "decoy",
     "decoy",
+    "biting_frost",
+    "torrential_rain",
+    "clear_weather",
     "impenetrable_fog",
     "elven_skirmisher",
     "elven_skirmisher",
@@ -78,6 +84,9 @@ module.exports = {
     "gargoyle",
     "cockatrice",
     "harpy",
+    "biting_frost",
+    "torrential_rain",
+    "clear_weather",
     "impenetrable_fog",
     "endrega",
     "vampire_bruxa",

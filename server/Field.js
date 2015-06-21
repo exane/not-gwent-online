@@ -1,13 +1,15 @@
 var Field = (function(){
-  var Field = function(){
+  var Field = function(side, hasHornField){
     if(!(this instanceof Field)){
-      return (new Field());
+      return (new Field(side, hasHornField));
     }
     /**
      * constructor here
      */
 
+    this._hasHornField = hasHornField || false;
     this._cards = [];
+    this.side = side;
   };
   var r = Field.prototype;
   /**
@@ -18,8 +20,19 @@ var Field = (function(){
 
   r._cards = null;
   r._score = 0;
+  r._hasHornField = null;
+  r._hornCard = null;
+  r.side = null;
 
-  r.add = function(card){
+  r.add = function(card, isHorn){
+    /*if(card.hasAbility("commanders_horn")) {
+      this.setHorn(card);
+      return;
+    }*/
+    if(isHorn && this._hasHornField) {
+      this.setHorn(card);
+      return;
+    }
     this._cards.push(card);
     this.updateScore();
   }
@@ -49,6 +62,9 @@ var Field = (function(){
   }
 
   r.isOnField = function(card){
+    if(this._hasHornField && this.getHorn() && card.getID() === this.getHorn().getID()){
+      return true;
+    }
     return this.getPosition(card) >= 0;
   }
 
@@ -69,11 +85,43 @@ var Field = (function(){
 
   r.removeAll = function(){
     var tmp = this._cards.slice();
+    var self = this;
     tmp.forEach(function(card){
       card.reset();
+      for(var event in card._uidEvents) {
+        self.side.off(event, card.getUidEvents(event));
+      }
     })
     this._cards = [];
+    if(this.getHorn()) {
+      var card = this.getHorn();
+      card.reset();
+      this.setHorn(null);
+      for(var event in card._uidEvents) {
+        self.side.off(event, card.getUidEvents(event));
+      }
+      tmp.push(card);
+    }
     return tmp;
+  }
+
+  r.getInfo = function() {
+    var self = this;
+    return {
+      cards: self._cards,
+      horn: self.getHorn(),
+      score: self._score
+    }
+  }
+
+  r.getHorn = function() {
+    if(!this._hasHornField) return null;
+    return this._hornCard;
+  }
+
+  r.setHorn = function(card) {
+    if(!this._hasHornField) return null;
+    this._hornCard = card;
   }
 
   return Field;

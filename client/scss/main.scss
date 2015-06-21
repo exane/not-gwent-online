@@ -17,7 +17,7 @@ $game-height: 800px;
 }
 
 .field {
-  width: 100%;
+  //width: 100%;
   height: 100px;
   border: 1px solid black;/*
   overflow: hidden;
@@ -33,6 +33,14 @@ $game-height: 800px;
     box-shadow: 0px 0px 15px #ffbb0b;
 
   }
+}
+
+.field-horn {/*
+  border: 1px solid green;*/
+  /*clear: both;*/
+  margin: 0px;
+  padding: 0px;
+
 }
 
 .field:hover, .field-single:hover {
@@ -104,11 +112,11 @@ $game-height: 800px;
   span {
     color: #00b000;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
     position: absolute;
     text-shadow: 1px 1px #101010;
-    margin-top: 55px;
-    margin-left: 30px;
+    margin-top: 62px;
+    margin-left: 0px;
     cursor: default;
   }
 

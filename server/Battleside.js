@@ -21,10 +21,15 @@ Battleside = (function(){
     this._isWaiting = true;
     this.socket = user.socket;
     this.field = {};
-    this.field[Card.TYPE.LEADER] = Field(Card.TYPE.LEADER);
-    this.field[Card.TYPE.CLOSE_COMBAT] = Field(Card.TYPE.CLOSE_COMBAT);
-    this.field[Card.TYPE.RANGED] = Field(Card.TYPE.RANGED);
-    this.field[Card.TYPE.SIEGE] = Field(Card.TYPE.SIEGE);
+    this.field[Card.TYPE.LEADER] = Field(this);
+    this.field[Card.TYPE.CLOSE_COMBAT] = Field(this, true);
+    this.field[Card.TYPE.RANGED] = Field(this, true);
+    this.field[Card.TYPE.SIEGE] = Field(this, true);
+    /*this.field[Card.TYPE.HORN] = {
+      close: Field(this),
+      range: Field(this),
+      siege: Field(this)
+    };*/
     this.n = n ? "p2" : "p1";
     this._name = name;
     this.battle = battle;
@@ -88,13 +93,23 @@ Battleside = (function(){
 
       self.playCard(card);
     })
-    this.receive("agile:field", function(data) {
+    this.receive("agile:field", function(data){
       var fieldType = data.field;
+      if(!(fieldType in [0, 1])) throw new Error("set field agile: false fieldtype " + fieldType);
       self.runEvent("agile:setField", null, [fieldType]);
       self.runEvent("NextTurn", null, [self.foe]);
     })
     this.receive("cancel:agile", function(){
       self.off("agile:setField");
+    })
+    this.receive("horn:field", function(data){
+      var fieldType = data.field;
+      if(!(fieldType in [0, 1, 2])) throw new Error("set field horn: false fieldtype " + fieldType);
+      self.runEvent("horn:setField", null, [fieldType]);
+      self.runEvent("NextTurn", null, [self.foe]);
+    })
+    this.receive("cancel:horn", function(){
+      self.off("horn:setField");
     })
 
 
@@ -129,7 +144,7 @@ Battleside = (function(){
   }
 
   r.setUpWeatherFieldWith = function(p2){
-    this.field[Card.TYPE.WEATHER] = p2.field[Card.TYPE.WEATHER] = Field(Card.TYPE.WEATHER);
+    this.field[Card.TYPE.WEATHER] = p2.field[Card.TYPE.WEATHER] = Field(this);
   }
 
   r.findCardOnFieldByID = function(id){
@@ -279,8 +294,16 @@ Battleside = (function(){
     this.checkAbilities(card, obj);
     if(obj._cancelPlacement) return 0;
 
-    var field = obj.targetSide.field[card.getType()];
-    field.add(card);
+
+    var field;
+    if(typeof obj.isHorn !== "undefined"){
+      field = obj.targetSide.field[obj.isHorn];
+      field.add(card, true);
+    }
+    else {
+      field = obj.targetSide.field[card.getType()];
+      field.add(card);
+    }
 
 
     this.runEvent("EachCardPlace");
@@ -296,6 +319,49 @@ Battleside = (function(){
     }
 
     return 1;
+  }
+
+  r.setHorn = function(card) {
+    var self = this;
+    this.send("played:horn", {cardID: card.getID()}, true)
+    this.on("horn:setField", function(type){
+      self.off("horn:setField");
+      card.changeType(type);
+      self.placeCard(card, {
+        isHorn: type,
+        disabled: true
+      });
+      self.hand.remove(card);
+    })
+  }
+
+  r.commanderHornAbility = function(card) {
+    var field = this.field[card.getType()];
+    var id = "commanders_horn";
+
+    if(typeof field === "undefined") {
+      //console.log("field unknown | %s", card.getName());
+      return;
+    }
+
+    if(!field.isOnField(card)){
+      field.get().forEach(function(_card){
+        if(_card.getID() == id) return;
+        if(_card.getType() != card.getType()) return;
+        if(_card.hasAbility("hero")) return;
+        _card.setBoost(id, 0);
+      })
+      this.off("EachCardPlace", card.getUidEvents("EachCardPlace"));
+      return;
+    }
+
+    field.get().forEach(function(_card){
+      if(_card.getID() == id) return;
+      if(_card.getType() != card.getType()) return;
+      if(_card.hasAbility("hero")) return;
+      _card.setBoost(id, 0);
+      _card.setBoost(id, _card.getPower());
+    })
   }
 
   r.checkAbilities = function(card, obj, __flag){
@@ -316,10 +382,17 @@ Battleside = (function(){
     }
 
     if(ability && !Array.isArray(ability)){
-      if(ability.onBeforePlace) {
+      if(ability.onBeforePlace){
         ability.onBeforePlace.apply(this, [card]);
       }
-      if(ability.cancelPlacement) {
+      if(ability.isCommandersHornCard) {
+        this.setHorn(card);
+      }
+      if(ability.commandersHorn) {
+        ability.onEachCardPlace = this.commanderHornAbility;
+        ability.onWeatherChange = this.commanderHornAbility;
+      }
+      if(ability.cancelPlacement){
         obj._cancelPlacement = true;
       }
       if(ability.waitResponse){
@@ -327,10 +400,11 @@ Battleside = (function(){
       }
       if(ability.changeSide){
         obj.targetSide = this.foe;
-      }/*
-      if(ability.onReset){
-        this.on("Reset", ability.onReset, this, [card])
-      }*/
+      }
+      if(typeof ability.weather !== "undefined"){
+        ability.onEachTurn = this.setWeather.bind(this, ability.weather);
+        ability.onEachCardPlace = this.setWeather.bind(this, ability.weather);
+      }
       if(ability.replaceWith){
         obj._cancelPlacement = true;
         this.on("Decoy:replaceWith", function(replaceCard){
@@ -362,6 +436,10 @@ Battleside = (function(){
         var uid = this.on("EachCardPlace", ability.onEachCardPlace, this, [card]);
         card._uidEvents["EachCardPlace"] = uid;
       }
+      if(ability.onWeatherChange){
+        var uid = this.on("WeatherChange", ability.onWeatherChange, this, [card]);
+        card._uidEvents["WeatherChange"] = uid;
+      }
 
       this.update();
     }
@@ -378,6 +456,49 @@ Battleside = (function(){
         ability.onAfterPlace.call(this, card)
       }
     }
+  }
+
+  r.setWeather = function(weather){
+    var targetRow = weather;
+    var field;
+    if(typeof targetRow === "undefined") return;
+
+
+    //console.log(this.field[Card.TYPE.WEATHER]);
+    if(targetRow === Card.TYPE.WEATHER){
+      field = this.field[targetRow];
+      field.removeAll();
+
+      for(var i = Card.TYPE.CLOSE_COMBAT; i <= Card.TYPE.SIEGE; i++) {
+        var _field1, _field2, _field;
+        _field1 = this.field[i].get();
+        _field2 = this.foe.field[i].get();
+        _field = _field1.concat(_field2);
+
+        _field.forEach(function(_card){
+          if(_card.hasAbility("hero")) return;
+          _card.setForcedPower(-1);
+        });
+      }
+      this.runEvent("WeatherChange");
+      return;
+    }
+    var forcedPower = 1;
+
+    if(typeof targetRow === "undefined"){
+      console.trace(this);
+    }
+    var field1 = this.field[targetRow].get();
+    var field2 = this.foe.field[targetRow].get();
+
+    field = field1.concat(field2);
+
+    field.forEach(function(_card){
+      if(_card.hasAbility("hero")) return;
+      _card.setForcedPower(forcedPower);
+    });
+    this.runEvent("WeatherChange");
+    this.update();
   }
 
   r.clearMainFields = function(){
@@ -432,7 +553,7 @@ Battleside = (function(){
         if(_.isArray(property)){
           var _f = false;
           for(var i = 0; i < property.length; i++) {
-            if(property[i] === val) {
+            if(property[i] === val){
               _f = true;
               break;
             }

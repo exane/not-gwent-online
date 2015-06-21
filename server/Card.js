@@ -17,7 +17,6 @@ var Card = (function(){
     this._boost = {};
     this._forcedPower = -1;
     this._init();
-
   };
   var r = Card.prototype;
   /**
@@ -68,6 +67,7 @@ var Card = (function(){
   }
   r.setForcedPower = function(nr){
     this._forcedPower = nr;
+    /*this.getBoost(); *///recalculate
   }
   r.getRawAbility = function(){
     return this._data.ability;
@@ -81,6 +81,16 @@ var Card = (function(){
       return res;
     }
     return AbilityData[this._data.ability];
+  }
+  r.hasAbility = function(ability) {
+    var a = this.getRawAbility();
+    if(Array.isArray(a)) {
+      for(var i=0; i<a.length; i++) {
+        var _a = a[i];
+        if(_a === ability) return true;
+      }
+    }
+    return a === ability;
   }
   r.getImage = function(){
     return "../assets/cards/" + this._data.img + ".png";
@@ -104,11 +114,6 @@ var Card = (function(){
   r.getID = function(){
     return this._id;
   }
-
-  /*r.boost = function(nr){
-    this.getPower(); //to recalculate this._power;
-    this._boost += nr;
-  }*/
 
   r.getBoost = function() {
     var res = 0;
