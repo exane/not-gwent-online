@@ -9,6 +9,9 @@ module.exports = {
       app.section = 'inner';
     });
 
+    router.on('/test', function() {
+    })
+
     this.configure();
     router.init();
   },

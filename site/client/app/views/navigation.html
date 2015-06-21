@@ -1,7 +1,7 @@
 <nav>
   <ul>
-    <li><a href="#/lobby" class="active">Lobby</a></li>
-    <li><a href="#">Deck Builder</a></li>
-    <li><a href="#">Highscore</a></li>
+    <li><a class="active" v-on="click: changeView('lobby')">Lobby</a></li>
+    <li><a href="#" v-on="click: changeView('builder')">Deck Builder</a></li>
+    <li><a href="#" v-on="click: changeView('highscore')">Highscore</a></li>
   </ul>
 </nav>
