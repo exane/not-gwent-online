@@ -13,7 +13,8 @@ module.exports = {
     navigation: require('./navigation'),
     chat: require('./chat'),
 
-    lobby: require('./lobby')
+    lobby: require('./lobby'),
+    deckBuilder: require('./deckBuilder')
   }
 
 };

@@ -1,5 +1,5 @@
 module.exports = {
 
-  template: require('../views/lobby.html'),
+  template: "<h2>lobby hier</h2>"
 
 };

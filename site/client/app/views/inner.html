@@ -4,10 +4,21 @@
 
 <main>
 
+  <style>
+    .test {
+      transition: all .5s ease;
+    }
+    .test-enter, .test-leave {
+      opacity: 0;
+    }
+  </style>
+
   <navigation></navigation>
 
   <section class="container-content">
-    <component is="lobby"></component>
+
+    <router-view class="test" v-transition="test" transition-mode="out-in"></router-view>
+
   </section>
 
 </main>

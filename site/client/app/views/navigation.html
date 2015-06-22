@@ -1,7 +1,7 @@
 <nav>
   <ul>
-    <li><a class="active" v-on="click: changeView('lobby')">Lobby</a></li>
-    <li><a v-on="click: changeView('deck-builder')">Deck Builder</a></li>
+    <li><a class="active" v-link="/lobby">Lobby</a></li>
+    <li><a v-link="/deck-builder">Deck Builder</a></li>
     <li><a v-on="click: changeView('highscore')">Highscore</a></li>
 
     <li class="sub-nav" v-on="click: searchMatch"><a>Quick Match</a></li>

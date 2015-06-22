@@ -21,11 +21,11 @@
   opacity: 0;
   visibility: hidden;
 
+  @include transition();
+
   &.active {
     visibility: visible;
     opacity: 1;
-
-    @include transition();
   }
 }
 
@@ -38,9 +38,9 @@
   margin: 24vh 0 0 0;
   float: left;
 
-  .active & {
-    @include transition();
+  @include transition();
 
+  .active & {
     margin: 25vh 0 0 0;
   }
 }
@@ -65,7 +65,6 @@
   clear: both;
   width: 100%;
   text-align: center;
-  //margin: 3px 0 0 20px;
 }
 
 .btn-cancel {
@@ -77,7 +76,9 @@
   color: darken(#8798ac, 10%);
   cursor: pointer;
 
+  @include transition();
+
   &:hover {
-    color: #8798ac;
+    color: #fff;
   }
 }
