@@ -6,6 +6,10 @@
   });
 
   get('/', function() {
+    if(Auth::check()) {
+      return redirect('/lobby');
+    }
+
     return view('app')
       ->withSection('landing');
   });
