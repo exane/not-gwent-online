@@ -109,12 +109,27 @@ $game-height: 800px;
   img {
     height: 120px;
   }
-  span {
+
+  /*.card-attr-power {
+    margin-top: 0px;
+    margin-left: 0px;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    line-height: 25px;
+    font-size: 20px;
+    color: black;
+  }*/
+  .card-attr-positive {
     color: #00b000;
+  }
+
+  span {
+    color: #ff2d00;
     font-weight: bold;
     font-size: 20px;
     position: absolute;
-    text-shadow: 1px 1px #101010;
+    text-shadow: 1px 1px 0px #101010;
     margin-top: 62px;
     margin-left: 0px;
     cursor: default;

@@ -231,30 +231,25 @@ module.exports = {
   },
   "foltest_leader3": {
     onActivate: function(){
-      var field = this.field[2];
-
-      //todo: unless there is commanders horn active
-      /*siegeCards.forEach(function(card){
-        card.setBoost("foltest_leader3", card.getPower());
-      })*/
-      /*field.add(Card("commanders_horn", true));*/
-      /*this.placeCard("commanders_horn", {
-        forceField: field
-      });*/
       this.setHorn("commanders_horn", 2);
     }
   },
   "foltest_leader4": {
     onActivate: function(){
-
+      //scorch siege
     }
   },
   "francesca_leader1": {
     onActivate: function(){
+      var cards = this.deck.find("key", "biting_frost")
+      if(!cards.length) return;
+      var card = this.deck.removeFromDeck(cards[0]);
+      this.placeCard(card);
     }
   },
   "francesca_leader2": {
     onActivate: function(){
+      this.setHorn("commanders_horn", 1);
     }
   },
   "francesca_leader3": {
@@ -275,10 +270,12 @@ module.exports = {
   },
   "eredin_leader3": {
     onActivate: function(){
+
     }
   },
   "eredin_leader4": {
     onActivate: function(){
+      this.setHorn("commanders_horn", 0);
     }
   },
   "hero": {}
