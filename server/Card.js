@@ -44,7 +44,7 @@ var Card = (function(){
 
   r._uidEvents = null;
 
-  r.getUidEvents = function(key) {
+  r.getUidEvents = function(key){
     return this._uidEvents[key];
   }
 
@@ -55,12 +55,22 @@ var Card = (function(){
   r.getName = function(){
     return this._data.name;
   }
+
+  r.getBasePower = function() {
+    var base = this._data.power;
+    if(this._forcedPower > -1){
+      base = this._forcedPower > this._data.power ? this._data.power : this._forcedPower;
+    }
+    return base;
+  }
+
   r.getPower = function(){
     if(this._data.power === -1) return 0;
-    if(this._forcedPower > -1){
+    return this.getBasePower() + this.getBoost();
+    /*if(this._forcedPower > -1){
       return (this._forcedPower > this._data.power ? this._data.power : this._forcedPower) + this.getBoost();
     }
-    return this._data.power + this.getBoost();
+    return this._data.power + this.getBoost();*/
   }
   r.getRawPower = function(){
     return this._data.power;
@@ -82,10 +92,10 @@ var Card = (function(){
     }
     return AbilityData[this._data.ability];
   }
-  r.hasAbility = function(ability) {
+  r.hasAbility = function(ability){
     var a = this.getRawAbility();
-    if(Array.isArray(a)) {
-      for(var i=0; i<a.length; i++) {
+    if(Array.isArray(a)){
+      for(var i = 0; i < a.length; i++) {
         var _a = a[i];
         if(_a === ability) return true;
       }
@@ -115,16 +125,22 @@ var Card = (function(){
     return this._id;
   }
 
-  r.getBoost = function() {
+  r.getBoost = function(){
     var res = 0;
     for(var key in this._boost) {
+      if(key === "commanders_horn" || key === "commanders_horn_card") continue;
       res += this._boost[key];
     }
+
+    if(this._boost["commanders_horn"] || this._boost["commanders_horn_card"]){
+      res += res + this.getBasePower();
+    }
+
     this.boost = res;
     return res;
   }
 
-  r.setBoost = function(key, val) {
+  r.setBoost = function(key, val){
     this._boost[key] = val;
     this.getBoost(); //to recalculate this.boost
   }

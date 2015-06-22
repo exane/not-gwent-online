@@ -46,11 +46,11 @@ Battleside = (function(){
       if(self._isWaiting) return;
       if(self.isPassing()) return;
 
-      console.log("leader activated");
 
       var leaderCard = self.getLeader();
       if(leaderCard.isDisabled()) return;
 
+      console.log("leader activated");
 
       var ability = leaderCard.getAbility();
 
@@ -291,17 +291,25 @@ Battleside = (function(){
   r.placeCard = function(card, obj){
     obj = _.extend({}, obj);
 
+    if(typeof card === "string" ) {
+      card = Card(card);
+    }
+
     this.checkAbilities(card, obj);
-    if(obj._cancelPlacement) return 0;
+    if(obj._cancelPlacement && !obj.forceField) return 0;
 
 
-    var field;
+    var field = obj.forceField || null;
     if(typeof obj.isHorn !== "undefined"){
-      field = obj.targetSide.field[obj.isHorn];
+      if(!field){
+        field = obj.targetSide.field[obj.isHorn];
+      }
       field.add(card, true);
     }
     else {
-      field = obj.targetSide.field[card.getType()];
+      if(!field){
+        field = obj.targetSide.field[card.getType()];
+      }
       field.add(card);
     }
 
@@ -321,8 +329,24 @@ Battleside = (function(){
     return 1;
   }
 
-  r.setHorn = function(card) {
+  r.setHorn = function(card, field){
     var self = this;
+    field = typeof field  === "undefined" ? null : field;
+
+    if(typeof card === "string"){
+      card = Card(card);
+    }
+
+    if(typeof field === "number") {
+      card.changeType(field);
+      this.placeCard(card, {
+        isHorn: field,
+        forcePlace: true
+      });
+      self.hand.remove(card);
+      return;
+    }
+
     this.send("played:horn", {cardID: card.getID()}, true)
     this.on("horn:setField", function(type){
       self.off("horn:setField");
@@ -335,11 +359,11 @@ Battleside = (function(){
     })
   }
 
-  r.commanderHornAbility = function(card) {
+  r.commanderHornAbility = function(card){
     var field = this.field[card.getType()];
     var id = "commanders_horn";
 
-    if(typeof field === "undefined") {
+    if(typeof field === "undefined"){
       //console.log("field unknown | %s", card.getName());
       return;
     }
@@ -385,17 +409,17 @@ Battleside = (function(){
       if(ability.onBeforePlace){
         ability.onBeforePlace.apply(this, [card]);
       }
-      if(ability.isCommandersHornCard) {
+      if(ability.isCommandersHornCard && !obj.isHorn){
         this.setHorn(card);
       }
-      if(ability.commandersHorn) {
+      if(ability.commandersHorn){
         ability.onEachCardPlace = this.commanderHornAbility;
         ability.onWeatherChange = this.commanderHornAbility;
       }
-      if(ability.cancelPlacement){
+      if(ability.cancelPlacement && !obj.forcePlace){
         obj._cancelPlacement = true;
       }
-      if(ability.waitResponse){
+      if(ability.waitResponse && !obj.forcePlace){
         obj._waitResponse = true;
       }
       if(ability.changeSide){
@@ -405,7 +429,7 @@ Battleside = (function(){
         ability.onEachTurn = this.setWeather.bind(this, ability.weather);
         ability.onEachCardPlace = this.setWeather.bind(this, ability.weather);
       }
-      if(ability.replaceWith){
+      if(ability.replaceWith && !obj.forcePlace){
         obj._cancelPlacement = true;
         this.on("Decoy:replaceWith", function(replaceCard){
           if(replaceCard.getType() == Card.TYPE.LEADER ||

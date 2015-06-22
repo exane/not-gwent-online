@@ -405,9 +405,10 @@ var BattleView = Backbone.View.extend({
   },
   clickLeader: function(e){
     var $card = $(e.target).closest(".field-leader");
-    console.log("click leader");
     if(!$card.parent().hasClass("player")) return;
-    if($card.hasClass("disabled")) return;
+    if($card.find(".card").hasClass("disabled")) return;
+
+    console.log("click leader");
 
 
     this.app.send("activate:leader")
