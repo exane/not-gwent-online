@@ -582,7 +582,7 @@ module.exports = {
   "celaeno_harpy": {
     name: "Celaeno Harpy",
     power: 2,
-    ability: null,
+    ability: "agile",
     img: "celaeno_harpy",
     faction: "monster",
     type: 1
