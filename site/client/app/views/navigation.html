@@ -1,8 +1,10 @@
 <nav>
   <ul>
-    <li><a class="active" v-link="/lobby">Lobby</a></li>
-    <li><a v-link="/deck-builder">Deck Builder</a></li>
-    <li><a v-on="click: changeView('highscore')">Highscore</a></li>
+    <li v-repeat="nav: navigation">
+      <a v-link="{{ nav.route }}" class="{{ route.path == nav.route ? 'active' : '' }}">
+        {{ nav.name }}
+      </a>
+    </li>
 
     <li class="sub-nav" v-on="click: searchMatch"><a>Quick Match</a></li>
   </ul>

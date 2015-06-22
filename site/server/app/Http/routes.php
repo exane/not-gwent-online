@@ -1,8 +1,11 @@
 <?php
 
   get('/lobby', function() {
-    return view('app')
-      ->withSection('inner');
+    return view('app')->withSection('inner');
+  });
+
+  get('/deck-builder', function() {
+    return view('app')->withSection('inner');
   });
 
   get('/', function() {
@@ -10,6 +13,5 @@
       return redirect('/lobby');
     }
 
-    return view('app')
-      ->withSection('landing');
+    return view('app')->withSection('landing');
   });

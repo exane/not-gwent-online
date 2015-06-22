@@ -2,6 +2,8 @@ module.exports = {
 
   template: require('../views/inner.html'),
 
+  inherit: true,
+
   data: function() {
     return {
       modal: false
