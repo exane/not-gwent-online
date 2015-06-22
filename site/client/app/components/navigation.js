@@ -12,8 +12,8 @@ module.exports = {
     },
 
     searchMatch: function() {
-    	this.modal = true;
-    	// trigger match functions
+      this.modal = true;
+      // trigger match functions
     }
   }
 

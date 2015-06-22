@@ -15,8 +15,8 @@ var app = new Vue({
   },
 
   components: {
-    lobby: require('./components/lobby'),
-    chat: require('./components/chat')
+    inner: require('./components/inner'),
+    landing: require('./components/landing')
   }
 
 });

@@ -1,16 +1,11 @@
 <?php
 
   get('/lobby', function() {
-    return view('inner')
-      ->withSection('inner')
-      ->withType('server');
+    return view('app')
+      ->withSection('inner');
   });
 
   get('/', function() {
-    if(Auth::check()) {
-      return redirect('/lobby');
-    }
-
-    return view('landing')
+    return view('app')
       ->withSection('landing');
   });

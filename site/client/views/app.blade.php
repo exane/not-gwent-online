@@ -14,27 +14,14 @@
   </head>
   <body class="{{ $section }}">
 
-    @yield('content')
+    @if(Auth::check() || Request::path() != '/')
+      <component is="inner"></component>
+    @else
+      <component is="landing"></component>
+    @endif
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="{{ url('assets/js/bundle.js') }}"></script>
-
-    <script>
-      // todo: extract to vue
-      setTimeout(function() {
-        $('.container-form-landing').addClass('active')
-      }, 300);
-
-      // todo: extract to vue
-      $('.btn-guest').on('click', function() {
-        // set localstorage for guest
-        $('.icon-guest-load').show();
-
-        setTimeout(function() {
-          window.location.href = './lobby';
-        }, 500);
-      });
-    </script>
 
   </body>
 </html>
