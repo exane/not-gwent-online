@@ -437,7 +437,7 @@ module.exports = {
   "havekar_smuggler": {
     name: "Havekar Smuggler",
     power: 5,
-    ability: "spy",
+    ability: "muster",
     img: "smuggler1",
     faction: "Scoia'tael",
     type: 0
