@@ -273,7 +273,7 @@ module.exports = {
     name: "Francesca The Beautiful",
     power: -1,
     ability: "francesca_leader2",
-    img: "francesca_beatiful",
+    img: "francesca_beautiful",
     faction: "Scoia'tael",
     type: 3
   },
