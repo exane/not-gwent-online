@@ -73,12 +73,12 @@
   margin: 50px 0 0 0;
   width: 100%;
   text-align: center;
-  color: darken(#8798ac, 10%);
+  color: darken(#8798ac, 30%);
   cursor: pointer;
 
   @include transition();
 
   &:hover {
-    color: #fff;
+    color: #8798ac;
   }
 }

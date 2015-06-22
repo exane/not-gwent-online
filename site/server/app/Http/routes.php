@@ -1,11 +1,15 @@
 <?php
 
   get('/lobby', function() {
-    return view('app')->withSection('inner');
+    return innerView();
   });
 
   get('/deck-builder', function() {
-    return view('app')->withSection('inner');
+    return innerView();
+  });
+
+  get('/highscore', function() {
+    return innerView();
   });
 
   get('/', function() {
@@ -15,3 +19,8 @@
 
     return view('app')->withSection('landing');
   });
+
+  function innerView()
+  {
+    return view('app')->withSection('inner');
+  }
