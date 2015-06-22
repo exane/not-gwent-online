@@ -6,6 +6,7 @@
 .wrap-modal-search {
   max-width: 250px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .modal {
@@ -47,7 +48,6 @@
 
 .icon-content-load {
   background: url(../img/content-load.gif) no-repeat;
-  //float: left;
   width: 32px;
   height: 32px;
   opacity: .9;
@@ -61,18 +61,10 @@
   font-weight: 300;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
   color: #8798ac;
-  float: left;
-  clear: both;
-  width: 100%;
-  text-align: center;
+  margin: 20px 0 50px 0;
 }
 
 .btn-cancel {
-  float: left;
-  clear: both;
-  margin: 50px 0 0 0;
-  width: 100%;
-  text-align: center;
   color: darken(#8798ac, 30%);
   cursor: pointer;
   text-transform: uppercase;
