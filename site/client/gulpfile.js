@@ -10,4 +10,6 @@ elixir.config.publicDir = '../public/';
 elixir(function(mix) {
   mix.sass('app.scss');
   mix.browserify('../../app/app.js');
+
+  mix.task('browserify', '../../app/**/*.js');
 });
