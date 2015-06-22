@@ -61,9 +61,20 @@ var Battle = (function(){
     this.p2.setLeadercard();
     this.p1.draw(10);
     this.p2.draw(10);
+    /*this.p1.hand.add(Card("commanders_horn"));
+    this.p2.hand.add(Card("commanders_horn"));
+    this.p1.hand.add(Card("milva"));
+    this.p2.hand.add(Card("milva"));
+    this.p1.hand.add(Card("havekar_healer"));
+    this.p2.hand.add(Card("havekar_healer"));
+    this.p1.hand.add(Card("toruviel"));
+    this.p2.hand.add(Card("toruviel"));
+    this.p1.hand.add(Card("vrihedd_brigade_recruit"));
+    this.p2.hand.add(Card("vrihedd_brigade_recruit"));
+    this.p1.hand.add(Card("impenetrable_fog"));
+    this.p2.hand.add(Card("impenetrable_fog"));*/
     /*
     this.p1.hand.add(Card("commanders_horn"));
-    this.p2.hand.add(Card("commanders_horn"));
     this.p1.hand.add(Card("commanders_horn"));
     this.p2.hand.add(Card("commanders_horn"));*/
     /*

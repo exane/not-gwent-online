@@ -5,6 +5,7 @@ var fs = require("fs");
 var babelify = require("babelify");
 var livereload = require("gulp-livereload");
 var sass = require("gulp-sass");
+var handlebars = require("browserify-handlebars");
 livereload({start: true});
 
 //fast install
@@ -13,6 +14,7 @@ livereload({start: true});
 
 gulp.task('browserify', function(){
   browserify('./client/js/main.js', {standalone: "app", debug: true})
+  .transform(handlebars)
   .transform(babelify)
   .bundle().on("error", function(err){
     console.log(err);

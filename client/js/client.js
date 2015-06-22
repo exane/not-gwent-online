@@ -8,19 +8,6 @@ var $ = require("jquery");
 
 window.$ = $;
 
-Handlebars.registerHelper("health", function(lives, options){
-  var out = "";
-
-  for(var i = 0; i < 2; i++) {
-    out += "<i";
-    if(i < lives){
-      out += " class='ruby'";
-    }
-    out += "></i>";
-  }
-  return out;
-});
-
 var App = Backbone.Router.extend({
   routes: {
     "lobby": "lobbyRoute",
@@ -90,15 +77,8 @@ var App = Backbone.Router.extend({
 
 var SideView = Backbone.View.extend({
   el: ".container",
-  template: Handlebars.compile('<div class="card{{#if _disabled}} disabled{{/if}}" data-key="{{_key}}" data-id="{{_id}}">' +
-  '<img src="../assets/cards/{{_data.img}}.png">' +
-  '</div>'),
-  templateCards: Handlebars.compile('{{#each this}}' +
-  '<div class="card{{#if _disabled}} disabled{{/if}}" data-key="{{_key}}" data-id="{{_id}}">' +
-  '{{#if boost}}<span>+{{boost}}</span>{{/if}}' +
-  '<img src="../assets/cards/{{_data.img}}.png">' +
-  '</div>' +
-  '{{/each}}'),
+  template: require("../templates/cards.handlebars"),
+  templateCards: require("../templates/multipleCards.handlebars"),
   initialize: function(options){
     var self = this;
     this.side = options.side;
@@ -231,8 +211,8 @@ var calculateCardMargin = function($selector, totalWidth, cardWidth, n){
 
 var BattleView = Backbone.View.extend({
   className: "container",
-  template: Handlebars.compile($("#battle-template").html()),
-  templatePreview: Handlebars.compile($("#preview-template").html()),
+  template: require("../templates/battle.handlebars"),
+  templatePreview: require("../templates/preview.handlebars"),
   initialize: function(options){
     var self = this;
     var user = this.user = options.user;
@@ -481,7 +461,7 @@ var BattleView = Backbone.View.extend({
 });
 
 var Modal = Backbone.Modal.extend({
-  template: Handlebars.compile($("#modal-template").html()),
+  template: require("../templates/modal.handlebars"),
   cancelEl: ".bbm-close",
   cancel: function(){
     this.model.set("openDiscard", false);
@@ -489,7 +469,7 @@ var Modal = Backbone.Modal.extend({
 });
 
 var MedicModal = Modal.extend({
-  template: Handlebars.compile($("#modal-medic-template").html()),
+  template: require("../templates/modal.medic.handlebars"),
   events: {
     "click .card": "onCardClick"
   },
@@ -608,7 +588,7 @@ var Lobby = Backbone.View.extend({
   },
   className: "container",
 
-  template: Handlebars.compile($("#matchmaker-template").html()),
+  template: require("../templates/lobby.handlebars"),
   initialize: function(options){
     this.user = options.user;
     this.app = options.app;
