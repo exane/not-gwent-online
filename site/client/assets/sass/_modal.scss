@@ -16,7 +16,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  background: rgba(14,27,43,.5);
+  background: rgba(14, 27, 43, .5);
   z-index: 10;
   opacity: 0;
   visibility: hidden;
@@ -24,18 +24,25 @@
   &.active {
     visibility: visible;
     opacity: 1;
-    transition: all .3s ease-in-out 0s;
+
+    @include transition();
   }
 }
 
 .modal-banner {
   z-index: 20;
-  background: rgba(6,13,22,.95);
+  background: rgba(6, 13, 22, .95);
   width: 100%;
   color: #fff;
   padding: 50px 0;
-  margin: 25vh 0 0 0;
+  margin: 24vh 0 0 0;
   float: left;
+
+  .active & {
+    @include transition();
+
+    margin: 25vh 0 0 0;
+  }
 }
 
 .icon-content-load {
@@ -71,6 +78,6 @@
   cursor: pointer;
 
   &:hover {
-   color: #8798ac;
+    color: #8798ac;
   }
 }

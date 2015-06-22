@@ -24,13 +24,13 @@
 
 .chats {
   float: left;
-  overflow-y: scroll;
-  height: calc(100% - 100px);
+  overflow-y: auto;
+  height: calc(100% - 80px);
   width: 100%;
 }
 
 .chatbox {
-  height: 100px;
+  height: 80px;
   float: left;
   width: 100%;
   border: 0;
