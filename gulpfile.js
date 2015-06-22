@@ -59,6 +59,7 @@ gulp.task("unit tests", function(){
 
 gulp.task("watch", function(){
   gulp.watch("./client/js/*", ["browserify"]);
+  gulp.watch("./client/templates/*", ["browserify"]);
   gulp.watch("./client/scss/*", ["sass"]);
   gulp.watch("./client/*.html", ["index"]);
   gulp.watch("./test/src/*", ["unit tests"]);

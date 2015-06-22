@@ -209,58 +209,12 @@ module.exports = {
     replaceWith: true
   },
   "commanders_horn": {
-    commandersHorn: true/*,
-    onEachCardPlace: function(card){
-      var field = this.field[card.getType()];
-      var id = "commanders_horn";
-
-      if(!field.isOnField(card)){
-        field.get().forEach(function(_card){
-          if(_card.getID() == id) return;
-          if(_card.getType() != card.getType()) return;
-          if(_card.hasAbility("hero")) return;
-          _card.setBoost(id, 0);
-        })
-        this.off("EachCardPlace", card.getUidEvents("EachCardPlace"));
-        return;
-      }
-
-      field.get().forEach(function(_card){
-        if(_card.getID() == id) return;
-        if(_card.getType() != card.getType()) return;
-        if(_card.hasAbility("hero")) return;
-        _card.setBoost(id, 0);
-        _card.setBoost(id, _card.getPower());
-      })
-    }*/
+    commandersHorn: true
   },
   "commanders_horn_card": {
     cancelPlacement: true,
     commandersHorn: true,
-    isCommandersHornCard: true/*,
-    onEachCardPlace: function(card){
-      var field = this.field[card.getType()];
-      var id = "commanders_horn";
-
-      if(!field.isOnField(card)){
-        field.get().forEach(function(_card){
-          if(_card.getID() == id) return;
-          if(_card.getType() != card.getType()) return;
-          if(_card.hasAbility("hero")) return;
-          _card.setBoost(id, 0);
-        })
-        this.off("EachCardPlace", card.getUidEvents("EachCardPlace"));
-        return;
-      }
-
-      field.get().forEach(function(_card){
-        if(_card.getID() == id) return;
-        if(_card.getType() != card.getType()) return;
-        if(_card.hasAbility("hero")) return;
-        _card.setBoost(id, 0);
-        _card.setBoost(id, _card.getPower());
-      })
-    }*/
+    isCommandersHornCard: true
   },
   "foltest_leader1": {
     onActivate: function(){
@@ -277,12 +231,17 @@ module.exports = {
   },
   "foltest_leader3": {
     onActivate: function(){
-      var siegeCards = this.field[2].get();
+      var field = this.field[2];
 
       //todo: unless there is commanders horn active
-      siegeCards.forEach(function(card){
+      /*siegeCards.forEach(function(card){
         card.setBoost("foltest_leader3", card.getPower());
-      })
+      })*/
+      /*field.add(Card("commanders_horn", true));*/
+      /*this.placeCard("commanders_horn", {
+        forceField: field
+      });*/
+      this.setHorn("commanders_horn", 2);
     }
   },
   "foltest_leader4": {

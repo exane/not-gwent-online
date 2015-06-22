@@ -4,7 +4,6 @@ var Backbone = require("backbone");
 require("./backbone.modal-min");
 var Handlebars = require("handlebars");
 var $ = require("jquery");
-//var Lobby = require("./client-lobby");
 
 window.$ = $;
 
@@ -307,6 +306,7 @@ var BattleView = Backbone.View.extend({
   onClickFieldCard: function(e){
     if(this.user.get("waitForDecoy")){
       var $card = $(e.target).closest(".card");
+      if(!$card.length) return;
       var _id = $card.data("id");
 
       if($card.parent().hasClass("field-horn")) return;
@@ -405,9 +405,10 @@ var BattleView = Backbone.View.extend({
   },
   clickLeader: function(e){
     var $card = $(e.target).closest(".field-leader");
-    console.log("click leader");
     if(!$card.parent().hasClass("player")) return;
-    if($card.hasClass("disabled")) return;
+    if($card.find(".card").hasClass("disabled")) return;
+
+    console.log("click leader");
 
 
     this.app.send("activate:leader")
