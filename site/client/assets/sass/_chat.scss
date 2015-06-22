@@ -12,11 +12,36 @@
   float: left;
   width: 100%;
   padding: 20px;
-  height: calc(100vh - 300px);
+  height: calc(100vh - 200px);
   min-height: 400px;
   clear: both;
+  position: relative;
 
   color: #fff;
+
+  @include contentGradient();
+}
+
+.chats {
+  float: left;
+  overflow-y: scroll;
+  height: calc(100% - 100px);
+  width: 100%;
+}
+
+.chatbox {
+  height: 100px;
+  float: left;
+  width: 100%;
+  border: 0;
+  resize: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #8798ac;
 
   @include contentGradient();
 }
