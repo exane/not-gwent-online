@@ -42,8 +42,8 @@ module.exports = {
     faction: "Northern Realm",
     type: 0
   },
-  "sigismunt_dijkstra": {
-    name: "Sigismunt Dijkstra",
+  "sigismund_dijkstra": {
+    name: "Sigismund Dijkstra",
     power: 4,
     ability: "spy",
     img: "dijkstra",
@@ -210,6 +210,40 @@ module.exports = {
     faction: "Northern Realm",
     type: 3
   },
+  "philippa_eilhart": {
+    name: "Philippa Eilhart",
+    power: 10,
+    ability: "hero",
+    img: "eilhart",
+    faction: "Northern Realm",
+    type: 1
+  },
+  "esterad_thyssen": {
+    name: "Esterad Thyssen",
+    power: 10,
+    ability: "hero",
+    img: "thyssen",
+    faction: "Northern Realm",
+    type: 0
+  },
+  "siege_tower": {
+    name: "Siege Tower",
+    power: 6,
+    ability: null,
+    img: "siege_tower",
+    faction: "Northern Realm",
+    type: 2
+  },
+  "catapult": {
+    name: "Catapult",
+    power: 8,
+    ability: "tight_bond",
+    img: "catapult",
+    faction: "Northern Realm",
+    type: 2
+  },
+
+
   "decoy": {
     name: "Decoy",
     power: -1,
@@ -226,6 +260,7 @@ module.exports = {
     faction: null,
     type: 4
   },
+
 
   "impenetrable_fog": {
     name: "Impenetrable Fog",
