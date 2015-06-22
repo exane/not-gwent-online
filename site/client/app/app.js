@@ -1,6 +1,8 @@
 var Vue = require('vue');
 var router = require('./routes');
 
+require('../../../public/Config.js');
+
 Vue.use(require('vue-resource'));
 Vue.http.headers.common['X-CSRF-TOKEN'] = $('.token').attr('content');
 

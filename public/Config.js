@@ -6,3 +6,7 @@ Config.Server = {
   "port": 16918,
   secure: false
 }
+
+Config.Site = {
+  base: "/gwent-online/site/public"
+}
