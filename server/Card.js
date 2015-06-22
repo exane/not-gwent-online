@@ -9,6 +9,7 @@ var Card = (function(){
     /**
      * constructor here
      */
+    this.boost = 0;
     this._uidEvents = {};
     this.setDisabled(false);
     this._key = key;
@@ -43,6 +44,10 @@ var Card = (function(){
   };
 
   r._uidEvents = null;
+  r.boost = null;
+  r.power = null;
+  r.diff = null;
+  r.diffPos = null;
 
   r.getUidEvents = function(key){
     return this._uidEvents[key];
@@ -56,7 +61,7 @@ var Card = (function(){
     return this._data.name;
   }
 
-  r.getBasePower = function() {
+  r.getBasePower = function(){
     var base = this._data.power;
     if(this._forcedPower > -1){
       base = this._forcedPower > this._data.power ? this._data.power : this._forcedPower;
@@ -65,12 +70,13 @@ var Card = (function(){
   }
 
   r.getPower = function(){
+    this.power = null;
+    this.diff = null;
+    this.diffPos = null;
     if(this._data.power === -1) return 0;
-    return this.getBasePower() + this.getBoost();
-    /*if(this._forcedPower > -1){
-      return (this._forcedPower > this._data.power ? this._data.power : this._forcedPower) + this.getBoost();
-    }
-    return this._data.power + this.getBoost();*/
+    this.diff = (this.power = (this.getBasePower() + this.getBoost())) - this.getRawPower();
+    if(this.diff > 0) this.diffPos = true;
+    return this.power;
   }
   r.getRawPower = function(){
     return this._data.power;

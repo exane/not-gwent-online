@@ -77,7 +77,7 @@ var App = Backbone.Router.extend({
 var SideView = Backbone.View.extend({
   el: ".container",
   template: require("../templates/cards.handlebars"),
-  templateCards: require("../templates/multipleCards.handlebars"),
+  templateCards: require("../templates/fieldCards.handlebars"),
   initialize: function(options){
     var self = this;
     this.side = options.side;
