@@ -4,6 +4,6 @@
     <li><a v-on="click: changeView('deck-builder')">Deck Builder</a></li>
     <li><a v-on="click: changeView('highscore')">Highscore</a></li>
 
-    <li class="sub-nav"><a>Quick Match</a></li>
+    <li class="sub-nav" v-on="click: searchMatch"><a>Quick Match</a></li>
   </ul>
 </nav>

@@ -16,7 +16,6 @@ var app = new Vue({
 
   components: {
     lobby: require('./components/lobby'),
-    navigation: require('./components/navigation'),
     chat: require('./components/chat')
   }
 

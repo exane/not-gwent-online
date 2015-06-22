@@ -3,6 +3,11 @@
   margin: 0 auto;
 }
 
+.wrap-modal-search {
+  max-width: 250px;
+  margin: 0 auto;
+}
+
 .modal {
   position: fixed;
   width: 100%;
@@ -31,4 +36,22 @@
   padding: 50px 0;
   margin: 15% 0 0 0;
   float: left;
+}
+
+.icon-content-load {
+  background: url(../img/content-load.gif) no-repeat;
+  float: left;
+  width: 32px;
+  height: 32px;
+  opacity: .9;
+}
+
+.modal-para {
+  font-size: 17px;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+  color: #8798ac;
+  float: left;
+  margin: 3px 0 0 20px;
 }

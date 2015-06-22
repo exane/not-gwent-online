@@ -13,9 +13,7 @@ var routes = {
 };
 
 var options = {
-  html5history: true,
-  run_handler_in_init: false,
-  convert_hash_in_init: false
+  html5history: true
 }
 
 var Router = require('director').Router;
