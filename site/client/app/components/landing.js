@@ -41,7 +41,7 @@ module.exports = {
     },
 
     closeLogin: function(e) {
-      if($(e.target).context.className == 'modal active') {
+      if(e.target.className == 'modal active') {
         this.modal = false;
       }
     }
