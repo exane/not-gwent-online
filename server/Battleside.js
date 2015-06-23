@@ -4,6 +4,7 @@ var Hand = require("./Hand");
 var Card = require("./Card");
 var Field = require("./Field");
 var _ = require("underscore");
+var Promise = require("jquery-deferred");
 
 
 var Battleside;
@@ -143,7 +144,7 @@ Battleside = (function(){
     return this._passing;
   }
 
-  r.isWaiting = function() {
+  r.isWaiting = function(){
     return this._isWaiting;
   }
 
@@ -212,7 +213,7 @@ Battleside = (function(){
 
     console.log("update:hand fired");
 
-    this.update();
+    /*this.update();*/
   }
 
   r.calcScore = function(){
@@ -593,7 +594,7 @@ Battleside = (function(){
             res.push(card);
           }
         }
-        else if(_.isArray(val)) {
+        else if(_.isArray(val)){
           var _f = false;
           for(var i = 0; i < val.length; i++) {
             if(property === val[i]){
@@ -613,6 +614,40 @@ Battleside = (function(){
     }
 
     return arr;
+  }
+
+  r.reDraw = function(n){
+    var hand = this.hand.getCards();
+    var self = this;
+    var left = n;
+    var deferred = Promise.Deferred();
+
+    this.send("redraw:cards", null, true);
+
+    this.receive("redraw:reDrawCard", function(data){
+      var id = data.cardID;
+      if(!left) return;
+      left--;
+      var card = self.hand.remove(id)[0];
+      console.log("hand -> deck: ", card.getName());
+      self.deck.add(card);
+      self.deck.shuffle();
+      self.draw(1);
+      self.update();
+      if(!left) {
+        self.send("redraw:close", null, true);
+        console.log("redraw finished");
+        deferred.resolve("done");
+      }
+    })
+
+    this.receive("redraw:close_client", function() {
+      console.log("redraw finished!");
+      deferred.resolve("done");
+    })
+
+    return deferred;
+
   }
 
   return Battleside;

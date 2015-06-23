@@ -4,14 +4,15 @@
   "description": "A standalone multiplayer version of Gwent (The Witcher 3)",
   "main": "gulpfile.js",
   "dependencies": {
-    "socketcluster": "2.2.x",
     "connect": "3.0.1",
     "express": "4.12.3",
-    "shortid": "^2.2.2",
-    "serve-static": "1.8.0",
+    "jquery-deferred": "^0.3.0",
     "minimist": "1.1.0",
-    "underscore": "^1.8.3",
-    "socketcluster-client": "2.2.x"
+    "serve-static": "1.8.0",
+    "shortid": "^2.2.2",
+    "socketcluster": "2.2.x",
+    "socketcluster-client": "2.2.x",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babelify": "^6.1.2",
@@ -22,7 +23,6 @@
     "gulp-sass": "^2.0.1",
     "handlebars": "^3.0.3",
     "jquery": "^2.1.4",
-    "promise": "^7.0.1",
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {

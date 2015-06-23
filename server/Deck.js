@@ -50,7 +50,6 @@ var Deck = (function(){
     return card;
   }
 
-
   r._loadCards = function(){
     this._deck = this.getDeck().map(function(cardkey){
       return Card(cardkey);
@@ -98,6 +97,10 @@ var Deck = (function(){
       deck[j] = deck[i];
       deck[i] = tmp;
     }
+  }
+
+  r.add = function(card) {
+    this._deck.push(card);
   }
 
   return Deck;

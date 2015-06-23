@@ -1,6 +1,7 @@
 var Battleside = require("./Battleside");
 var Card = require("./Card");
 var shortid = require("shortid");
+var Promise = require("jquery-deferred");
 
 
 var Battle = (function(){
@@ -61,72 +62,23 @@ var Battle = (function(){
     this.p2.setLeadercard();
     this.p1.draw(10);
     this.p2.draw(10);
-    /*this.p1.hand.add(Card("commanders_horn"));
-    this.p2.hand.add(Card("commanders_horn"));*/
-    /*
-        this.p1.hand.add(Card("ciaran_aep_easnillien"));
-        this.p2.hand.add(Card("ciaran_aep_easnillien"));*/
-    /*
-        */
-    /*this.p1.hand.add(Card("decoy"));
-        this.p2.hand.add(Card("decoy"));*/
-    /*
-        this.p1.hand.add(Card("milva"));
-        this.p2.hand.add(Card("milva"));
-        this.p1.hand.add(Card("havekar_healer"));
-        this.p2.hand.add(Card("havekar_healer"));
-        this.p1.hand.add(Card("toruviel"));
-        this.p2.hand.add(Card("toruviel"));
-        this.p1.hand.add(Card("vrihedd_brigade_recruit"));
-        this.p2.hand.add(Card("vrihedd_brigade_recruit"));
-        this.p1.hand.add(Card("impenetrable_fog"));
-        this.p2.hand.add(Card("impenetrable_fog"));*/
-    /*
-    this.p1.hand.add(Card("commanders_horn"));
-    this.p1.hand.add(Card("commanders_horn"));
-    this.p2.hand.add(Card("commanders_horn"));*/
-    /*
-    this.p1.hand.add(Card("biting_frost"));
-    this.p2.hand.add(Card("biting_frost"));
-    this.p1.hand.add(Card("torrential_rain"));
-    this.p2.hand.add(Card("torrential_rain"));
-    this.p1.hand.add(Card("clear_weather"));
-    this.p2.hand.add(Card("clear_weather"));*/
-    /*
-        this.p1.hand.add(Card("kaedweni_siege_expert"));
-        this.p2.hand.add(Card("kaedweni_siege_expert"));
-        this.p1.hand.add(Card("ballista"));
-        this.p2.hand.add(Card("ballista"));
-        this.p1.hand.add(Card("ballista"));
-        this.p2.hand.add(Card("ballista"));
-        this.p1.hand.add(Card("ballista"));
-        this.p2.hand.add(Card("ballista"));
-        this.p1.hand.add(Card("ballista"));
-        this.p2.hand.add(Card("ballista"));
-        this.p1.hand.add(Card("ballista"));
-        this.p2.hand.add(Card("ballista"));*/
-
-    /*
-    this.p1.hand.add(Card("dun_banner_medic"));
-    this.p2.hand.add(Card("dun_banner_medic"));
-    this.p1.hand.add(Card("isengrim_faoiltiarnah"));
-    this.p2.hand.add(Card("isengrim_faoiltiarnah"));*/
-
-    /*this.p1.addToDiscard([Card("kaedweni_siege_expert")]);
-    this.p2.addToDiscard([Card("kaedweni_siege_expert")]);*/
-    /*
-        this.p1.hand.add(Card("decoy"));
-        this.p1.hand.add(Card("impenetrable_fog"));
-        this.p2.hand.add(Card("decoy"));
-        this.p2.hand.add(Card("impenetrable_fog"));*/
 
     this.update();
 
 
-    /*PubSub.subscribe("nextTurn", this.switchTurn.bind(this));*/
+    Promise.when(this.p1.reDraw(2), this.p2.reDraw(2))
+    .then(function() {
+      this.on("NextTurn", this.switchTurn);
+      this.switchTurn(Math.random() > .5 ? this.p1 : this.p2);
+    }.bind(this));
+
+
+
+
+    /*
     this.on("NextTurn", this.switchTurn);
 
-    this.switchTurn(Math.random() > .5 ? this.p1 : this.p2);
+    this.switchTurn(Math.random() > .5 ? this.p1 : this.p2);*/
   }
 
   r.switchTurn = function(side, __flag){
@@ -173,6 +125,7 @@ var Battle = (function(){
   }
 
   r.update = function(){
+    console.log("update called");
     this._update(this.p1);
     this._update(this.p2);
   }

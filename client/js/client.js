@@ -226,6 +226,8 @@ var BattleView = Backbone.View.extend({
     this.listenTo(user, "change:openDiscard", this.render);
     this.listenTo(user, "change:setAgile", this.render);
     this.listenTo(user, "change:setHorn", this.render);
+    this.listenTo(user, "change:isReDrawing", this.render);
+    /*this.listenTo(user, "change:handCards", this.render);*/
 
     this.$hand = this.$el.find(".field-hand");
     this.$preview = this.$el.find(".card-preview");
@@ -378,6 +380,12 @@ var BattleView = Backbone.View.extend({
       calculateCardMargin(this.$el.find(".field-hand .card"), 538, 70, this.handCards.length);
     }
 
+    if(this.user.get("isReDrawing")) {
+      this.user.set("handCards", this.handCards);
+      var modal = new ReDrawModal({model: this.user});
+      this.$el.prepend(modal.render().el);
+    }
+
     if(this.user.get("openDiscard")){
       var modal = new Modal({model: this.user});
       this.$el.prepend(modal.render().el);
@@ -488,6 +496,28 @@ var MedicModal = Modal.extend({
   }
 });
 
+var ReDrawModal = Modal.extend({
+  template: require("../templates/modal.redraw.handlebars"),
+  initialize: function(){
+    this.listenTo(this.model, "change:isReDrawing", this.cancel);
+  },
+  events: {
+    "click .card": "onCardClick"
+  },
+  onCardClick: function(e){
+    console.log($(e.target).closest(".card"));
+    var id = $(e.target).closest(".card").data().id;
+    this.model.get("app").send("redraw:reDrawCard", {
+      cardID: id
+    })
+  },
+  cancel: function(){
+    if(!this.model.get("isReDrawing")) return;
+    this.model.get("app").send("redraw:close_client");
+    this.model.set("isReDrawing", false);
+  }
+});
+
 var User = Backbone.Model.extend({
   defaults: {
     name: "",
@@ -552,6 +582,14 @@ var User = Backbone.Model.extend({
     app.receive("played:horn", function(data){
       console.log("played horn");
       self.set("setHorn", data.cardID);
+    })
+
+    app.receive("redraw:cards", function() {
+      self.set("isReDrawing", true);
+    })
+
+    app.receive("redraw:close", function() {
+      self.set("isReDrawing", false);
     })
 
     app.on("createRoom", this.createRoom, this);
