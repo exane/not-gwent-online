@@ -1,11 +1,5 @@
 module.exports = {
 
-  template: "<h2>deckbuilder hier</h2>",
-
-  data: function() {
-    return {
-
-    }
-  }
+  template: require('../views/deckBuilder.html')
 
 };

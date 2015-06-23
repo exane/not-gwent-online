@@ -1,4 +1,4 @@
-.wrap-modal {
+.wrap-modal-login {
   max-width: 600px;
   margin: 0 auto;
 }
@@ -64,7 +64,7 @@
   margin: 20px 0 50px 0;
 }
 
-.btn-cancel {
+.btn-sub {
   color: darken(#8798ac, 30%);
   cursor: pointer;
   text-transform: uppercase;
@@ -73,5 +73,10 @@
 
   &:hover {
     color: #8798ac;
+  }
+
+  .wrap-modal-login & {
+    margin: 30px 0 0 0;
+    float: left;
   }
 }

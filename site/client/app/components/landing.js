@@ -6,6 +6,16 @@ module.exports = {
 
   inherit: true,
 
+  data: function() {
+    return {
+      modal: false
+    }
+  },
+
+  components: {
+    login: require('./modals/login')
+  },
+
   ready: function() {
     setTimeout(function() {
       $('.container-form-landing').addClass('active')
@@ -19,6 +29,14 @@ module.exports = {
 
       setTimeout(function() {
         window.location.href = './lobby';
+      }, 500);
+    },
+
+    openLogin: function() {
+      this.modal = true;
+
+      setTimeout(function() {
+        $('.login-username').focus();
       }, 500);
     }
   }
