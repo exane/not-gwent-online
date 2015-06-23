@@ -586,6 +586,18 @@ Battleside = (function(){
             res.push(card);
           }
         }
+        else if(_.isArray(val)) {
+          var _f = false;
+          for(var i = 0; i < val.length; i++) {
+            if(property === val[i]){
+              _f = true;
+              break;
+            }
+          }
+          if(!_f){
+            res.push(card);
+          }
+        }
         else if(card.getProperty(prop) !== val){
           res.push(card);
         }
