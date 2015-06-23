@@ -22,6 +22,10 @@
   width: 220px;
 
   @include secondGradient();
+
+  .container-form-landing & {
+    width: 170px;
+  }
 }
 
 .wrap-btn-action {
