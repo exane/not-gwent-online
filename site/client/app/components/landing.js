@@ -37,7 +37,13 @@ module.exports = {
 
       setTimeout(function() {
         $('.login-username').focus();
-      }, 500);
+      }, 300);
+    },
+
+    closeLogin: function(e) {
+      if($(e.target).context.className == 'modal active') {
+        this.modal = false;
+      }
     }
   }
 
