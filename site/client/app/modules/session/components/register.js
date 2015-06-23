@@ -4,11 +4,21 @@ module.exports = {
 
   inherit: true,
 
+  data: function() {
+    return {
+      username: '',
+      password: '',
+      email: ''
+    }
+  },
+
   methods: {
     register: function(e) {
       e.preventDefault();
 
-      console.log("bal");
+      if( ! this.username || ! this.password || ! this.email) {
+        $('.form-error').hide().fadeIn('fast');
+      }
 
       return false;
     }

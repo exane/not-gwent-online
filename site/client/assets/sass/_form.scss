@@ -102,3 +102,12 @@
 :-ms-input-placeholder {
   color: darken(#8798ac, 10%);
 }
+
+.form-error {
+  float: left;
+  clear: both;
+  color: #c64b4b;
+  font-size: 15px;
+  margin: 20px 0;
+  display: none;
+}
