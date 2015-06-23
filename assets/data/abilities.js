@@ -22,7 +22,7 @@ module.exports = {
 
       discard = this.filter(discard, {
         "ability": "hero",
-        "type": card.constructor.TYPE.SPECIAL
+        "type": [card.constructor.TYPE.SPECIAL, card.constructor.TYPE.WEATHER]
       })
 
       this.send("played:medic", {

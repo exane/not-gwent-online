@@ -143,6 +143,10 @@ Battleside = (function(){
     return this._passing;
   }
 
+  r.isWaiting = function() {
+    return this._isWaiting;
+  }
+
   r.setUpWeatherFieldWith = function(p2){
     this.field[Card.TYPE.WEATHER] = p2.field[Card.TYPE.WEATHER] = Field(this);
   }
@@ -277,6 +281,8 @@ Battleside = (function(){
 
   r.playCard = function(card){
     if(card === null || card === -1) return;
+    if(this.isWaiting()) return;
+    if(this.isPassing()) return;
 
     if(!this.placeCard(card)) return;
 
@@ -291,7 +297,7 @@ Battleside = (function(){
   r.placeCard = function(card, obj){
     obj = _.extend({}, obj);
 
-    if(typeof card === "string" ) {
+    if(typeof card === "string"){
       card = Card(card);
     }
 
@@ -331,13 +337,13 @@ Battleside = (function(){
 
   r.setHorn = function(card, field){
     var self = this;
-    field = typeof field  === "undefined" ? null : field;
+    field = typeof field === "undefined" ? null : field;
 
     if(typeof card === "string"){
       card = Card(card);
     }
 
-    if(typeof field === "number") {
+    if(typeof field === "number"){
       card.changeType(field);
       this.placeCard(card, {
         isHorn: field,
@@ -409,7 +415,7 @@ Battleside = (function(){
       if(ability.onBeforePlace){
         ability.onBeforePlace.apply(this, [card]);
       }
-      if(ability.isCommandersHornCard && !obj.isHorn){
+      if(ability.isCommandersHornCard && typeof obj.isHorn === "undefined"){
         this.setHorn(card);
       }
       if(ability.commandersHorn){
@@ -529,8 +535,9 @@ Battleside = (function(){
     var cards1 = this.field[Card.TYPE.CLOSE_COMBAT].removeAll();
     var cards2 = this.field[Card.TYPE.RANGED].removeAll();
     var cards3 = this.field[Card.TYPE.SIEGE].removeAll();
+    var cards4 = this.field[Card.TYPE.WEATHER].removeAll();
 
-    var cards = cards1.concat(cards2.concat(cards3));
+    var cards = cards1.concat(cards2.concat(cards3.concat(cards4)));
     this.addToDiscard(cards);
   }
 

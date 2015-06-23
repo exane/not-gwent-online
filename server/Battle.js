@@ -62,21 +62,25 @@ var Battle = (function(){
     this.p1.draw(10);
     this.p2.draw(10);
     /*this.p1.hand.add(Card("commanders_horn"));
-    this.p2.hand.add(Card("commanders_horn"));*//*
-    this.p1.hand.add(Card("ciaran_aep_easnillien"));
-    this.p2.hand.add(Card("ciaran_aep_easnillien"));*//*
-    *//*this.p1.hand.add(Card("decoy"));
-    this.p2.hand.add(Card("decoy"));*//*
-    this.p1.hand.add(Card("milva"));
-    this.p2.hand.add(Card("milva"));
-    this.p1.hand.add(Card("havekar_healer"));
-    this.p2.hand.add(Card("havekar_healer"));
-    this.p1.hand.add(Card("toruviel"));
-    this.p2.hand.add(Card("toruviel"));
-    this.p1.hand.add(Card("vrihedd_brigade_recruit"));
-    this.p2.hand.add(Card("vrihedd_brigade_recruit"));
-    this.p1.hand.add(Card("impenetrable_fog"));
-    this.p2.hand.add(Card("impenetrable_fog"));*/
+    this.p2.hand.add(Card("commanders_horn"));*/
+    /*
+        this.p1.hand.add(Card("ciaran_aep_easnillien"));
+        this.p2.hand.add(Card("ciaran_aep_easnillien"));*/
+    /*
+        */
+    /*this.p1.hand.add(Card("decoy"));
+        this.p2.hand.add(Card("decoy"));*/
+    /*
+        this.p1.hand.add(Card("milva"));
+        this.p2.hand.add(Card("milva"));
+        this.p1.hand.add(Card("havekar_healer"));
+        this.p2.hand.add(Card("havekar_healer"));
+        this.p1.hand.add(Card("toruviel"));
+        this.p2.hand.add(Card("toruviel"));
+        this.p1.hand.add(Card("vrihedd_brigade_recruit"));
+        this.p2.hand.add(Card("vrihedd_brigade_recruit"));
+        this.p1.hand.add(Card("impenetrable_fog"));
+        this.p2.hand.add(Card("impenetrable_fog"));*/
     /*
     this.p1.hand.add(Card("commanders_horn"));
     this.p1.hand.add(Card("commanders_horn"));
@@ -87,19 +91,20 @@ var Battle = (function(){
     this.p1.hand.add(Card("torrential_rain"));
     this.p2.hand.add(Card("torrential_rain"));
     this.p1.hand.add(Card("clear_weather"));
-    this.p2.hand.add(Card("clear_weather"));*//*
-    this.p1.hand.add(Card("kaedweni_siege_expert"));
-    this.p2.hand.add(Card("kaedweni_siege_expert"));
-    this.p1.hand.add(Card("ballista"));
-    this.p2.hand.add(Card("ballista"));
-    this.p1.hand.add(Card("ballista"));
-    this.p2.hand.add(Card("ballista"));
-    this.p1.hand.add(Card("ballista"));
-    this.p2.hand.add(Card("ballista"));
-    this.p1.hand.add(Card("ballista"));
-    this.p2.hand.add(Card("ballista"));
-    this.p1.hand.add(Card("ballista"));
-    this.p2.hand.add(Card("ballista"));*/
+    this.p2.hand.add(Card("clear_weather"));*/
+    /*
+        this.p1.hand.add(Card("kaedweni_siege_expert"));
+        this.p2.hand.add(Card("kaedweni_siege_expert"));
+        this.p1.hand.add(Card("ballista"));
+        this.p2.hand.add(Card("ballista"));
+        this.p1.hand.add(Card("ballista"));
+        this.p2.hand.add(Card("ballista"));
+        this.p1.hand.add(Card("ballista"));
+        this.p2.hand.add(Card("ballista"));
+        this.p1.hand.add(Card("ballista"));
+        this.p2.hand.add(Card("ballista"));
+        this.p1.hand.add(Card("ballista"));
+        this.p2.hand.add(Card("ballista"));*/
 
     /*
     this.p1.hand.add(Card("dun_banner_medic"));
@@ -127,6 +132,8 @@ var Battle = (function(){
   r.switchTurn = function(side, __flag){
     __flag = typeof __flag == "undefined" ? 0 : 1;
 
+    /*side.foe.wait();*/
+
 
     if(!(side instanceof Battleside)){
       console.trace("side is not a battleside!");
@@ -140,7 +147,10 @@ var Battle = (function(){
     }
 
     this.runEvent("EachTurn");
+
+    //setTimeout(function() {
     this.runEvent("Turn" + side.getID());
+    //}.bind(this), 1000);
     console.log("current Turn: ", side.getName());
 
   }
@@ -253,7 +263,7 @@ var Battle = (function(){
       delete this.events[event][uid];
       return;
     }
-    for(var _uid in this.events[event]){
+    for(var _uid in this.events[event]) {
       this.events[event][_uid] = null;
       delete this.events[event][_uid];
     }
