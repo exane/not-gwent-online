@@ -1,5 +1,23 @@
 <?php
 
+  // todo: move to controllers
+  use Gwent\User;
+  use Illuminate\Support\Facades\Request;
+
+  Route::group(['prefix' => 'api'], function() {
+
+    post('/register', function() {
+      $user = new User();
+      $user->username = Request::input('username');
+      $user->email = Request::input('email');
+      $user->password = bcrypt(Request::input('password'));
+      $user->save();
+
+      Auth::login($user);
+    });
+
+  });
+
   get('/lobby', function() {
     return innerView();
   });
