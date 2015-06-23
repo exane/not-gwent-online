@@ -7,31 +7,17 @@
   }
 
   .bla {
-    padding: 5px;
+    padding: 4px;
     float: left;
     border-radius: 14px;
     margin: 100px;
     position: relative;
+
+    box-shadow: 0 0 2px 0 orange;
   }
 
-  /*.shadow {
-    border-radius: 40%;
-    box-shadow: 0 0 30px 10px #ffa500;
-    content: "";
-    height: calc(100% - 40px);
-    left: 10px;
-    position: absolute;
-    width: calc(100% - 20px);
-    z-index: 1;
-    transition: all 0.3s ease-in-out 0s;
-
-    -webkit-animation: Shadow 2s ease infinite;
-    -moz-animation: Shadow 2s ease infinite;
-    animation: Shadow 2s ease infinite;
-  }*/
-
   .shadow {
-    border-radius: 50%;
+    border-radius: 35%;
     box-shadow: 0 0 15px 14px #ffa500;
     content: "";
     height: calc(100% - 40px);
@@ -109,51 +95,18 @@
     }
   }
 
-  /*@-webkit-keyframes Shadow {
-    0% {
-      top: 10px;
-      box-shadow: 0 10px 30px 10px #ffa500;
-    }
-    25%{top: 20px}
-    50%{
-      top: 30px;
-      box-shadow: 0 -10px 30px 10px #ffa500;
-    }
-    75%{top: 20px}
-    100%{top: 10px;
-      box-shadow: 0 10px 30px 10px #ffa500;
-    }
+  .overlay-card {
+    background: linear-gradient(2deg, rgba(255,255,255,.05), rgba(255,255,255,.3), rgba(255,255,255,.1));
+    background-size: 800% 800%;
+    position: absolute;
+    z-index: 20;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+
+    -webkit-animation: AnimationName 10s ease infinite;
+    -moz-animation: AnimationName 10s ease infinite;
+    animation: AnimationName 10s ease infinite;
   }
-  @-moz-keyframes Shadow {
-    0% {
-      top: 10px;
-      box-shadow: 0 10px 30px 10px #ffa500;
-    }
-    25%{top: 20px}
-    50%{
-      top: 30px;
-    box-shadow: 0 -10px 30px 10px #ffa500;
-    }
-    75%{top: 20px}
-    100%{top: 10px;
-      box-shadow: 0 10px 30px 10px #ffa500;
-    }
-  }
-  @keyframes Shadow {
-    0% {
-      top: 10px;
-      box-shadow: 0 10px 30px 10px #ffa500;
-    }
-    25%{top: 20px}
-    50%{
-      top: 30px;
-    box-shadow: 0 -10px 30px 10px #ffa500;
-    }
-    75%{top: 20px}
-    100%{top: 10px;
-      box-shadow: 0 10px 30px 10px #ffa500;
-    }
-  }*/
 
   @-webkit-keyframes AnimationName {
     0%{background-position:51% 0%}
@@ -175,6 +128,7 @@
   <div class="bla ani">
     <img src="http://80.240.132.120/gwent/assets/cards/ballista1.png" class="card" width="150" height="auto">
     <div class="shadow"></div>
+    <div class="overlay-card"></div>
   </div>
 
 </div>
