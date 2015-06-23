@@ -11,7 +11,8 @@ module.exports = {
   },
 
   components: {
-    login: require('./login')
+    login: require('./../../session/components/login'),
+    register: require('./../../session/components/register')
   },
 
   ready: function() {
