@@ -1,5 +1,3 @@
-var router = require('./../routes');
-
 module.exports = {
 
   template: require('../views/navigation.html'),

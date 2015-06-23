@@ -11,12 +11,12 @@ module.exports = {
   },
 
   components: {
-    searchmatch: require('./modals/searchMatch'),
+    searchmatch: require('./search-match'),
     navigation: require('./navigation'),
     chat: require('./chat'),
 
-    lobby: require('./lobby'),
-    deckBuilder: require('./deckBuilder')
+    lobby: require('./../../lobby/components/lobby'),
+    deckBuilder: require('./../../deck-builder/components/deck-builder'),
   }
 
 };

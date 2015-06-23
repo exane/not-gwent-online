@@ -7,8 +7,8 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = $('.token').attr('content');
 
 var app = Vue.extend({
   components: {
-    inner: require('./components/inner'),
-    landing: require('./components/landing')
+    inner: require('./modules/inner/components/inner'),
+    landing: require('./modules/landing/components/landing')
   }
 });
 

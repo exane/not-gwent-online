@@ -1,6 +1,6 @@
 module.exports = {
 
-  template: require('../../views/modals/searchMatch.html'),
+  template: require('./../views/search-match.html'),
 
   inherit: true,
 

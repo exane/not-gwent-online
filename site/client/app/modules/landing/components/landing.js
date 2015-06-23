@@ -1,8 +1,6 @@
-var router = require('./../routes');
-
 module.exports = {
 
-  template: require('../views/landing.html'),
+  template: require('./../views/landing.html'),
 
   inherit: true,
 
@@ -13,7 +11,7 @@ module.exports = {
   },
 
   components: {
-    login: require('./modals/login')
+    login: require('./login')
   },
 
   ready: function() {

@@ -1,6 +1,6 @@
 module.exports = {
 
-  template: require('../../views/modals/login.html'),
+  template: require('./../views/login.html'),
 
   inherit: true,
 
