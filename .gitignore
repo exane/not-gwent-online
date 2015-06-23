@@ -10,4 +10,4 @@ test/spec
 /site/client/node_modules
 /site/public/assets/js/bundle.js
 /site/public/assets/css/app.css
-/site/server/composer.lock
+site/server/composer.lock

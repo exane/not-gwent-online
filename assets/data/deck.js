@@ -7,7 +7,7 @@ module.exports = {
     "poor_fucking_infantry",
     "yarpen_zigrin",
     "blue_stripes_commando",
-    "sigismunt_dijkstra",
+    "sigismund_dijkstra",
     "prince_stennis",
     "siegfried_of_denesle",
     "ves",
