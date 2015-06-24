@@ -380,7 +380,7 @@ var BattleView = Backbone.View.extend({
       calculateCardMargin(this.$el.find(".field-hand .card"), 538, 70, this.handCards.length);
     }
 
-    if(this.user.get("isReDrawing")) {
+    if(this.user.get("isReDrawing")){
       this.user.set("handCards", this.handCards);
       var modal = new ReDrawModal({model: this.user});
       this.$el.prepend(modal.render().el);
@@ -584,11 +584,11 @@ var User = Backbone.Model.extend({
       self.set("setHorn", data.cardID);
     })
 
-    app.receive("redraw:cards", function() {
+    app.receive("redraw:cards", function(){
       self.set("isReDrawing", true);
     })
 
-    app.receive("redraw:close", function() {
+    app.receive("redraw:close", function(){
       self.set("isReDrawing", false);
     })
 

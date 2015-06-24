@@ -67,24 +67,15 @@ var Battle = (function(){
 
 
     Promise.when(this.p1.reDraw(2), this.p2.reDraw(2))
-    .then(function() {
+    .then(function(){
       this.on("NextTurn", this.switchTurn);
       this.switchTurn(Math.random() > .5 ? this.p1 : this.p2);
     }.bind(this));
 
-
-
-
-    /*
-    this.on("NextTurn", this.switchTurn);
-
-    this.switchTurn(Math.random() > .5 ? this.p1 : this.p2);*/
   }
 
   r.switchTurn = function(side, __flag){
     __flag = typeof __flag == "undefined" ? 0 : 1;
-
-    /*side.foe.wait();*/
 
 
     if(!(side instanceof Battleside)){
@@ -98,13 +89,12 @@ var Battle = (function(){
       return this.switchTurn(side.foe, 1);
     }
 
+
     this.runEvent("EachTurn");
 
-    //setTimeout(function() {
     this.runEvent("Turn" + side.getID());
-    //}.bind(this), 1000);
-    console.log("current Turn: ", side.getName());
 
+    console.log("current Turn: ", side.getName());
   }
 
   r.startNextRound = function(){
@@ -175,7 +165,7 @@ var Battle = (function(){
         obj.cb.apply(ctx, obj.onArgs.concat(args));
       }
     }
-    this.update();
+    //this.update();
   }
 
   r.on = function(eventid, cb, ctx, args){
