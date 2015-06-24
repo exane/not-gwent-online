@@ -8,7 +8,7 @@ module.exports = {
   data: function() {
     return {
       cards: [],
-      deck: [],
+      deck: {},
 
       leaders: [],
       leader: null,
@@ -18,12 +18,8 @@ module.exports = {
   },
 
   ready: function() {
-    // filter over leaders and store them separately.
-    this.cards = $.map(cards, (n) => {
-      if(n.type != 3) return n;
-
-      this.leaders.push(n);
-    });
+    this.initCards();
+    this.initDeck();
   },
 
   methods: {
@@ -31,11 +27,34 @@ module.exports = {
       // todo: load animation
       $('.all-cards').addClass('remove');
       this.factionFilter = deck;
+      this.initDeck();
       $('.all-cards').scrollTop(0);
 
       setTimeout(function() {
         $('.all-cards').removeClass('remove');
       }, 500);
+    },
+
+    // Filter for leaders and store them separately.
+    initCards: function() {
+      this.cards = $.map(cards, (n) => {
+        if(n.type != 3) return n;
+
+        this.leaders.push(n);
+      });
+    },
+
+    initDeck: function() {
+      this.deck = {};
+
+      deck[this.factionFilter].forEach((x) => {
+        this.deck[x] = (this.deck[x] || 0) + 1;
+      });
+    },
+
+    // test
+    removeCard: function(el) {
+
     }
   }
 };

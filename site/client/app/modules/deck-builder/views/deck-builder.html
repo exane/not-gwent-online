@@ -1,7 +1,13 @@
 <div class="heading">
-  <a v-class="active: factionFilter == 'northern_realm'" v-on="click: changeDeck('northern_realm')">Northern Realm</a>
-  <a v-class="active: factionFilter == 'scoiatael'" v-on="click: changeDeck('scoiatael')">Scoia'tael</a>
-  <a v-class="active: factionFilter == 'monster'" v-on="click: changeDeck('monster')">Monster</a>
+  <div class="heading-decks">
+    <a v-class="active: factionFilter == 'northern_realm'" v-on="click: changeDeck('northern_realm')">Northern Realm</a>
+    <a v-class="active: factionFilter == 'scoiatael'" v-on="click: changeDeck('scoiatael')">Scoia'tael</a>
+    <a v-class="active: factionFilter == 'monster'" v-on="click: changeDeck('monster')">Monster</a>
+  </div>
+
+  <div class="heading-my-deck">
+    <span>My Deck</span>
+  </div>
 </div>
 
 <div class="all-cards-wrap">
@@ -20,7 +26,110 @@
   </div>
 </div>
 
+<div class="all-deck-wrap">
+  <div class="all-deck">
+
+    <div class="clear-space"></div>
+
+    <div class="my-card" v-repeat="deck">
+      <div class="images">
+        <div
+          v-repeat="$value"
+          class="img-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/medic.png)'"></div>
+      </div>
+      <div class="sep">{{ $value }}x Blue Stripes Commando<br>
+        <span>
+          Power: 5 (Close Combat)
+        </span>
+        <em class="delete" v-on="click: removeCard($key)">Delete</em>
+      </div>
+    </div>
+
+    <div class="clear-space"></div>
+
+  </div>
+</div>
+
   <style>
+
+    .delete {
+      float: left;
+      clear: both;
+      font-style: normal;
+    }
+
+    .images {
+      position: relative;
+      width: 50px;
+      height: 94px;
+      float: left;
+    }
+
+    .img-small {
+      float: left;
+      background-size: 50px 94px;
+      width: 50px;
+      height: 94px;
+      position: absolute;
+      z-index: 100;
+    }
+
+      .img-small:nth-child(2) {
+        top: 3px;
+        z-index: 99;
+        right: -3px;
+        opacity: .5;
+      }
+
+      .img-small:nth-child(3) {
+        top: 6px;
+        z-index: 98;
+        right: -6px;
+        opacity: .5;
+      }
+
+    .my-card {
+      color: #c3cdd8;
+      float: left;
+      width: 50%;
+      margin: 0 0 20px 0;
+    }
+
+    .all-deck i {
+      color: #435365;
+      font-style: normal;
+      float: left;
+      font-size: 20px;
+      margin: 8px 0 0 0;
+    }
+
+    .sep {
+      float: left;
+      margin: 0 0 0 20px;
+      width: calc(100% - 100px);
+    }
+
+    .all-deck span {
+      color: #435365;
+      font-size: 14px;
+      float: left;
+    }
+
+    .all-deck-wrap {
+      width: 47%;
+      overflow: hidden;
+      float: right;
+      height: calc(100% + 40px);
+      padding: 0 20px;
+      margin: -80px 0 0 0;
+    }
+
+    .all-deck {
+      float: left;
+      width: calc(100% + 50px);
+      height: 100%;
+      overflow-y: auto;
+    }
 
     .shadow-all-cards {
       height: 60px;
@@ -35,13 +144,10 @@
     .test {
       float: left;
       overflow: hidden;
+      width: 100%;;
     }
 
     .remove {
       opacity: 0;
-    }
-
-    .load-deck {
-
     }
   </style>
