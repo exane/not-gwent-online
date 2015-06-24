@@ -15,7 +15,7 @@ module.exports = {
     power: 1,
     ability: null,
     img: "foot_soldier1",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "poor_fucking_infantry": {
@@ -23,7 +23,7 @@ module.exports = {
     power: 1,
     ability: "tight_bond",
     img: "infantry",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "yarpen_zigrin": {
@@ -31,7 +31,7 @@ module.exports = {
     power: 2,
     ability: null,
     img: "yarpen",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "blue_stripes_commando": {
@@ -39,7 +39,7 @@ module.exports = {
     power: 4,
     ability: "tight_bond",
     img: "commando",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "sigismund_dijkstra": {
@@ -47,7 +47,7 @@ module.exports = {
     power: 4,
     ability: "spy",
     img: "dijkstra",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "prince_stennis": {
@@ -55,7 +55,7 @@ module.exports = {
     power: 5,
     ability: "spy",
     img: "stennis",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "siegfried_of_denesle": {
@@ -63,7 +63,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "siegfried",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "ves": {
@@ -71,7 +71,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "ves",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "vernon_roche": {
@@ -79,7 +79,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "roche",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "john_natalis": {
@@ -87,7 +87,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "natalis",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "sheldon_skaggs": {
@@ -95,7 +95,7 @@ module.exports = {
     power: 4,
     ability: null,
     img: "skaggs",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 1
   },
   "sabrina_glevissig": {
@@ -103,7 +103,7 @@ module.exports = {
     power: 4,
     ability: null,
     img: "sabrina",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 1
   },
   "crinfrid_reavers_dragon_hunter": {
@@ -111,7 +111,7 @@ module.exports = {
     power: 5,
     ability: "tight_bond",
     img: "crinfrid",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 1
   },
   "sile_de_tansarville": {
@@ -119,7 +119,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "sile",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 1
   },
   "keira_metz": {
@@ -127,7 +127,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "keira",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 1
   },
   "dethmold": {
@@ -135,7 +135,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "dethmold",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 1
   },
   "kaedweni_siege_expert": {
@@ -143,7 +143,7 @@ module.exports = {
     power: 1,
     ability: "morale_boost",
     img: "siege_expert1",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 2
   },
   "dun_banner_medic": {
@@ -151,7 +151,7 @@ module.exports = {
     power: 5,
     ability: "medic",
     img: "medic",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 2
   },
   "ballista": {
@@ -159,7 +159,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "ballista1",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 2
   },
   "trebuchet": {
@@ -167,7 +167,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "trebuchet1",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 2
   },
   "thaler": {
@@ -175,7 +175,7 @@ module.exports = {
     power: 1,
     ability: "spy",
     img: "thaler",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 2
   },
   "foltest_king_of_temeria": {
@@ -183,7 +183,7 @@ module.exports = {
     power: -1,
     ability: "foltest_leader1",
     img: "foltest_king",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 3
   },
   "foltest_lord_commander": {
@@ -191,7 +191,7 @@ module.exports = {
     power: -1,
     ability: "foltest_leader2",
     img: "foltest_commander",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 3
   },
   "foltest_siegemaster": {
@@ -199,7 +199,7 @@ module.exports = {
     power: -1,
     ability: "foltest_leader3",
     img: "foltest_siege",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 3
   },
   "foltest_forged": {
@@ -207,7 +207,7 @@ module.exports = {
     power: -1,
     ability: "foltest_leader4",
     img: "foltest_forged",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 3
   },
   "philippa_eilhart": {
@@ -215,7 +215,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "eilhart",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 1
   },
   "esterad_thyssen": {
@@ -223,7 +223,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "thyssen",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 0
   },
   "siege_tower": {
@@ -231,7 +231,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "siege_tower",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 2
   },
   "catapult": {
@@ -239,7 +239,7 @@ module.exports = {
     power: 8,
     ability: "tight_bond",
     img: "catapult",
-    faction: "Northern Realm",
+    faction: "northern_realm",
     type: 2
   },
 
@@ -301,7 +301,7 @@ module.exports = {
     power: -1,
     ability: "francesca_leader1",
     img: "francesca_pureblood",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 3
   },
   "francesca_the_beautiful": {
@@ -309,7 +309,7 @@ module.exports = {
     power: -1,
     ability: "francesca_leader2",
     img: "francesca_beautiful",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 3
   },
   "francesca_daisy_of_the_valley": {
@@ -317,7 +317,7 @@ module.exports = {
     power: -1,
     ability: "francesca_leader3",
     img: "francesca_daisy",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 3
   },
   "francesca_queen_of_dol_blathanna": {
@@ -325,7 +325,7 @@ module.exports = {
     power: -1,
     ability: "francesca_leader4",
     img: "francesca_queen",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 3
   },
   "saesenthessis": {
@@ -333,7 +333,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "saesenthessis",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "iorveth": {
@@ -341,7 +341,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "iorveth",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "isengrim_faoiltiarnah": {
@@ -349,7 +349,7 @@ module.exports = {
     power: 10,
     ability: ["hero", "morale_boost"],
     img: "isengrim",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 0
   },
   "eithne": {
@@ -357,7 +357,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "eithne",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "havekar_healer": {
@@ -365,7 +365,7 @@ module.exports = {
     power: 0,
     ability: "medic",
     img: "healer",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "riordain": {
@@ -373,7 +373,7 @@ module.exports = {
     power: 1,
     ability: null,
     img: "riordain",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "toruviel": {
@@ -381,7 +381,7 @@ module.exports = {
     power: 2,
     ability: null,
     img: "toruviel",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "elven_skirmisher": {
@@ -390,7 +390,7 @@ module.exports = {
     ability: "muster",
     musterType: "skirmisher",
     img: "elven_skirmisher2",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "dwarven_skirmisher": {
@@ -399,7 +399,7 @@ module.exports = {
     ability: "muster",
     musterType: "skirmisher",
     img: "skirmisher2",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 0
   },
   "ciaran_aep_easnillien": {
@@ -407,7 +407,7 @@ module.exports = {
     power: 3,
     ability: "agile",
     img: "easnillien",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "vrihedd_brigade_recruit": {
@@ -415,7 +415,7 @@ module.exports = {
     power: 4,
     ability: null,
     img: "recruit",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "dol_blathanna_archer": {
@@ -423,7 +423,7 @@ module.exports = {
     power: 4,
     ability: null,
     img: "archer",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   }, /*
   "hav_caaren_medic": {
@@ -431,7 +431,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "", //missing image
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 0
   },*/
   "havekar_smuggler": {
@@ -439,7 +439,7 @@ module.exports = {
     power: 5,
     ability: "muster",
     img: "smuggler1",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 0
   },
   "mahakaman_defender": {
@@ -447,7 +447,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "defender2",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 0
   },
   "vrihedd_brigade_veteran": {
@@ -455,7 +455,7 @@ module.exports = {
     power: 5,
     ability: "agile",
     img: "veteran1",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 0
   },
   "dennis_cranmer": {
@@ -463,7 +463,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "cranmer",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 0
   },
   "filavandrel_aen_fidhail": {
@@ -471,7 +471,7 @@ module.exports = {
     power: 6,
     ability: "agile",
     img: "fidhail",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "ida_emean_aep_sivney": {
@@ -479,7 +479,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "sivney",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
   "yaevinn": {
@@ -487,7 +487,7 @@ module.exports = {
     power: 6,
     ability: "agile",
     img: "yaevinn",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 0
   },
   "barclay_els": {
@@ -495,7 +495,7 @@ module.exports = {
     power: 6,
     ability: "agile",
     img: "barclay",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 0
   },
   "dol_blathanna_scout": {
@@ -503,7 +503,7 @@ module.exports = {
     power: 6,
     ability: "agile",
     img: "scout2",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 0
   },
   "milva": {
@@ -511,7 +511,7 @@ module.exports = {
     power: 10,
     ability: "morale_boost",
     img: "milva",
-    faction: "Scoia'tael",
+    faction: "scoiatael",
     type: 1
   },
 
