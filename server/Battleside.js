@@ -78,7 +78,7 @@ Battleside = (function(){
     })
     this.receive("set:passing", function(){
       self.setPassing(true);
-      self.update();
+      //self.update();
       self.runEvent("NextTurn", null, [self.foe]);
     })
     this.receive("medic:chooseCardFromDiscard", function(data){
@@ -210,10 +210,6 @@ Battleside = (function(){
       var card = this.deck.draw();
       this.hand.add(card);
     }
-
-    console.log("update:hand fired");
-
-    /*this.update();*/
   }
 
   r.calcScore = function(){
@@ -266,9 +262,9 @@ Battleside = (function(){
     this.socket.on(event, cb);
   }
 
-  r.update = function(){
-    //PubSub.publish("update");
-    this.runEvent("Update");
+  r.update = function(self){
+    self = self || false;
+    this.runEvent("Update", null, [self]);
   }
 
   r.onTurnStart = function(){
@@ -325,13 +321,14 @@ Battleside = (function(){
 
     this.checkAbilityOnAfterPlace(card, obj);
 
-    this.update();
 
     if(obj._waitResponse){
       this.hand.remove(card);
       this.update();
       return 0;
     }
+
+    this.update();
 
     return 1;
   }
@@ -409,7 +406,7 @@ Battleside = (function(){
     }
 
     if(ability && ability.name === obj.suppress){
-      this.update();
+      //this.update();
     }
 
     if(ability && !Array.isArray(ability)){
@@ -454,7 +451,6 @@ Battleside = (function(){
 
           self.hand.add(replaceCard);
           self.hand.remove(card);
-          self.update();
 
           self.runEvent("NextTurn", null, [self.foe]);
         })
@@ -472,7 +468,7 @@ Battleside = (function(){
         card._uidEvents["WeatherChange"] = uid;
       }
 
-      this.update();
+      //this.update();
     }
   }
 
@@ -480,7 +476,7 @@ Battleside = (function(){
     var ability = card.getAbility();
     if(ability){
       if(ability.name && ability.name === obj.suppress){
-        this.update();
+        //this.update();
         return;
       }
       if(ability.onAfterPlace){
@@ -529,7 +525,7 @@ Battleside = (function(){
       _card.setForcedPower(forcedPower);
     });
     this.runEvent("WeatherChange");
-    this.update();
+    //this.update();
   }
 
   r.clearMainFields = function(){
@@ -633,17 +629,20 @@ Battleside = (function(){
       self.deck.add(card);
       self.deck.shuffle();
       self.draw(1);
-      self.update();
       if(!left) {
         self.send("redraw:close", null, true);
         console.log("redraw finished");
         deferred.resolve("done");
+        //self.socket.off("redraw:reDrawCard", h1);
       }
+      /*self.update(self);*/
+      self.battle.updateSelf(self);
     })
 
     this.receive("redraw:close_client", function() {
       console.log("redraw finished!");
       deferred.resolve("done");
+      //self.socket.off("redraw:close_client", h2);
     })
 
     return deferred;

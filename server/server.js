@@ -1,6 +1,7 @@
 var argv = require('minimist')(process.argv.slice(2));
-var SocketCluster = require('socketcluster').SocketCluster;
+/*var SocketCluster = require('socketcluster').SocketCluster;*/
 
+/*
 var socketCluster = new SocketCluster({
   workers: Number(argv.w) || 1,
   stores: Number(argv.s) || 1,
@@ -10,4 +11,34 @@ var socketCluster = new SocketCluster({
   storeController: __dirname + '/store.js',
   socketChannelLimit: 100,
   rebootWorkerOnCrash: argv['auto-reboot'] != false
-});
+});*/
+
+global.connections = require("./Connections")();
+
+global.matchmaking = require("./Matchmaker")();
+
+global.Room = require("./Room");
+
+global.User = require("./User");
+
+/*global.Socket = require("./Socket");*/
+
+
+var app = require('http').createServer();
+global.io = require("socket.io")(app);
+
+app.listen(16918);
+
+io.on("connection", function(socket) {
+  var user;
+  connections.add(user = User(socket));
+  console.log("new user ", user.getName());
+
+  socket.on("disconnect", function() {
+    connections.remove(user);
+    user.disconnect();
+    console.log("user ", user.getName(), " disconnected");
+    user = null;
+  })
+
+})

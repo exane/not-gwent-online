@@ -12,6 +12,8 @@ var User = (function(){
     this._rooms = [];
     this._id = socket.id;
     this.generateName();
+
+    this._events();
   };
   var r = User.prototype;
   /**
@@ -23,7 +25,7 @@ var User = (function(){
   r._id = null;
   r._name = null;
   r._rooms = null;
-  r._searching = false;
+  r._inQueue = false;
   r.socket = null;
   r.disconnected = false;
 
@@ -31,13 +33,13 @@ var User = (function(){
     return this._id;
   }
 
-  r.joinRoom = function(roomid){
+  /*r.joinRoom = function(roomid){
     var self = this;
-    /*this.socket.on(roomid, function(d) {
+    *//*this.socket.on(roomid, function(d) {
       var event = d.event, data = d.data;
       self.socket.on(event, data);
-    });*/
-  }
+    });*//*
+  }*/
 
   r.send = function(event, data, room){
     room = room || null;
@@ -45,12 +47,12 @@ var User = (function(){
     if(!room){
       this.socket.emit(event, data);
     }
-    else {/*
-      this.socket.to(room).emit(event, data);*/
-      this.socket.global.publish(room, {
+    else {
+      this.socket.to(room).emit(event, data);
+      /*this.socket.global.publish(room, {
         event: event,
         data: data
-      })
+      })*/
     }
   }
 
@@ -102,6 +104,8 @@ var User = (function(){
     var self = this;
     this.disconnected = true;
 
+    matchmaking.removeFromQueue(this);
+
     this._rooms.forEach(function(room) {
       room.leave(self);
       if(!room.hasUser()) {
@@ -113,6 +117,57 @@ var User = (function(){
     this.cleanUp();
   }
 
+  r._events = function() {
+    var socket = this.socket;
+    var self = this;
+
+    socket.on("request:name", function(data){
+      if(data && data.name){
+        self.setName(data.name);
+      }
+      socket.emit("response:name", {name: self.getName()});
+    })
+
+    /*socket.on("request:createRoom", function(){
+      var room = Room();
+      connections.roomCollection[room.getID()] = room;
+      room.join(self);
+      console.log("room %s created by %s", room.getID(), self.getName());
+      self.send("response:createRoom", room.getID());
+    })
+
+    socket.on("request:joinRoom", function(){
+      console.log("joinroom");
+      var interval = setInterval(function(){
+        for(var key in connections.roomCollection) {
+          var room = connections.roomCollection[key];
+          if(!room.isOpen()) continue;
+          room.join(self);
+          clearInterval(interval);
+          console.log("user %s joined room %s", self.getName(), room.getID());
+          self.send("response:joinRoom", room.getID());
+        }
+      }, 1000);
+    })*/
+
+    socket.on("request:matchmaking", function() {
+      if(self._inQueue) return;
+      matchmaking.findOpponent(self);
+    });
+
+    socket.on("request:gameLoaded", function(data){
+      console.log(data);
+      connections.roomCollection[data._roomID].setReady(self);
+    })
+
+    socket.on("set:deck", function(data) {
+      console.log(data);
+      if(data && data.deck){
+        self.setDeck(data.deck);
+      }
+    })
+
+  }
 
   return User;
 })();

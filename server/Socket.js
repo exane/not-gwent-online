@@ -1,11 +1,8 @@
-/*
-var app = require('http').createServer();
-global.io = require("socket.io")(app);
-var User = require("./User");
+/*var app = require('http').createServer();
+global.io = require("socket.io")(app);*/
+/*var User = require("./User");
 var Connections = require("./Connections");
-var Battle = require("./Battle");
-var Npc = require("./Npc");
-var Room = require("./Room");
+var Room = require("./Room");*/
 
 
 var Socket = (function(){
@@ -13,39 +10,28 @@ var Socket = (function(){
     if(!(this instanceof Socket)){
       return (new Socket());
     }
-    */
-/**
+    /**
      * constructor here
-     *//*
-
+     */
     this.connections = Connections();
-    */
-/*
-        this.matchmaker = Matchmaker(this.connections);
-    *//*
-
     this.roomCollection = {};
     app.listen(this.port);
     this.io = io;
     this._events();
   };
   var r = Socket.prototype;
-  */
-/**
+  /**
    * methods && properties here
    * r.property = null;
    * r.getProperty = function() {...}
-   *//*
-
+   */
   r.io = null;
   r.port = 16918;
   r.connections = null;
   r.roomCollection = null;
-  */
-/*
+  /*
     r.matchmaker = null;
-  *//*
-
+  */
 
   r._events = function(){
     var self = this;
@@ -102,4 +88,4 @@ var Socket = (function(){
   return Socket;
 })();
 
-module.exports = Socket;*/
+module.exports = Socket;

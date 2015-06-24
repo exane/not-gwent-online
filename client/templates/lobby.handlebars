@@ -14,8 +14,11 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <button type="button" class="btn btn-primary create-room">Create Room</button>
-          <button type="button" class="btn btn-primary join-room">Join Room</button>
+          <button type="button" class="btn btn-primary startMatchmaking"{{#if inMatchmakerQueue}} disabled{{/if}}>
+          Search Opponent
+          {{#if inMatchmakerQueue}}<img src="../site/public/assets/img/content-load.gif" width=20 style="margin: 5px;"> {{/if}}
+          </button>
+          <!--<button type="button" class="btn btn-primary join-room">Join Room</button>-->
         </div>
       </div>
     </div>

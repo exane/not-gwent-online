@@ -46,7 +46,7 @@ var Battle = (function(){
         this.on("AfterPlace", this.checkAbilityOnAfterPlace)*/
 
 
-    this.channel = this.socket.subscribe(this._id);
+    //this.channel = this.socket.subscribe(this._id);
     this.p1 = Battleside(this._user1.getName(), 0, this, this._user1);
     this.p2 = Battleside(this._user2.getName(), 1, this, this._user2);
     this.p1.foe = this.p2;
@@ -67,24 +67,15 @@ var Battle = (function(){
 
 
     Promise.when(this.p1.reDraw(2), this.p2.reDraw(2))
-    .then(function() {
+    .then(function(){
       this.on("NextTurn", this.switchTurn);
       this.switchTurn(Math.random() > .5 ? this.p1 : this.p2);
     }.bind(this));
 
-
-
-
-    /*
-    this.on("NextTurn", this.switchTurn);
-
-    this.switchTurn(Math.random() > .5 ? this.p1 : this.p2);*/
   }
 
   r.switchTurn = function(side, __flag){
     __flag = typeof __flag == "undefined" ? 0 : 1;
-
-    /*side.foe.wait();*/
 
 
     if(!(side instanceof Battleside)){
@@ -98,13 +89,12 @@ var Battle = (function(){
       return this.switchTurn(side.foe, 1);
     }
 
+
     this.runEvent("EachTurn");
 
-    //setTimeout(function() {
     this.runEvent("Turn" + side.getID());
-    //}.bind(this), 1000);
-    console.log("current Turn: ", side.getName());
 
+    console.log("current Turn: ", side.getName());
   }
 
   r.startNextRound = function(){
@@ -130,27 +120,33 @@ var Battle = (function(){
     this._update(this.p2);
   }
 
-  r._update = function(p){
+  r.updateSelf = function(side) {
+    this._update(side, true);
+  }
+
+  r._update = function(p, isPrivate){
+    isPrivate = isPrivate || false;
     p.send("update:info", {
       info: p.getInfo(),
       leader: p.field[Card.TYPE.LEADER].get()[0]
-    })
+    }, isPrivate)
     p.send("update:hand", {
       cards: JSON.stringify(p.hand.getCards())
-    });
+    },isPrivate);
     p.send("update:fields", {
       close: p.field[Card.TYPE.CLOSE_COMBAT].getInfo(),
       ranged: p.field[Card.TYPE.RANGED].getInfo(),
       siege: p.field[Card.TYPE.SIEGE].getInfo(),
       weather: p.field[Card.TYPE.WEATHER].getInfo()
-    })
+    }, isPrivate);
   }
 
   r.send = function(event, data){
-    this.channel.publish({
+    /*this.channel.publish({
       event: event,
       data: data
-    });
+    });*/
+    io.sockets.in(this._id).emit(event, data);
   }
 
   r.runEvent = function(eventid, ctx, args, uid){
@@ -175,7 +171,7 @@ var Battle = (function(){
         obj.cb.apply(ctx, obj.onArgs.concat(args));
       }
     }
-    this.update();
+    //this.update();
   }
 
   r.on = function(eventid, cb, ctx, args){
