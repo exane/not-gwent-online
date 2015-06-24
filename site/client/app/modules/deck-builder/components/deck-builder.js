@@ -8,21 +8,28 @@ module.exports = {
   data: function() {
     return {
       cards: [],
-      deck: []
+      deck: [],
+
+      leaders: [],
+      leader: null,
+
+      factionFilter: 'Northern Realm'
     }
   },
 
   ready: function() {
-    this.cards = $.map(cards, function(n) {
-      if(n.faction == 'Northern Realm' && n.type != 3) return n;
-    });
+    this.cards = cards;
+  },
 
-    $.map(deck, (n, i) => {
-      if(i == 'northern_realm') {
-        for(var m in n) {
-          this.deck.push(this.cards[m]);
-        }
-      }
-    });
+  methods: {
+    changeDeck: function(deck) {
+      $('.all-cards').addClass('remove');
+      this.factionFilter = deck;
+      $('.all-cards').scrollTop(0);
+
+      setTimeout(function() {
+        $('.all-cards').removeClass('remove');
+      }, 600);
+    }
   }
 };

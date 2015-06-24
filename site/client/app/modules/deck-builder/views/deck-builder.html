@@ -1,11 +1,14 @@
-<div class="heading">Nord Deck</div>
+<div class="heading">
+  <a v-class="active: factionFilter == 'Northern Realm'" v-on="click: changeDeck('Northern Realm')">Northern Realm</a>
+  <a v-class="active: factionFilter == 'scoiatael'" v-on="click: changeDeck('sco bla')">Scoia'tael</a>
+  <a v-class="active: factionFilter == 'monster'" v-on="click: changeDeck('monster')">Monster</a>
+</div>
 
 <div class="all-cards-wrap">
   <div class="all-cards">
-
     <div class="clear-space"></div>
 
-    <div class="card-wrap" v-repeat="card: cards">
+    <div class="card-wrap" v-repeat="card: cards | filterBy factionFilter in faction">
       <div class="bla ani"></div>
       <div class="card-img card" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + card.img + '.png)'"></div>
       <div class="shadow"></div>
@@ -15,11 +18,17 @@
     <div class="clear-space"></div>
 
   </div>
+  <div class="shadow-all-cards"></div>
 </div>
 
-  <!--div class="line"></div-->
-
   <style>
+
+    .shadow-all-cards {
+      height: 60px;
+      float: left;
+      width: 100%;
+    }
+
 .container-content {
   padding: 0;
 }
@@ -27,5 +36,9 @@
     .test {
       float: left;
       overflow: hidden;
+    }
+
+    .remove {
+      opacity: 0;
     }
   </style>
