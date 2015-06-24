@@ -18,7 +18,12 @@ module.exports = {
   },
 
   ready: function() {
-    this.cards = cards;
+    // filter over leaders and store them separately.
+    this.cards = $.map(cards, (n) => {
+      if(n.type != 3) return n;
+
+      this.leaders.push(n);
+    });
   },
 
   methods: {
@@ -30,7 +35,7 @@ module.exports = {
 
       setTimeout(function() {
         $('.all-cards').removeClass('remove');
-      }, 600);
+      }, 500);
     }
   }
 };
