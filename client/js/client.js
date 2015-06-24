@@ -1,5 +1,4 @@
-/*("http://localhost:16918")*/
-var socketCluster = require("socketcluster-client");
+var socket = require("socket.io-client");
 var Backbone = require("backbone");
 require("./backbone.modal-min");
 var Handlebars = require("handlebars");
@@ -21,7 +20,7 @@ var App = Backbone.Router.extend({
     Backbone.history.start();
   },
   connect: function(){
-    this.socket = socketCluster.connect(Config.Server);
+    this.socket = socket(Config.Server.hostname + ":" + Config.Server.port);
   },
   receive: function(event, cb){
     this.socket.on(event, cb);
@@ -235,7 +234,7 @@ var BattleView = Backbone.View.extend({
 
     var interval = setInterval(function(){
       if(!user.get("room")) return;
-      this.setUpBattleEvents(user.get("room"));
+      this.setUpBattleEvents();
       this.app.send("request:gameLoaded", {_roomID: user.get("room")});
       clearInterval(interval);
     }.bind(this), 10);
@@ -421,12 +420,50 @@ var BattleView = Backbone.View.extend({
 
     this.app.send("activate:leader")
   },
-  setUpBattleEvents: function(channelName){
-    this.battleChannel = this.app.socket.subscribe(channelName);
+  setUpBattleEvents: function(){
     var self = this;
     var user = this.user;
+    var app = user.get("app");
 
-    this.battleChannel.watch(function(d){
+    app.on("update:hand", function(data) {
+      if(user.get("roomSide") == data._roomSide){
+        self.handCards = JSON.parse(data.cards);
+        self.user.set("handCards", app.handCards);
+        self.render();
+      }
+    })
+    app.on("update:info", function(data) {
+      var _side = data._roomSide;
+      var infoData = data.info;
+      var leader = data.leader;
+
+      var side = self.yourSide;
+      if(user.get("roomSide") != _side){
+        side = self.otherSide;
+      }
+      side.infoData = infoData;
+      side.leader = leader;
+
+      side.infoData.discard = JSON.parse(side.infoData.discard);
+
+      side.render();
+    })
+
+    app.on("update:fields", function(data) {
+      var _side = data._roomSide;
+
+      var side = self.yourSide;
+      if(user.get("roomSide") != _side){
+        side = self.otherSide;
+      }
+      side.field.close = data.close;
+      side.field.ranged = data.ranged;
+      side.field.siege = data.siege;
+      side.field.weather = data.weather;
+      side.render();
+    })
+
+    /*this.battleChannel.watch(function(d){
       var event = d.event, data = d.data;
 
       if(event === "update:hand"){
@@ -465,7 +502,7 @@ var BattleView = Backbone.View.extend({
         side.field.weather = data.weather;
         side.render();
       }
-    })
+    })*/
   }
 });
 
@@ -525,7 +562,8 @@ var User = Backbone.Model.extend({
   },
   initialize: function(){
     var self = this;
-    var app = this.get("app");
+    var user = this;
+    var app = user.get("app");
 
     this.listenTo(this.attributes, "change:room", this.subscribeRoom);
 
@@ -592,7 +630,17 @@ var User = Backbone.Model.extend({
       self.set("isReDrawing", false);
     })
 
-    app.on("createRoom", this.createRoom, this);
+    app.receive("update:hand", function(data){
+      app.trigger("update:hand", data);
+    })
+    app.receive("update:fields", function(data){
+      app.trigger("update:fields", data);
+    })
+    app.receive("update:info", function(data){
+      app.trigger("update:info", data);
+    })
+
+    app.on("startMatchmaking", this.startMatchmaking, this);
     app.on("joinRoom", this.joinRoom, this);
     app.on("setName", this.setName, this);
     app.on("setDeck", this.setDeck, this);
@@ -600,8 +648,8 @@ var User = Backbone.Model.extend({
 
     app.send("request:name", this.get("name") == "unnamed" ? null : {name: this.get("name")});
   },
-  createRoom: function(){
-    this.get("app").send("request:createRoom");
+  startMatchmaking: function(){
+    this.get("app").send("request:matchmaking");
   },
   joinRoom: function(){
     this.get("app").send("request:joinRoom");
@@ -609,7 +657,7 @@ var User = Backbone.Model.extend({
   subscribeRoom: function(){
     var room = this.get("room");
     var app = this.get("app");
-    app.socket.subscribe(room);
+    //app.socket.subscribe(room);
   },
   setName: function(name){
     this.get("app").send("request:name", {name: name});
@@ -636,7 +684,7 @@ var Lobby = Backbone.View.extend({
     this.render();
   },
   events: {
-    "click .create-room": "createRoom",
+    "click .startMatchmaking": "startMatchmaking",
     "click .join-room": "joinRoom",
     "blur .name-input": "changeName",
     "change #deckChoice": "setDeck"
@@ -646,8 +694,8 @@ var Lobby = Backbone.View.extend({
     /*this.$el.find("#deckChoice option[value='" + this.app.user.get("setDeck") + "']").attr("selected", "selected")*/
     return this;
   },
-  createRoom: function(){
-    this.app.trigger("createRoom");
+  startMatchmaking: function(){
+    this.app.trigger("startMatchmaking");
   },
   joinRoom: function(){
     this.app.trigger("joinRoom");

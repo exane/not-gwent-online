@@ -2,9 +2,9 @@ var shortid = require("shortid");
 var Battle = require("./Battle");
 
 var Room = (function(){
-  var Room = function(scServer){
+  var Room = function(){
     if(!(this instanceof Room)){
-      return (new Room(scServer));
+      return (new Room());
     }
     /**
      * constructor here
@@ -14,7 +14,7 @@ var Room = (function(){
     this._id = shortid.generate();
     this._users = [];
     this._ready = {};
-    this.socket = scServer.global;
+    //this.socket = scServer.global;
 
 
     console.log("room created: " + this.getID());
@@ -40,6 +40,8 @@ var Room = (function(){
     if(this._users.length >= 2) return;
     this._users.push(user);
     user.addRoom(this);
+    user.socket.join(this.getID());
+    user.send("response:joinRoom", this.getID());
 
     if(!this.isOpen()){
       this.initBattle();
@@ -55,7 +57,7 @@ var Room = (function(){
   }
 
   r.initBattle = function(){
-    this._battle = Battle(this._id, this._users[0], this._users[1], this.socket);
+    this._battle = Battle(this._id, this._users[0], this._users[1], io);
     this._users[0].send("init:battle", {side: "p1"});
     this._users[1].send("init:battle", {side: "p2"});
   }

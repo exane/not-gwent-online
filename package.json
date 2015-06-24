@@ -10,8 +10,8 @@
     "minimist": "1.1.0",
     "serve-static": "1.8.0",
     "shortid": "^2.2.2",
-    "socketcluster": "2.2.x",
-    "socketcluster-client": "2.2.x",
+    "socket.io": "^1.3.5",
+    "socket.io-client": "^1.3.5",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

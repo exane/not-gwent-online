@@ -620,7 +620,7 @@ Battleside = (function(){
 
     this.send("redraw:cards", null, true);
 
-    var h1 = this.receive("redraw:reDrawCard", function(data){
+    this.receive("redraw:reDrawCard", function(data){
       var id = data.cardID;
       if(!left) return;
       left--;
@@ -633,15 +633,16 @@ Battleside = (function(){
         self.send("redraw:close", null, true);
         console.log("redraw finished");
         deferred.resolve("done");
-        self.socket.off("redraw:reDrawCard", h1);
+        //self.socket.off("redraw:reDrawCard", h1);
       }
-      self.update(self);
+      /*self.update(self);*/
+      self.battle.updateSelf(self);
     })
 
-    var h2 = this.receive("redraw:close_client", function() {
+    this.receive("redraw:close_client", function() {
       console.log("redraw finished!");
       deferred.resolve("done");
-      self.socket.off("redraw:close_client", h2);
+      //self.socket.off("redraw:close_client", h2);
     })
 
     return deferred;

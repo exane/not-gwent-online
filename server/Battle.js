@@ -46,7 +46,7 @@ var Battle = (function(){
         this.on("AfterPlace", this.checkAbilityOnAfterPlace)*/
 
 
-    this.channel = this.socket.subscribe(this._id);
+    //this.channel = this.socket.subscribe(this._id);
     this.p1 = Battleside(this._user1.getName(), 0, this, this._user1);
     this.p2 = Battleside(this._user2.getName(), 1, this, this._user2);
     this.p1.foe = this.p2;
@@ -120,27 +120,33 @@ var Battle = (function(){
     this._update(this.p2);
   }
 
-  r._update = function(p){
+  r.updateSelf = function(side) {
+    this._update(side, true);
+  }
+
+  r._update = function(p, isPrivate){
+    isPrivate = isPrivate || false;
     p.send("update:info", {
       info: p.getInfo(),
       leader: p.field[Card.TYPE.LEADER].get()[0]
-    })
+    }, isPrivate)
     p.send("update:hand", {
       cards: JSON.stringify(p.hand.getCards())
-    });
+    },isPrivate);
     p.send("update:fields", {
       close: p.field[Card.TYPE.CLOSE_COMBAT].getInfo(),
       ranged: p.field[Card.TYPE.RANGED].getInfo(),
       siege: p.field[Card.TYPE.SIEGE].getInfo(),
       weather: p.field[Card.TYPE.WEATHER].getInfo()
-    })
+    }, isPrivate);
   }
 
   r.send = function(event, data){
-    this.channel.publish({
+    /*this.channel.publish({
       event: event,
       data: data
-    });
+    });*/
+    io.sockets.in(this._id).emit(event, data);
   }
 
   r.runEvent = function(eventid, ctx, args, uid){
