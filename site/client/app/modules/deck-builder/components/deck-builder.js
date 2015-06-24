@@ -13,7 +13,7 @@ module.exports = {
       leaders: [],
       leader: null,
 
-      factionFilter: 'Northern Realm'
+      factionFilter: 'northern_realm'
     }
   },
 
@@ -23,6 +23,7 @@ module.exports = {
 
   methods: {
     changeDeck: function(deck) {
+      // todo: load animation
       $('.all-cards').addClass('remove');
       this.factionFilter = deck;
       $('.all-cards').scrollTop(0);
