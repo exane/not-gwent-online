@@ -7,7 +7,7 @@
 
     <div class="card-wrap" v-repeat="card: cards">
       <div class="bla ani"></div>
-      <div class="card-img card" style="background-image: url(http://80.240.132.120/gwent/assets/cards/{{ card.img }}.png)"></div>
+      <div class="card-img card" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + card.img + '.png)'"></div>
       <div class="shadow"></div>
       <div class="overlay-card"></div>
     </div>
@@ -18,8 +18,6 @@
 </div>
 
   <!--div class="line"></div-->
-
-  <p>{{ leader.name }}</p>
 
   <style>
 .container-content {

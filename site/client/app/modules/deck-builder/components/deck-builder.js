@@ -20,16 +20,9 @@ module.exports = {
     $.map(deck, (n, i) => {
       if(i == 'northern_realm') {
         for(var m in n) {
-          //console.log(this.cards[m].type);
           this.deck.push(this.cards[m]);
         }
       }
     });
-  },
-
-  filters: {
-    leader: function(deck) {
-      //return deck.type == 3 ? deck : 'ne';
-    }
   }
 };
