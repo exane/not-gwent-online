@@ -579,10 +579,10 @@ var User = Backbone.Model.extend({
       app.navigate("battle", {trigger: true});
     })
 
-    app.receive("response:createRoom", function(roomID){
+    /*app.receive("response:createRoom", function(roomID){
       self.set("room", roomID);
       console.log("room created", roomID);
-    });
+    });*/
 
     app.receive("response:joinRoom", function(roomID){
       self.set("room", roomID);
@@ -649,10 +649,12 @@ var User = Backbone.Model.extend({
     app.send("request:name", this.get("name") == "unnamed" ? null : {name: this.get("name")});
   },
   startMatchmaking: function(){
+    this.set("inMatchmakerQueue", true);
     this.get("app").send("request:matchmaking");
   },
   joinRoom: function(){
     this.get("app").send("request:joinRoom");
+    this.set("inMatchmakerQueue", false);
   },
   subscribeRoom: function(){
     var room = this.get("room");
@@ -685,7 +687,7 @@ var Lobby = Backbone.View.extend({
   },
   events: {
     "click .startMatchmaking": "startMatchmaking",
-    "click .join-room": "joinRoom",
+    /*"click .join-room": "joinRoom",*/
     "blur .name-input": "changeName",
     "change #deckChoice": "setDeck"
   },
