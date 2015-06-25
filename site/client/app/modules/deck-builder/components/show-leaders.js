@@ -14,8 +14,8 @@ module.exports = {
     chooseLeader(card) {
       // todo: make own leader variable
       for(var item in this.deck) {
-        if(this.deck[item].type == 3) {
-          this.deck.$set(item, card);
+        if(this.deck[item].card.type == 3) {
+          this.deck.$set(item, {card});
         }
       }
 
