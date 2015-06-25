@@ -1,1 +1,7 @@
-<img src="{{src}}">
+<img src="../assets/cards/{{card.img}}.png" height="450">
+<div class="preview-description">
+  <p>{{card.name}}</p>
+  {{#each abilities as |val key|}}
+    <p>{{val}}</p>
+  {{/each}}
+</div>

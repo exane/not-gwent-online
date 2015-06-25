@@ -4,6 +4,9 @@ require("./backbone.modal-min");
 let Handlebars = require('handlebars/runtime').default;
 let $ = require("jquery");
 
+let cardData = require("../../assets/data/cards");
+let abilityData = require("../../assets/data/abilities");
+
 window.$ = $;
 
 Handlebars.registerPartial("card", require("../templates/cards.handlebars"));
@@ -150,16 +153,16 @@ let SideView = Backbone.View.extend({
     }
 
     let isInfluencedByWeather;
-    this.field.weather.cards.forEach((card) => {
+    this.field.weather.cards.forEach((card) =>{
       let key = card._key;
       if(key === "biting_frost") isInfluencedByWeather = true;
     })
 
-    if(isInfluencedByWeather) {
+    if(isInfluencedByWeather){
       $field.addClass("field-frost");
     }
 
-    calculateCardMargin($field.find(".card"), 424, 70, cards.length);
+    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
   },
   renderRangeField: function(){
     if(!this.field.ranged) return;
@@ -178,16 +181,16 @@ let SideView = Backbone.View.extend({
     }
 
     let isInfluencedByWeather;
-    this.field.weather.cards.forEach((card) => {
+    this.field.weather.cards.forEach((card) =>{
       let key = card._key;
       if(key === "impenetrable_fog") isInfluencedByWeather = true;
     })
 
-    if(isInfluencedByWeather) {
+    if(isInfluencedByWeather){
       $field.addClass("field-fog");
     }
 
-    calculateCardMargin($field.find(".card"), 424, 70, cards.length);
+    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
   },
   renderSiegeField: function(){
     if(!this.field.siege) return;
@@ -206,16 +209,16 @@ let SideView = Backbone.View.extend({
     }
 
     let isInfluencedByWeather;
-    this.field.weather.cards.forEach((card) => {
+    this.field.weather.cards.forEach((card) =>{
       let key = card._key;
       if(key === "torrential_rain") isInfluencedByWeather = true;
     })
 
-    if(isInfluencedByWeather) {
+    if(isInfluencedByWeather){
       $field.addClass("field-rain");
     }
-    
-    calculateCardMargin($field.find(".card"), 424, 70, cards.length);
+
+    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
   },
   renderWeatherField: function(){
     if(!this.field.weather) return;
@@ -253,8 +256,8 @@ let calculateCardMargin = function($selector, totalWidth, cardWidth, n){
 
 let BattleView = Backbone.View.extend({
   className: "container",
-  template: require("../templates/battle.handlebars"),
-  templatePreview: require("../templates/preview.handlebars"),
+  template: require("../templates/battle.handlebars"), /*
+  templatePreview: require("../templates/preview.handlebars"),*/
   initialize: function(options){
     let self = this;
     let user = this.user = options.user;
@@ -305,7 +308,7 @@ let BattleView = Backbone.View.extend({
     if(this.user.get("waiting")) return;
     this.user.set("passing", true);
     this.user.get("app").send("set:passing");
-  },
+  }, 
   onClick: function(e){
     if(!!this.user.get("waiting")) return;
     if(!!this.user.get("passing")) return;
@@ -386,9 +389,12 @@ let BattleView = Backbone.View.extend({
   },
   onMouseover: function(e){
     let target = $(e.target).closest(".card");
-    this.user.set("showPreview", target.find("img").attr("src"));
+    //this.user.set("showPreview", target.find("img").attr("src"));
+    //this.user.set("showPreview", target.data().key);
+    this.user.set("showPreview", new Preview({key: target.data().key}));
   },
   onMouseleave: function(e){
+    this.user.get("showPreview").remove();
     this.user.set("showPreview", null);
   },
   openDiscard: function(e){
@@ -422,7 +428,7 @@ let BattleView = Backbone.View.extend({
 
 
     if(this.handCards){
-      calculateCardMargin(this.$el.find(".field-hand .card"), 633, 70, this.handCards.length);
+      calculateCardMargin(this.$el.find(".field-hand .card"), 538, 70, this.handCards.length);
     }
 
     if(this.user.get("isReDrawing")){
@@ -454,7 +460,17 @@ let BattleView = Backbone.View.extend({
     return this;
   },
   renderPreview: function(){
-    this.$el.find(".card-preview").html(this.templatePreview({src: this.user.get("showPreview")}))
+    /*let preview = new Preview({key: this.user.get("showPreview")});*/
+    let preview = this.user.get("showPreview");
+    if(!preview) {
+      return;
+    }
+    this.$el.find(".card-preview").html(preview.render().el);
+    /*this.$el.find(".card-preview").html(this.templatePreview({src: this.user.get("showPreview")}))
+    this.$el.find(".card-preview").css("display", "none");
+    if(this.user.get("showPreview")) {
+      this.$el.find(".card-preview").css("display", "block");
+    }*/
   },
   clickLeader: function(e){
     let $card = $(e.target).closest(".field-leader");
@@ -471,14 +487,14 @@ let BattleView = Backbone.View.extend({
     let user = this.user;
     let app = user.get("app");
 
-    app.on("update:hand", function(data) {
+    app.on("update:hand", function(data){
       if(user.get("roomSide") == data._roomSide){
         self.handCards = JSON.parse(data.cards);
         self.user.set("handCards", app.handCards);
         self.render();
       }
     })
-    app.on("update:info", function(data) {
+    app.on("update:info", function(data){
       let _side = data._roomSide;
       let infoData = data.info;
       let leader = data.leader;
@@ -495,7 +511,7 @@ let BattleView = Backbone.View.extend({
       side.render();
     })
 
-    app.on("update:fields", function(data) {
+    app.on("update:fields", function(data){
       let _side = data._roomSide;
 
       let side = self.yourSide;
@@ -691,7 +707,7 @@ let User = Backbone.Model.extend({
       app.trigger("update:info", data);
     })
 
-    app.receive("gameover", function(data) {
+    app.receive("gameover", function(data){
       let winner = data.winner;
 
       console.log("gameover");
@@ -771,6 +787,37 @@ let Lobby = Backbone.View.extend({
   changeName: function(e){
     let name = $(e.target).val();
     this.app.trigger("setName", name);
+  }
+});
+
+let Preview = Backbone.View.extend({
+  template: require("../templates/preview.handlebars"),
+  initialize: function(opt){
+    this.card = cardData[opt.key];
+
+    if(!this.card || !this.card.ability) return;
+
+    if(Array.isArray(this.card.ability)){
+      this.abilities = this.card.ability.slice();
+    }
+    else {
+      this.abilities = [];
+      this.abilities.push(this.card.ability);
+    }
+
+    this.abilities = this.abilities.map((ability) =>{
+      return abilityData[ability].description;
+    })
+
+    "lol";
+  },
+  render: function(){
+    let html = this.template({
+      card: this.card,
+      abilities: this.abilities
+    })
+    this.$el.html(html);
+    return this;
   }
 });
 
