@@ -53,24 +53,6 @@ var Battle = (function(){
     this.p2.foe = this.p1;
     this.p1.setUpWeatherFieldWith(this.p2);
 
-    this.p1.hand.add(Card("poor_fucking_infantry"));
-    this.p2.hand.add(Card("poor_fucking_infantry"));
-    this.p1.hand.add(Card("poor_fucking_infantry"));
-    this.p2.hand.add(Card("poor_fucking_infantry"));
-    this.p1.hand.add(Card("poor_fucking_infantry"));
-    this.p2.hand.add(Card("poor_fucking_infantry"));
-    this.p1.hand.add(Card("poor_fucking_infantry"));
-    this.p2.hand.add(Card("poor_fucking_infantry"));
-    this.p1.hand.add(Card("poor_fucking_infantry"));
-    this.p2.hand.add(Card("poor_fucking_infantry"));
-    this.p1.hand.add(Card("poor_fucking_infantry"));
-    this.p2.hand.add(Card("poor_fucking_infantry"));
-    this.p1.hand.add(Card("poor_fucking_infantry"));
-    this.p2.hand.add(Card("poor_fucking_infantry"));
-    this.p1.hand.add(Card("poor_fucking_infantry"));
-    this.p2.hand.add(Card("poor_fucking_infantry"));
-    this.p1.hand.add(Card("poor_fucking_infantry"));
-    this.p2.hand.add(Card("poor_fucking_infantry"));
 
 
     this.start();
@@ -81,6 +63,26 @@ var Battle = (function(){
     this.p2.setLeadercard();
     this.p1.draw(10);
     this.p2.draw(10);
+
+    /*this.p1.hand.add(Card("poor_fucking_infantry"));
+       this.p2.hand.add(Card("poor_fucking_infantry"));
+       this.p1.hand.add(Card("poor_fucking_infantry"));
+       this.p2.hand.add(Card("poor_fucking_infantry"));
+       this.p1.hand.add(Card("poor_fucking_infantry"));
+       this.p2.hand.add(Card("poor_fucking_infantry"));
+       this.p1.hand.add(Card("poor_fucking_infantry"));
+       this.p2.hand.add(Card("poor_fucking_infantry"));
+       this.p1.hand.add(Card("poor_fucking_infantry"));
+       this.p2.hand.add(Card("poor_fucking_infantry"));
+       this.p1.hand.add(Card("poor_fucking_infantry"));
+       this.p2.hand.add(Card("poor_fucking_infantry"));
+       this.p1.hand.add(Card("poor_fucking_infantry"));
+       this.p2.hand.add(Card("poor_fucking_infantry"));
+       this.p1.hand.add(Card("poor_fucking_infantry"));
+       this.p2.hand.add(Card("poor_fucking_infantry"));
+       this.p1.hand.add(Card("poor_fucking_infantry"));
+       this.p2.hand.add(Card("poor_fucking_infantry"));*/
+
 
     this.update();
 
@@ -120,6 +122,7 @@ var Battle = (function(){
     var loser = this.checkRubies();
     if(this.checkIfIsOver()){
       console.log("its over!");
+      this.gameOver(loser.foe);
       this.update();
       return;
     }
@@ -131,6 +134,12 @@ var Battle = (function(){
 
     this.update();
     this.switchTurn(loser);
+  }
+
+  r.gameOver = function(winner) {
+    this.send("gameover", {
+      winner: winner.getName()
+    })
   }
 
   r.update = function(){
