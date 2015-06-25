@@ -38,9 +38,9 @@
       <span>LEADER</span>
 
       <div class="card-wrap-small" v-repeat="item: deck | getType [3]" track-by="$index" v-on="click: showLeaders(item.name)">
-        <!--div class="count-card no-select">1x</div-->
+        <div class="count-card no-select">{{ item.count > 1 ? item.count + 'x' : '' }}</div>
         <div class="bla ani"></div>
-        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.img + '.png)'"></div>
+        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.card.img + '.png)'"></div>
         <div class="shadow"></div>
         <div class="overlay-card"></div>
       </div>
@@ -51,9 +51,9 @@
       <span>CLOSE COMBAT</span>
 
       <div class="card-wrap-small" v-repeat="item: deck | getType [0]" track-by="$index">
-        <div class="count-card no-select">{{ c > 1 ? c + 'x' : '' }}</div>
+        <div class="count-card no-select">{{ item.count > 1 ? item.count + 'x' : '' }}</div>
         <div class="bla ani"></div>
-        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.img + '.png)'"></div>
+        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.card.img + '.png)'"></div>
         <div class="shadow"></div>
         <div class="overlay-card"></div>
       </div>
@@ -63,8 +63,9 @@
       <span>RANGE</span>
 
       <div class="card-wrap-small" v-repeat="item: deck | getType [1]" track-by="$index">
+        <div class="count-card no-select">{{ item.count > 1 ? item.count + 'x' : '' }}</div>
         <div class="bla ani"></div>
-        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.img + '.png)'"></div>
+        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.card.img + '.png)'"></div>
         <div class="shadow"></div>
         <div class="overlay-card"></div>
       </div>
@@ -74,8 +75,9 @@
       <span>SPECIAL</span>
 
       <div class="card-wrap-small" v-repeat="item: deck | getType [4,5]" track-by="$index">
+        <div class="count-card no-select">{{ item.count > 1 ? item.count + 'x' : '' }}</div>
         <div class="bla ani"></div>
-        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.img + '.png)'"></div>
+        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.card.img + '.png)'"></div>
         <div class="shadow"></div>
         <div class="overlay-card"></div>
       </div>
