@@ -1,3 +1,5 @@
+<showleaders></showleaders>
+
 <div class="heading">
   <div class="heading-decks">
     <a v-class="active: factionFilter == 'northern_realm'" v-on="click: changeDeck('northern_realm')">Northern Realm</a>
@@ -35,8 +37,8 @@
     <div class="my-card-container">
       <span>LEADER</span>
 
-      <div class="card-wrap-small" v-repeat="item: deck | getType [3]" track-by="$index">
-        <div class="count-card no-select">1x</div>
+      <div class="card-wrap-small" v-repeat="item: deck | getType [3]" track-by="$index" v-on="click: showLeaders(item.name)">
+        <!--div class="count-card no-select">1x</div-->
         <div class="bla ani"></div>
         <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.img + '.png)'"></div>
         <div class="shadow"></div>

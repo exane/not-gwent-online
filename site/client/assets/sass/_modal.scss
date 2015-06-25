@@ -9,6 +9,17 @@
   text-align: center;
 }
 
+.wrap-modal-leaders {
+  margin: 14vh auto;
+  max-width: 750px;
+
+  @include transition();
+
+  .active & {
+    margin: 15vh auto;
+  }
+}
+
 .modal {
   position: fixed;
   width: 100%;

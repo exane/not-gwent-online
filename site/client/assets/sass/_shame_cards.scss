@@ -10,6 +10,14 @@
   height: 132px;
 }
 
+.card-wrap-big .card-img {
+  background-size: 150px 284px !important;
+  width: 150px !important;
+  height: 284px !important;
+  top: 4px;
+  left: 4px;
+}
+
 .card,
 .card-small-small {
   float: left;
@@ -136,10 +144,10 @@
   background-size: 800% 800%;
   position: absolute;
   z-index: 20;
-  top: 10px;
-  left: 10px;
-  width: calc(100% - 10px);
-  height: calc(100% - 5px);
+  top: 6px;
+  left: 6px;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
   border-radius: 12px;
   opacity: 0;
   cursor: pointer;
@@ -179,6 +187,17 @@
   //transition: transform .1s ease-in-out 0s;
 
 }
+
+.card-wrap-big {
+  width: 158px;
+  height: 292px;
+  transition: all 0.2s ease-in-out 0s;
+  margin: 0 0 0 20px;
+}
+
+  .card-wrap-big:hover {
+    //transform: scale(1.1,1.1) !important;
+  }
 
 .card-wrap-small {
   float: left;
