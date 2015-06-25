@@ -37,13 +37,13 @@ module.exports = {
   methods: {
     changeDeck: function(deck) {
       // todo: load animation
-      $('.all-cards').addClass('remove');
+      $('.all-cards, .all-deck').addClass('remove');
       this.factionFilter = deck;
       this.initDeck();
-      $('.all-cards').scrollTop(0);
+      $('.all-cards, .all-deck').scrollTop(0);
 
       setTimeout(function() {
-        $('.all-cards').removeClass('remove');
+        $('.all-cards, .all-deck').removeClass('remove');
       }, 500);
     },
 
