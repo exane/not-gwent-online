@@ -1,6 +1,8 @@
 module.exports = {
 
   "agile": {
+    name: "agile",
+    description: "Can be placed in either the Close Combat or Ranged Combat row. Cannot be moved once placed.",
     cancelPlacement: true,
     onBeforePlace: function(card){
       var self = this;
@@ -16,6 +18,8 @@ module.exports = {
     }
   },
   "medic": {
+    name: "medic",
+    description: "Choose one card from your discard pile (excluding heroes / special cards) to play instantly.",
     waitResponse: true,
     onAfterPlace: function(card){
       var discard = this.getDiscard();
@@ -31,6 +35,8 @@ module.exports = {
     }
   },
   "morale_boost": {
+    name: "morale_boost",
+    description: "Adds +1 strength to all units in the row, excluding itself.",
     onEachCardPlace: function(card){
       var field = this.field[card.getType()];
       var id = card.getID();
@@ -53,6 +59,7 @@ module.exports = {
   },
   "muster": {
     name: "muster",
+    description: "Find any cards with the same name in your deck and play them instantly.",
     onAfterPlace: function(card){
       var musterType = card.getMusterType();
       var self = this;
@@ -77,6 +84,8 @@ module.exports = {
     }
   },
   "tight_bond": {
+    name: "tight_bond",
+    description: "Place next to a card with the name same to double the strength of both cards.",
     onAfterPlace: function(card){
       var field = this.field[card.getType()];
       var cards = field.get();
@@ -91,12 +100,16 @@ module.exports = {
     }
   },
   "spy": {
+    name: "spy",
+    description: "Place on your opponents battlefield (counts towards their total strength) then draw two new cards from your deck.",
     changeSide: true,
-    onAfterPlace: function(card){
+    onAfterPlace: function(){
       this.draw(2);
     }
   },
   "weather_fog": {
+    name: "weather_fog",
+    description: "Sets the strength of all Ranged Combat cards to 1 for both players.",
     weather: 1/*,
     onEachTurn: function(card){
       var targetRow = card.constructor.TYPE.RANGED;
@@ -126,6 +139,8 @@ module.exports = {
     }*/
   },
   "weather_rain": {
+    name: "weather_rain",
+    description: "Sets the strength of all Siege Combat cards to 1 for both players.",
     weather: 2
     /*onEachTurn: function(card){
       var targetRow = card.constructor.TYPE.SIEGE;
@@ -155,6 +170,8 @@ module.exports = {
     }*/
   },
   "weather_frost": {
+    name: "weather_frost",
+    description: "Sets the strength of all Close Combat cards to 1 for both players.",
     weather: 0
     /*
       onEachTurn: function(card){
@@ -185,6 +202,8 @@ module.exports = {
       }*/
   },
   "weather_clear": {
+    name: "weather_clear",
+    description: "Removes all Weather Card (Biting Frost, Impenetrable Fog and Torrential Rain) effects.",
     weather: 5
     /*onAfterPlace: function(card){
       var targetRow = card.constructor.TYPE.WEATHER;
@@ -206,17 +225,29 @@ module.exports = {
     }*/
   },
   "decoy": {
+    name: "decoy",
+    description: "Decoy: Swap with a card on the battlefield to return it to your hand.",
     replaceWith: true
   },
+  "scorch": {
+    name: "scorch",
+    description: "Scorch: Discard after playing. Kills the strongest card(s) in the battlefield."
+  },
   "commanders_horn": {
+    name: "commanders_horn",
+    description: "Commander's Horn: Doubles the strength of all unit cards in a row. Limited to 1 per row.",
     commandersHorn: true
   },
   "commanders_horn_card": {
+    name: "commanders_horn",
+    description: "Commander's Horn: Doubles the strength of all unit cards in a row. Limited to 1 per row.",
     cancelPlacement: true,
     commandersHorn: true,
     isCommandersHornCard: true
   },
   "foltest_leader1": {
+    name: "",
+    description: "",
     onActivate: function(){
       var cards = this.deck.find("key", "impenetrable_fog")
       if(!cards.length) return;
@@ -225,21 +256,29 @@ module.exports = {
     }
   },
   "foltest_leader2": {
+    name: "",
+    description: "",
     onActivate: function(){
       this.setWeather(5);
     }
   },
   "foltest_leader3": {
+    name: "",
+    description: "Doubles the strength of all Siege units, unless a Commander's Horn is already in play on that row",
     onActivate: function(){
       this.setHorn("commanders_horn", 2);
     }
   },
   "foltest_leader4": {
+    name: "",
+    description: "",
     onActivate: function(){
       //scorch siege
     }
   },
   "francesca_leader1": {
+    name: "",
+    description: "",
     onActivate: function(){
       var cards = this.deck.find("key", "biting_frost")
       if(!cards.length) return;
@@ -248,35 +287,52 @@ module.exports = {
     }
   },
   "francesca_leader2": {
+    name: "",
+    description: "",
     onActivate: function(){
       this.setHorn("commanders_horn", 1);
     }
   },
   "francesca_leader3": {
+    name: "",
+    description: "",
     onActivate: function(){
     }
   },
   "francesca_leader4": {
+    name: "",
+    description: "",
     onActivate: function(){
     }
   },
   "eredin_leader1": {
+    name: "",
+    description: "",
     onActivate: function(){
     }
   },
   "eredin_leader2": {
+    name: "",
+    description: "",
     onActivate: function(){
     }
   },
   "eredin_leader3": {
+    name: "",
+    description: "",
     onActivate: function(){
 
     }
   },
   "eredin_leader4": {
+    name: "",
+    description: "",
     onActivate: function(){
       this.setHorn("commanders_horn", 0);
     }
   },
-  "hero": {}
+  "hero": {
+    name: "hero",
+    description: "Hero: Not affected by special cards, weather cards or abilities."
+  }
 }
