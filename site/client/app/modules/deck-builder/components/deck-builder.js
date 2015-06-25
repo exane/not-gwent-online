@@ -29,13 +29,34 @@ module.exports = {
   },
 
   filters: {
+
+    // Iterate for correct card type and merge multiple cards.
     getType: function(c, type) {
+      var a = [];
+      var itemCount = {};
+
       var tmp = $.map(c, (item) => {
-        //if(item.type == type) return item;
-        if($.inArray(item.type, type) > -1) return item;
+        if($.inArray(item.card.type, type) > -1) {
+          if($.inArray(item.card.name, a) > -1) {
+            itemCount[item.card.name] = (itemCount[item.card.name] || 1) + 1;
+          } else {
+            a.push(item.card.name);
+
+            return item;
+          }
+        }
       });
 
-      return tmp;
+      // todo: extract to method
+      var tmp2 = $.map(tmp, (item) => {
+        if(itemCount[item.card.name]) {
+          item.count = itemCount[item.card.name];
+        }
+
+        return item;
+      });
+
+      return tmp2;
     }
   },
 
@@ -66,7 +87,10 @@ module.exports = {
       var _deck = deck[this.factionFilter];
 
       for(var item in _deck) {
-        this.deck.push(cards[_deck[item]]);
+        this.deck.push({
+          card: cards[_deck[item]],
+          count: 1
+        });
       }
     },
 
