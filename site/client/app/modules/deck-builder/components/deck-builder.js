@@ -8,7 +8,7 @@ module.exports = {
   data: function() {
     return {
       cards: [],
-      deck: {},
+      deck: [],
 
       leaders: [],
       leader: null,
@@ -20,6 +20,18 @@ module.exports = {
   ready: function() {
     this.initCards();
     this.initDeck();
+  },
+
+  filters: {
+    getType: function(c, type) {
+      var tmp = $.map(c, (item) => {
+        if(item.type == type) return item;
+      });
+
+      return tmp;
+
+      return c;
+    }
   },
 
   methods: {
@@ -45,11 +57,13 @@ module.exports = {
     },
 
     initDeck: function() {
-      this.deck = {};
+      this.deck = [];
+      var _deck = deck[this.factionFilter];
 
-      deck[this.factionFilter].forEach((x) => {
-        this.deck[x] = (this.deck[x] || 0) + 1;
-      });
+      for(var item in _deck) {
+        this.deck.push(cards[_deck[item]]);
+      }
+
     },
 
     // test

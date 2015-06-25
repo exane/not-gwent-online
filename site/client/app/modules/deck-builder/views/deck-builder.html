@@ -14,7 +14,7 @@
   <div class="all-cards">
     <div class="clear-space"></div>
 
-    <div class="card-wrap" v-repeat="card: cards | filterBy factionFilter in faction">
+    <div class="card-wrap" v-repeat="card: cards | filterBy factionFilter in faction" track-by="$index">
       <div class="bla ani"></div>
       <div class="card-img card" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + card.img + '.png)'"></div>
       <div class="shadow"></div>
@@ -31,12 +31,14 @@
 
     <div class="clear-space"></div>
 
+    <!-- todo: own component -->
     <div class="my-card-container">
       <span>LEADER</span>
 
-      <div class="card-wrap-small">
+      <div class="card-wrap-small" v-repeat="item: deck | getType 3" track-by="$index">
+        <div class="count-card no-select">1x</div>
         <div class="bla ani"></div>
-        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/medic.png)'"></div>
+        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.img + '.png)'"></div>
         <div class="shadow"></div>
         <div class="overlay-card"></div>
       </div>
@@ -46,9 +48,10 @@
     <div class="my-card-container">
       <span>CLOSE COMBAT</span>
 
-      <div class="card-wrap-small" v-repeat="5">
+      <div class="card-wrap-small" v-repeat="item: deck | getType 0" track-by="$index">
+        <div class="count-card no-select">{{ c > 1 ? c + 'x' : '' }}</div>
         <div class="bla ani"></div>
-        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/imlerith.png)'"></div>
+        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.img + '.png)'"></div>
         <div class="shadow"></div>
         <div class="overlay-card"></div>
       </div>
@@ -57,9 +60,20 @@
     <div class="my-card-container">
       <span>RANGE</span>
 
-      <div class="card-wrap-small" v-repeat="11">
+      <div class="card-wrap-small" v-repeat="item: deck | getType 1" track-by="$index">
         <div class="bla ani"></div>
-        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/siege_tech.png)'"></div>
+        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.img + '.png)'"></div>
+        <div class="shadow"></div>
+        <div class="overlay-card"></div>
+      </div>
+    </div>
+
+    <div class="my-card-container">
+      <span>SPECIAL</span>
+
+      <div class="card-wrap-small" v-repeat="item: deck | getType 4" track-by="$index">
+        <div class="bla ani"></div>
+        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.img + '.png)'"></div>
         <div class="shadow"></div>
         <div class="overlay-card"></div>
       </div>
@@ -68,9 +82,9 @@
     <div class="my-card-container">
       <span>WEATHER</span>
 
-      <div class="card-wrap-small" v-repeat="3">
+      <div class="card-wrap-small" v-repeat="item: deck | getType 5" track-by="$index">
         <div class="bla ani"></div>
-        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/frost.png)'"></div>
+        <div class="card-img-small card-small-small" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + item.img + '.png)'"></div>
         <div class="shadow"></div>
         <div class="overlay-card"></div>
       </div>
@@ -82,6 +96,19 @@
 </div>
 
   <style>
+
+    .count-card {
+      font-size: 22px;
+      color: #fff;
+      font-weight: bold;
+      position: absolute;
+      left: 60%;
+      top: 60%;
+      z-index: 100;
+      cursor: pointer;
+      text-shadow: 0 0 2px #000;
+      transform: translate(-50%, -50%);
+    }
 
     .my-card-container {
       float: left;

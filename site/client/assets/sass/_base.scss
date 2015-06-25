@@ -34,3 +34,7 @@ input, textarea {
 
 a { text-decoration: none; }
 ul { list-style: none; }
+
+.no-select {
+  user-select: none;
+}
