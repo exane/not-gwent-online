@@ -25,12 +25,11 @@ module.exports = {
   filters: {
     getType: function(c, type) {
       var tmp = $.map(c, (item) => {
-        if(item.type == type) return item;
+        //if(item.type == type) return item;
+        if($.inArray(item.type, type) > -1) return item;
       });
 
       return tmp;
-
-      return c;
     }
   },
 
@@ -63,7 +62,6 @@ module.exports = {
       for(var item in _deck) {
         this.deck.push(cards[_deck[item]]);
       }
-
     },
 
     // test
