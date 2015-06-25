@@ -78,7 +78,7 @@ Battleside = (function(){
     })
     this.receive("set:passing", function(){
       self.setPassing(true);
-      //self.update();
+      self.update();
       self.runEvent("NextTurn", null, [self.foe]);
     })
     this.receive("medic:chooseCardFromDiscard", function(data){
@@ -226,6 +226,7 @@ Battleside = (function(){
       lives: this._rubies,
       score: this.calcScore(),
       hand: this.hand.length(),
+      deck: this.deck.length(),
       discard: this.getDiscard(true),
       passing: this._passing
     }
@@ -452,6 +453,7 @@ Battleside = (function(){
           self.hand.add(replaceCard);
           self.hand.remove(card);
 
+          self.update();
           self.runEvent("NextTurn", null, [self.foe]);
         })
       }

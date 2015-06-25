@@ -1,23 +1,30 @@
-<div class="col-xs-12 game-info game-info-foe foe">
-  <div class="col-xs-12 info-name">{{name}}</div>
-  <div class="col-xs-6 field-single field-leader"></div>
-  <div class="col-xs-6">
-    <div class="row">
-      <div class="col-xs-6">Points:</div>
-      <div class="col-xs-6 score">{{score}}</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-6">Hand:</div>
-      <div class="col-xs-6 hand-card">{{hand}}</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 gwent-lives">
-        {{#health}}
-        {{/health}}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 passing">Passed</div>
+<div class="col-xs-12 info-name">{{data.name}}</div>
+<div class="col-xs-6 field-single field-leader">{{>card leader}}</div>
+<div class="col-xs-6">
+  <div class="row">
+    <div class="col-xs-6">Points:</div>
+    <div class="col-xs-6 score">{{data.score}}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Hand:</div>
+    <div class="col-xs-6 hand-card">{{data.hand}}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">Deck:</div>
+    <div class="col-xs-6 hand-card">{{data.deck}}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 gwent-lives">
+      {{#health data.lives}}
+      {{/health}}
     </div>
   </div>
+  <div class="row">
+    <div class="col-xs-12 passing">{{#if data.passing}}Passed{{/if}}</div>
+  </div>
 </div>
+{{#if passBtn}}
+<div class="col-xs-12">
+  <button class="button-pass">Pass</button>
+</div>
+{{/if}}

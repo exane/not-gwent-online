@@ -53,6 +53,25 @@ var Battle = (function(){
     this.p2.foe = this.p1;
     this.p1.setUpWeatherFieldWith(this.p2);
 
+    this.p1.hand.add(Card("poor_fucking_infantry"));
+    this.p2.hand.add(Card("poor_fucking_infantry"));
+    this.p1.hand.add(Card("poor_fucking_infantry"));
+    this.p2.hand.add(Card("poor_fucking_infantry"));
+    this.p1.hand.add(Card("poor_fucking_infantry"));
+    this.p2.hand.add(Card("poor_fucking_infantry"));
+    this.p1.hand.add(Card("poor_fucking_infantry"));
+    this.p2.hand.add(Card("poor_fucking_infantry"));
+    this.p1.hand.add(Card("poor_fucking_infantry"));
+    this.p2.hand.add(Card("poor_fucking_infantry"));
+    this.p1.hand.add(Card("poor_fucking_infantry"));
+    this.p2.hand.add(Card("poor_fucking_infantry"));
+    this.p1.hand.add(Card("poor_fucking_infantry"));
+    this.p2.hand.add(Card("poor_fucking_infantry"));
+    this.p1.hand.add(Card("poor_fucking_infantry"));
+    this.p2.hand.add(Card("poor_fucking_infantry"));
+    this.p1.hand.add(Card("poor_fucking_infantry"));
+    this.p2.hand.add(Card("poor_fucking_infantry"));
+
 
     this.start();
   }

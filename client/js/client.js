@@ -1,23 +1,38 @@
 var socket = require("socket.io-client");
 var Backbone = require("backbone");
 require("./backbone.modal-min");
-var Handlebars = require("handlebars");
+var Handlebars = require('handlebars/runtime').default;
 var $ = require("jquery");
 
 window.$ = $;
 
+Handlebars.registerPartial("card", require("../templates/cards.handlebars"));
+Handlebars.registerHelper("health", function(lives){
+  var out = "";
+
+  for(var i = 0; i < 2; i++) {
+    out += "<i";
+    if(i < lives){
+      out += " class='ruby'";
+    }
+    out += "></i>";
+  }
+  return out;
+});
+
 var App = Backbone.Router.extend({
   routes: {
-    "lobby": "lobbyRoute",
+    /*"lobby": "lobbyRoute",
     "battle": "battleRoute",
-    "*path": "defaultRoute"
+    "*path": "defaultRoute"*/
   },
   initialize: function(){
     var self = this;
     this.connect();
     this.user = new User({app: this});
 
-    Backbone.history.start();
+    /*Backbone.history.start();*/
+    this.lobbyRoute();
   },
   connect: function(){
     this.socket = socket(Config.Server.hostname + ":" + Config.Server.port);
@@ -77,6 +92,7 @@ var SideView = Backbone.View.extend({
   el: ".container",
   template: require("../templates/cards.handlebars"),
   templateCards: require("../templates/fieldCards.handlebars"),
+  templateInfo: require("../templates/info.handlebars"),
   initialize: function(options){
     var self = this;
     this.side = options.side;
@@ -100,14 +116,14 @@ var SideView = Backbone.View.extend({
   renderInfo: function(){
     var d = this.infoData;
     var l = this.leader;
-    this.$info = this.$el.find(".game-info" + this.side);
-    this.$info.find(".info-name").html(d.name);
-    this.$info.find(".score").html(d.score);
-    this.$info.find(".hand-card").html(d.hand);
-    this.$info.find(".gwent-lives").html(this.lives(d.lives));
-    if(l._key){
-      this.$info.find(".field-leader").html(this.template(l))
-    }
+    var html = this.templateInfo({
+      data: d,
+      leader: l,
+      passBtn: this.side === ".player"
+    })
+
+    this.$info = this.$el.find(".game-info" + this.side).html(html);
+
 
     if(this.app.user.get("waiting") && this.side === ".player"){
       this.$info.addClass("removeBackground");
@@ -115,9 +131,6 @@ var SideView = Backbone.View.extend({
     if(!this.app.user.get("waiting") && this.side === ".foe"){
       this.$info.addClass("removeBackground");
     }
-
-    this.$info.find(".passing").html(d.passing ? "Passed" : "");
-
   },
   renderCloseField: function(){
     if(!this.field.close) return;
@@ -136,7 +149,7 @@ var SideView = Backbone.View.extend({
       this.$fields.find(".field-horn-close").html(this.template(horn));
     }
 
-    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
+    calculateCardMargin($field.find(".card"), 424, 70, cards.length);
   },
   renderRangeField: function(){
     if(!this.field.ranged) return;
@@ -154,7 +167,7 @@ var SideView = Backbone.View.extend({
       this.$fields.find(".field-horn-range").html(this.template(horn));
     }
 
-    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
+    calculateCardMargin($field.find(".card"), 424, 70, cards.length);
   },
   renderSiegeField: function(){
     if(!this.field.siege) return;
@@ -172,7 +185,7 @@ var SideView = Backbone.View.extend({
       this.$fields.find(".field-horn-siege").html(this.template(horn));
     }
 
-    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
+    calculateCardMargin($field.find(".card"), 424, 70, cards.length);
   },
   renderWeatherField: function(){
     if(!this.field.weather) return;
@@ -181,7 +194,8 @@ var SideView = Backbone.View.extend({
     $weatherField.html(this.templateCards(cards));
 
     return this;
-  },
+  }
+  /*,
   lives: function(lives){
     var out = "";
     for(var i = 0; i < 2; i++) {
@@ -192,7 +206,7 @@ var SideView = Backbone.View.extend({
       out += "></i>";
     }
     return out;
-  }
+  }*/
 });
 
 var calculateCardMargin = function($selector, totalWidth, cardWidth, n){
@@ -241,8 +255,8 @@ var BattleView = Backbone.View.extend({
 
     this.render();
 
-    yourSide = this.yourSide = new SideView({side: ".player", app: this.app, battleView: this});
-    otherSide = this.otherSide = new SideView({side: ".foe", app: this.app, battleView: this});
+    this.yourSide = new SideView({side: ".player", app: this.app, battleView: this});
+    this.otherSide = new SideView({side: ".foe", app: this.app, battleView: this});
 
   },
   events: {
@@ -376,7 +390,7 @@ var BattleView = Backbone.View.extend({
 
 
     if(this.handCards){
-      calculateCardMargin(this.$el.find(".field-hand .card"), 538, 70, this.handCards.length);
+      calculateCardMargin(this.$el.find(".field-hand .card"), 633, 70, this.handCards.length);
     }
 
     if(this.user.get("isReDrawing")){
@@ -576,7 +590,8 @@ var User = Backbone.Model.extend({
       self.set("roomSide", data.side);
       /*
             self.set("channel:battle", app.socket.subscribe(self.get("room")));*/
-      app.navigate("battle", {trigger: true});
+      //app.navigate("battle", {trigger: true});
+      app.battleRoute();
     })
 
     /*app.receive("response:createRoom", function(roomID){
