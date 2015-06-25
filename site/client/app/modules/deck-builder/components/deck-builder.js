@@ -10,11 +10,17 @@ module.exports = {
       cards: [],
       deck: [],
 
-      leaders: [],
-      leader: null,
+      allLeaders: [],
+      myLeaders: [],
 
-      factionFilter: 'northern_realm'
+      factionFilter: 'northern_realm',
+
+      modalLeader: false
     }
+  },
+
+  components: {
+    showleaders: require('./show-leaders')
   },
 
   ready: function() {
@@ -51,7 +57,7 @@ module.exports = {
       this.cards = $.map(cards, (n) => {
         if(n.type != 3) return n;
 
-        this.leaders.push(n);
+        this.allLeaders.push(n);
       });
     },
 
@@ -64,9 +70,12 @@ module.exports = {
       }
     },
 
-    // test
-    removeCard: function(el) {
+    showLeaders: function(currentLeader) {
+      this.myLeaders = $.map(this.allLeaders, (item) => {
+        if(item.faction == this.factionFilter) return item;
+      });
 
+      this.modalLeader = true;
     }
   }
 };

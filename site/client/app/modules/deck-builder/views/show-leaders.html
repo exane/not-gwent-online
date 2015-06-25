@@ -1,0 +1,12 @@
+<div class="modal" v-class="active: modalLeader" v-on="click: closeLeaders">
+  <div class="wrap-modal-leaders">
+
+    <div class="card-wrap card-wrap-big" v-repeat="card: myLeaders" v-on="click: chooseLeader(card)">
+      <div class="bla ani"></div>
+      <div class="card-img card" v-style="background-image: 'url(http://80.240.132.120/gwent/assets/cards/' + card.img  + '.png)'"></div>
+      <div class="shadow"></div>
+      <div class="overlay-card"></div>
+    </div>
+
+  </div>
+</div>
