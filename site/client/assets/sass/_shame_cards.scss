@@ -70,8 +70,8 @@
   transition: all .05s ease-in-out 0s;
 }
 
-.card-wrap .ani,
-.card-wrap-small .ani {
+.card-wrap:hover .ani,
+.card-wrap-small:hover .ani {
   background: linear-gradient(2deg, #ffa500, #ffd68b, #ffa500, #ffa500);
   background-size: 800% 800%;
 
