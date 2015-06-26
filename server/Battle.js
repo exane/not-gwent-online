@@ -64,24 +64,15 @@ var Battle = (function(){
     this.p1.draw(10);
     this.p2.draw(10);
 
-    /*this.p1.hand.add(Card("poor_fucking_infantry"));
-       this.p2.hand.add(Card("poor_fucking_infantry"));
-       this.p1.hand.add(Card("poor_fucking_infantry"));
-       this.p2.hand.add(Card("poor_fucking_infantry"));
-       this.p1.hand.add(Card("poor_fucking_infantry"));
-       this.p2.hand.add(Card("poor_fucking_infantry"));
-       this.p1.hand.add(Card("poor_fucking_infantry"));
-       this.p2.hand.add(Card("poor_fucking_infantry"));
-       this.p1.hand.add(Card("poor_fucking_infantry"));
-       this.p2.hand.add(Card("poor_fucking_infantry"));
-       this.p1.hand.add(Card("poor_fucking_infantry"));
-       this.p2.hand.add(Card("poor_fucking_infantry"));
-       this.p1.hand.add(Card("poor_fucking_infantry"));
-       this.p2.hand.add(Card("poor_fucking_infantry"));
-       this.p1.hand.add(Card("poor_fucking_infantry"));
-       this.p2.hand.add(Card("poor_fucking_infantry"));
-       this.p1.hand.add(Card("poor_fucking_infantry"));
-       this.p2.hand.add(Card("poor_fucking_infantry"));*/
+   /* this.p1.hand.add(Card("impenetrable_fog"));
+    this.p2.hand.add(Card("impenetrable_fog"));
+    this.p1.hand.add(Card("biting_frost"));
+    this.p2.hand.add(Card("biting_frost"));
+    this.p1.hand.add(Card("torrential_rain"));
+    this.p2.hand.add(Card("torrential_rain"));
+    this.p1.hand.add(Card("clear_weather"));
+    this.p2.hand.add(Card("clear_weather"));*/
+
 
 
     this.update();

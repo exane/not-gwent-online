@@ -567,6 +567,7 @@ Battleside = (function(){
 
   r.resetNewRound = function(){
     this.clearMainFields();
+    this.setWeather(5); //clear weather
     this.setPassing(false);
   }
 

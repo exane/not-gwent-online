@@ -308,7 +308,7 @@ let BattleView = Backbone.View.extend({
     if(this.user.get("waiting")) return;
     this.user.set("passing", true);
     this.user.get("app").send("set:passing");
-  }, 
+  },
   onClick: function(e){
     if(!!this.user.get("waiting")) return;
     if(!!this.user.get("passing")) return;
