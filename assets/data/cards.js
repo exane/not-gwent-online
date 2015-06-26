@@ -252,6 +252,14 @@ module.exports = {
     faction: null,
     type: 4
   },
+  "scorch": {
+    name: "Scorch",
+    power: -1,
+    ability: "scorch_card",
+    img: "scorch",
+    faction: null,
+    type: 4
+  },
   "commanders_horn": {
     name: "Commander's Horn",
     power: -1,
@@ -308,6 +316,14 @@ module.exports = {
     power: 0,
     ability: ["hero", "spy"],
     img: "avallach",
+    faction: null,
+    type: 0
+  },
+  "villentretenmerth": {
+    name: "Villentretenmerth ",
+    power: 7,
+    ability: "scorch",
+    img: "villentretenmerth",
     faction: null,
     type: 0
   },

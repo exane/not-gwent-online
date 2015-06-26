@@ -301,6 +301,11 @@ Battleside = (function(){
 
     this.checkAbilities(card, obj);
     if(obj._cancelPlacement && !obj.forceField) return 0;
+    if(obj._nextTurn && !obj.forceField) {
+      this.update();
+      this.runEvent("NextTurn", null, [this.foe]);
+      return 0;
+    }
 
 
     var field = obj.forceField || null;
@@ -424,6 +429,16 @@ Battleside = (function(){
       if(ability.cancelPlacement && !obj.forcePlace){
         obj._cancelPlacement = true;
       }
+      if(ability.nextTurn) {
+        obj._nextTurn = ability.nextTurn;
+      }
+      if(ability.scorch) {
+        this.scorch(card);
+      }
+      if(ability.removeImmediately) {
+        this.hand.remove(card);
+        this.addToDiscard(card);
+      }
       if(ability.waitResponse && !obj.forcePlace){
         obj._waitResponse = true;
       }
@@ -531,6 +546,17 @@ Battleside = (function(){
     //this.update();
   }
 
+  r.scorch = function(card) {
+    var side = this.foe;
+    var field = side.field[Card.TYPE.CLOSE_COMBAT];
+    var cards = field.getHighestCards();
+    var removeCards = field.removeCard(cards);
+
+    side.addToDiscard(removeCards);/*
+    this.hand.remove(card);
+    this.addToDiscard(card);*/
+  }
+
   r.clearMainFields = function(){
     var cards1 = this.field[Card.TYPE.CLOSE_COMBAT].removeAll();
     var cards2 = this.field[Card.TYPE.RANGED].removeAll();
@@ -543,8 +569,11 @@ Battleside = (function(){
 
   r.addToDiscard = function(cards){
     var self = this;
-    cards.forEach(function(card){
-      self._discard.push(card);
+    if(!Array.isArray(cards)) {
+      cards =  [cards];
+    }
+    cards.forEach(function(_card){
+      self._discard.push(_card);
     });
   }
 

@@ -105,6 +105,20 @@ var Field = (function(){
     return tmp;
   }
 
+  r.removeCard = function(cards) {
+    var res = [];
+    var _cards = this.get();
+    if(!Array.isArray(cards)) {
+      cards =  [cards];
+    }
+    var self = this;
+    cards.forEach(function(card) {
+      res.push(_cards.splice(self.getPosition(card), 1)[0]);
+    })
+
+    return res;
+  }
+
   r.getInfo = function() {
     var self = this;
     return {
@@ -122,6 +136,21 @@ var Field = (function(){
   r.setHorn = function(card) {
     if(!this._hasHornField) return null;
     this._hornCard = card;
+  }
+
+  r.getHighestCards = function() {
+    var res = [];
+    var highest = 0;
+
+    this.get().forEach(function(card) {
+      highest = card.getPower() > highest ? card.getPower() : highest;
+    })
+
+    this.get().forEach(function(card) {
+      if(card.getPower() === highest) res.push(card);
+    });
+
+    return res;
   }
 
   return Field;

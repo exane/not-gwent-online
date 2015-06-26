@@ -231,9 +231,17 @@ module.exports = {
     description: "Decoy: Swap with a card on the battlefield to return it to your hand.",
     replaceWith: true
   },
+  "scorch_card": {
+    name: "scorch",
+    description: "Scorch: Discard after playing. Kills the strongest card(s) in the battlefield.",
+    scorch: true,
+    removeImmediately: true,
+    nextTurn: true
+  },
   "scorch": {
     name: "scorch",
-    description: "Scorch: Discard after playing. Kills the strongest card(s) in the battlefield."
+    description: "Scorch: Discard after playing. Kills the strongest card(s) in the battlefield.",
+    scorch: true
   },
   "commanders_horn": {
     name: "commanders_horn",

@@ -64,6 +64,15 @@ var Battle = (function(){
     this.p1.draw(10);
     this.p2.draw(10);
 
+    this.p1.placeCard("ves");
+    this.p2.placeCard("ves");
+    this.p1.placeCard("yarpen_zigrin");
+    this.p2.placeCard("yarpen_zigrin");
+
+    this.p1.hand.add(Card("scorch"));
+    this.p2.hand.add(Card("scorch"));
+    this.p1.hand.add(Card("villentretenmerth"));
+    this.p2.hand.add(Card("villentretenmerth"));
 
    /* this.p1.hand.add(Card("impenetrable_fog"));
     this.p2.hand.add(Card("impenetrable_fog"));
