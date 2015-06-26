@@ -295,6 +295,22 @@ module.exports = {
     type: 5
   },
 
+  "dandelion": {
+    name: "Dandelion",
+    power: 2,
+    ability: "commanders_horn",
+    img: "dandelion",
+    faction: null,
+    type: 0
+  },
+  "avallach": {
+    name: "Avallac'h",
+    power: 0,
+    ability: ["hero", "spy"],
+    img: "avallach",
+    faction: null,
+    type: 0
+  },
 
   "francesca_pureblood_elf": {
     name: "Francesca, Pureblood Elf",
