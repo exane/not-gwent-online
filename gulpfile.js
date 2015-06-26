@@ -14,7 +14,9 @@ livereload({start: true});
 
 gulp.task('browserify', function(){
   browserify('./client/js/main.js', {standalone: "app", debug: true})
-  .transform(handlebars)
+  .transform(handlebars).on("error", function(err){
+    console.log(err);
+  })
   .transform(babelify)
   .bundle().on("error", function(err){
     console.log(err);

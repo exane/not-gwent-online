@@ -138,11 +138,13 @@ var Field = (function(){
     this._hornCard = card;
   }
 
-  r.getHighestCards = function() {
+  r.getHighestCards = function(noHeroes) {
+    noHeroes = noHeroes || false;
     var res = [];
     var highest = 0;
 
     this.get().forEach(function(card) {
+      if(noHeroes && card.getAbility("hero")) return;
       highest = card.getPower() > highest ? card.getPower() : highest;
     })
 

@@ -221,3 +221,20 @@ i {
 
   }
 }
+
+.playcard-banner {
+  position: fixed;
+  border: 1px solid red;
+  background: orangered;
+  width: 100%;
+  height: 250px;
+  left: 0;
+  text-align: center;
+  top: 200px;
+  z-index: 200;
+  .card {
+    position: relative;
+    left: 50%;
+    top: 30%;
+  }
+}
