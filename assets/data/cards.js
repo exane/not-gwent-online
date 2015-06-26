@@ -551,7 +551,7 @@ module.exports = {
   "kayran": {
     name: "Kayran",
     power: 8,
-    ability: ["hero", "morale_boost"],
+    ability: ["hero", "morale_boost", "agile"],
     img: "kayran",
     faction: "monster",
     type: 1

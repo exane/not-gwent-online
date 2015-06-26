@@ -397,11 +397,11 @@ Battleside = (function(){
     var self = this;
     obj.targetSide = this;
     if(obj.disabled) return;
-    var ability = Array.isArray(__flag) || card.getAbility();
+    var ability = Array.isArray(__flag) ? __flag : card.getAbility();
 
     if(Array.isArray(ability) && ability.length){
       var ret = ability.slice();
-      ret = ret.splice(0, 1);
+      ret.splice(0, 1);
       this.checkAbilities(card, obj, ret);
       ability = ability[0];
     }
@@ -443,6 +443,7 @@ Battleside = (function(){
             return;
           }
           if(replaceCard.getName() === card.getName()) return;
+          if(replaceCard.hasAbility("hero")) return;
           self.off("Decoy:replaceWith");
           var field = self.field[replaceCard.getType()];
 

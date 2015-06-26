@@ -43,6 +43,7 @@ module.exports = {
       if(!field.isOnField(card)){
         field.get().forEach(function(_card){
           if(_card.getID() == id) return;
+          if(_card.hasAbility("hero")) return;
           if(_card.getType() != card.getType()) return;
           _card.setBoost(id, 0);
         })
@@ -52,6 +53,7 @@ module.exports = {
 
       field.get().forEach(function(_card){
         if(_card.getID() == id) return;
+        if(_card.hasAbility("hero")) return;
         if(_card.getType() != card.getType()) return;
         _card.setBoost(id, 1);
       })
