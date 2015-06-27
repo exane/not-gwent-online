@@ -624,7 +624,7 @@ let WinnerModal = Modal.extend({
 let User = Backbone.Model.extend({
   defaults: {
     name: "",
-    deckKey: "northern_realm"
+    deckKey: "northern"
   },
   initialize: function(){
     let self = this;
