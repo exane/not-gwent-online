@@ -33,14 +33,6 @@ var User = (function(){
     return this._id;
   }
 
-  /*r.joinRoom = function(roomid){
-    var self = this;
-    *//*this.socket.on(roomid, function(d) {
-      var event = d.event, data = d.data;
-      self.socket.on(event, data);
-    });*//*
-  }*/
-
   r.send = function(event, data, room){
     room = room || null;
     data = data || null;
@@ -49,10 +41,6 @@ var User = (function(){
     }
     else {
       this.socket.to(room).emit(event, data);
-      /*this.socket.global.publish(room, {
-        event: event,
-        data: data
-      })*/
     }
   }
 
@@ -127,28 +115,6 @@ var User = (function(){
       }
       socket.emit("response:name", {name: self.getName()});
     })
-
-    /*socket.on("request:createRoom", function(){
-      var room = Room();
-      connections.roomCollection[room.getID()] = room;
-      room.join(self);
-      console.log("room %s created by %s", room.getID(), self.getName());
-      self.send("response:createRoom", room.getID());
-    })
-
-    socket.on("request:joinRoom", function(){
-      console.log("joinroom");
-      var interval = setInterval(function(){
-        for(var key in connections.roomCollection) {
-          var room = connections.roomCollection[key];
-          if(!room.isOpen()) continue;
-          room.join(self);
-          clearInterval(interval);
-          console.log("user %s joined room %s", self.getName(), room.getID());
-          self.send("response:joinRoom", room.getID());
-        }
-      }, 1000);
-    })*/
 
     socket.on("request:matchmaking", function() {
       if(self._inQueue) return;

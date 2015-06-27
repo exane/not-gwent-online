@@ -29,7 +29,7 @@ global.io = require("socket.io")(app);
 
 app.listen(16918);
 
-io.on("connection", function(socket) {
+io.on("connection", function(socket) { //global connection
   var user;
   connections.add(user = User(socket));
   console.log("new user ", user.getName());
