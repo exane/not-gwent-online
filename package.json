@@ -19,10 +19,15 @@
     "browserify": "^10.2.4",
     "browserify-handlebars": "^1.0.0",
     "gulp": "^3.9.0",
+    "gulp-if": "^1.2.5",
+    "gulp-imagemin": "^2.3.0",
     "gulp-livereload": "^3.8.0",
     "gulp-sass": "^2.0.1",
     "handlebars": "^3.0.3",
     "jquery": "^2.1.4",
+    "sprity": "^1.0.6",
+    "sprity-gm": "^1.0.2",
+    "sprity-sass": "^1.0.4",
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
