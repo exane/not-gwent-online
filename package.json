@@ -16,9 +16,11 @@
   },
   "devDependencies": {
     "babelify": "^6.1.2",
+    "backbone": "^1.2.1",
     "browserify": "^10.2.4",
     "browserify-handlebars": "^1.0.0",
     "gulp": "^3.9.0",
+    "gulp-gm": "0.0.7",
     "gulp-if": "^1.2.5",
     "gulp-imagemin": "^2.3.0",
     "gulp-livereload": "^3.8.0",

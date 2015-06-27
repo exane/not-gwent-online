@@ -2,7 +2,6 @@ var browserify = require('browserify');
 var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var fs = require("fs");
-var spritesmith = require("gulp.spritesmith");
 var babelify = require("babelify");
 var livereload = require("gulp-livereload");
 var sass = require("gulp-sass");
@@ -82,25 +81,31 @@ gulp.task("index", function(){
   .pipe(gulp.dest("./public/build"));
 })
 
-gulp.task('resize', function(){
-  if(fs.existsSync(__dirname + "/assets/cards/lg/monster/arachas1.png")) {
-    console.log("skip resizing");
-    return;
+gulp.task('resize sm', function(done){
+  if(fs.existsSync(__dirname + "/assets/cards/sm/monster/arachas1.png")) {
+    console.log("skip resizing sm");
+    return done();
   }
-  gulp.src('./assets/original_cards/**/*.png')
+  return gulp.src('./assets/original_cards/**/*.png')
   .pipe(gm(function(gmfile){
     return gmfile.resize(null, 120);
   }))
   .pipe(gulp.dest('./assets/cards/sm/'));
+});
 
-  gulp.src('./assets/original_cards/**/*.png')
+gulp.task('resize lg', ["resize sm"], function(done){
+  if(fs.existsSync(__dirname + "/assets/cards/lg/monster/arachas1.png")) {
+    console.log("skip resizing lg");
+    return done();
+  }
+  return gulp.src('./assets/original_cards/**/*.png')
   .pipe(gm(function(gmfile){
     return gmfile.resize(null, 450);
   }))
   .pipe(gulp.dest('./assets/cards/lg/'));
 });
 
-gulp.task("sprite", function(){
+gulp.task("sprite", ["resize lg"], function(){
   /*if(fs.existsSync(__dirname + "/public/build/")) {
     console.log("skip resizing");
     return;
@@ -119,7 +124,9 @@ gulp.task("sprite", function(){
     margin: 0
     //template: "./client/scss/_cards.hbs"
   })
-  .pipe(gulpif("*.png", gulp.dest("./public/build/"), gulp.dest("./client/scss/")))
+  .pipe(gulpif("*.png", gulp.dest("./public/build/"), gulp.dest("./client/scss/")));
+
+
 })
 
-gulp.task("default", ["watch", "browserify", "sass", "unit tests", "index", "resize", "sprite"]);
+gulp.task("default", ["watch", "browserify", "sass", "unit tests", "index", "resize lg", "resize sm", "sprite"]);
