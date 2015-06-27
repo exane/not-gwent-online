@@ -15,7 +15,7 @@ module.exports = {
     power: 1,
     ability: null,
     img: "foot_soldier1",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "poor_fucking_infantry": {
@@ -23,7 +23,7 @@ module.exports = {
     power: 1,
     ability: "tight_bond",
     img: "infantry",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "yarpen_zigrin": {
@@ -31,7 +31,7 @@ module.exports = {
     power: 2,
     ability: null,
     img: "yarpen",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "blue_stripes_commando": {
@@ -39,7 +39,7 @@ module.exports = {
     power: 4,
     ability: "tight_bond",
     img: "commando",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "sigismund_dijkstra": {
@@ -47,7 +47,7 @@ module.exports = {
     power: 4,
     ability: "spy",
     img: "dijkstra",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "prince_stennis": {
@@ -55,7 +55,7 @@ module.exports = {
     power: 5,
     ability: "spy",
     img: "stennis",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "siegfried_of_denesle": {
@@ -63,7 +63,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "siegfried",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "ves": {
@@ -71,7 +71,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "ves",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "vernon_roche": {
@@ -79,7 +79,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "roche",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "john_natalis": {
@@ -87,7 +87,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "natalis",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "sheldon_skaggs": {
@@ -95,7 +95,7 @@ module.exports = {
     power: 4,
     ability: null,
     img: "skaggs",
-    faction: "northern_realm",
+    faction: "northern",
     type: 1
   },
   "sabrina_glevissig": {
@@ -103,7 +103,7 @@ module.exports = {
     power: 4,
     ability: null,
     img: "sabrina",
-    faction: "northern_realm",
+    faction: "northern",
     type: 1
   },
   "crinfrid_reavers_dragon_hunter": {
@@ -111,7 +111,7 @@ module.exports = {
     power: 5,
     ability: "tight_bond",
     img: "crinfrid",
-    faction: "northern_realm",
+    faction: "northern",
     type: 1
   },
   "sile_de_tansarville": {
@@ -119,7 +119,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "sile",
-    faction: "northern_realm",
+    faction: "northern",
     type: 1
   },
   "keira_metz": {
@@ -127,7 +127,7 @@ module.exports = {
     power: 5,
     ability: null,
     img: "keira",
-    faction: "northern_realm",
+    faction: "northern",
     type: 1
   },
   "dethmold": {
@@ -135,7 +135,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "dethmold",
-    faction: "northern_realm",
+    faction: "northern",
     type: 1
   },
   "kaedweni_siege_expert": {
@@ -143,7 +143,7 @@ module.exports = {
     power: 1,
     ability: "morale_boost",
     img: "siege_expert1",
-    faction: "northern_realm",
+    faction: "northern",
     type: 2
   },
   "dun_banner_medic": {
@@ -151,7 +151,7 @@ module.exports = {
     power: 5,
     ability: "medic",
     img: "medic",
-    faction: "northern_realm",
+    faction: "northern",
     type: 2
   },
   "ballista": {
@@ -159,7 +159,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "ballista1",
-    faction: "northern_realm",
+    faction: "northern",
     type: 2
   },
   "trebuchet": {
@@ -167,7 +167,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "trebuchet1",
-    faction: "northern_realm",
+    faction: "northern",
     type: 2
   },
   "thaler": {
@@ -175,7 +175,7 @@ module.exports = {
     power: 1,
     ability: "spy",
     img: "thaler",
-    faction: "northern_realm",
+    faction: "northern",
     type: 2
   },
   "foltest_king_of_temeria": {
@@ -183,7 +183,7 @@ module.exports = {
     power: -1,
     ability: "foltest_leader1",
     img: "foltest_king",
-    faction: "northern_realm",
+    faction: "northern",
     type: 3
   },
   "foltest_lord_commander": {
@@ -191,7 +191,7 @@ module.exports = {
     power: -1,
     ability: "foltest_leader2",
     img: "foltest_commander",
-    faction: "northern_realm",
+    faction: "northern",
     type: 3
   },
   "foltest_siegemaster": {
@@ -199,7 +199,7 @@ module.exports = {
     power: -1,
     ability: "foltest_leader3",
     img: "foltest_siege",
-    faction: "northern_realm",
+    faction: "northern",
     type: 3
   },
   "foltest_forged": {
@@ -207,7 +207,7 @@ module.exports = {
     power: -1,
     ability: "foltest_leader4",
     img: "foltest_forged",
-    faction: "northern_realm",
+    faction: "northern",
     type: 3
   },
   "philippa_eilhart": {
@@ -215,7 +215,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "eilhart",
-    faction: "northern_realm",
+    faction: "northern",
     type: 1
   },
   "esterad_thyssen": {
@@ -223,7 +223,7 @@ module.exports = {
     power: 10,
     ability: "hero",
     img: "thyssen",
-    faction: "northern_realm",
+    faction: "northern",
     type: 0
   },
   "siege_tower": {
@@ -231,7 +231,7 @@ module.exports = {
     power: 6,
     ability: null,
     img: "siege_tower",
-    faction: "northern_realm",
+    faction: "northern",
     type: 2
   },
   "catapult": {
@@ -239,7 +239,7 @@ module.exports = {
     power: 8,
     ability: "tight_bond",
     img: "catapult",
-    faction: "northern_realm",
+    faction: "northern",
     type: 2
   },
 
@@ -249,7 +249,7 @@ module.exports = {
     power: -1,
     ability: "decoy",
     img: "decoy",
-    faction: null,
+    faction: "neutral",
     type: 4
   },
   "scorch": {
@@ -257,7 +257,7 @@ module.exports = {
     power: -1,
     ability: "scorch_card",
     img: "scorch",
-    faction: null,
+    faction: "neutral",
     type: 4
   },
   "commanders_horn": {
@@ -265,7 +265,7 @@ module.exports = {
     power: -1,
     ability: "commanders_horn_card",
     img: "horn",
-    faction: null,
+    faction: "neutral",
     type: 4
   },
 
@@ -275,7 +275,7 @@ module.exports = {
     power: -1,
     ability: "weather_fog",
     img: "fog",
-    faction: null,
+    faction: "neutral",
     type: 5
   },
   "biting_frost": {
@@ -283,7 +283,7 @@ module.exports = {
     power: -1,
     ability: "weather_frost",
     img: "frost",
-    faction: null,
+    faction: "neutral",
     type: 5
   },
   "torrential_rain": {
@@ -291,7 +291,7 @@ module.exports = {
     power: -1,
     ability: "weather_rain",
     img: "rain",
-    faction: null,
+    faction: "neutral",
     type: 5
   },
   "clear_weather": {
@@ -299,7 +299,7 @@ module.exports = {
     power: -1,
     ability: "weather_clear",
     img: "clear",
-    faction: null,
+    faction: "neutral",
     type: 5
   },
 
@@ -308,7 +308,7 @@ module.exports = {
     power: 2,
     ability: "commanders_horn",
     img: "dandelion",
-    faction: null,
+    faction: "neutral",
     type: 0
   },
   "avallach": {
@@ -316,7 +316,7 @@ module.exports = {
     power: 0,
     ability: ["hero", "spy"],
     img: "avallach",
-    faction: null,
+    faction: "neutral",
     type: 0
   },
   "villentretenmerth": {
@@ -324,7 +324,7 @@ module.exports = {
     power: 7,
     ability: "scorch",
     img: "villentretenmerth",
-    faction: null,
+    faction: "neutral",
     type: 0
   },
 
