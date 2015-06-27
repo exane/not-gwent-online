@@ -83,7 +83,7 @@ gulp.task("index", function(){
 
 gulp.task('resize sm', function(done){
   if(fs.existsSync(__dirname + "/assets/cards/sm/monster/arachas1.png")) {
-    console.log("skip resizing sm");
+    console.log("skip generating sm images");
     return done();
   }
   return gulp.src('./assets/original_cards/**/*.png')
@@ -95,7 +95,7 @@ gulp.task('resize sm', function(done){
 
 gulp.task('resize lg', ["resize sm"], function(done){
   if(fs.existsSync(__dirname + "/assets/cards/lg/monster/arachas1.png")) {
-    console.log("skip resizing lg");
+    console.log("skip generating lg images");
     return done();
   }
   return gulp.src('./assets/original_cards/**/*.png')
@@ -106,10 +106,10 @@ gulp.task('resize lg', ["resize sm"], function(done){
 });
 
 gulp.task("sprite", ["resize lg"], function(){
-  /*if(fs.existsSync(__dirname + "/public/build/")) {
-    console.log("skip resizing");
+  if(fs.existsSync(__dirname + "/public/build/cards-lg-monster.png")) {
+    console.log("skip sprite generating");
     return;
-  }*/
+  }
   sprity.src({
     src: "./assets/cards/**/*.png",
     style: "cards.css",
