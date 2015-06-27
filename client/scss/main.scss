@@ -29,12 +29,13 @@ $game-height: 800px;
 .field {
   //width: 100%;
   height: 100px;
-  border: 1px solid black;/*
-  overflow: hidden;
+  border: 1px solid black;
+  /*
+    overflow: hidden;
 
-  &:hover {
-    overflow: visible;
-  }*/
+    &:hover {
+      overflow: visible;
+    }*/
 
   .card:first-child {
     margin-left: 0 !important;
@@ -45,8 +46,9 @@ $game-height: 800px;
   }
 }
 
-.field-horn {/*
-  border: 1px solid green;*/
+.field-horn {
+  /*
+    border: 1px solid green;*/
   /*clear: both;*/
   margin: 0px;
   padding: 0px;
@@ -67,18 +69,20 @@ $game-height: 800px;
     &:hover {
       position: relative;
       z-index: 10;
-      transform: scale(1.25,1.25);
+      transform: scale(1.25, 1.25);
     }
   }
 }
 
-.passing {/*
-  display: none;*/
+.passing {
+  /*
+    display: none;*/
 }
 
 .field-single {
-  border: 1px solid black;/*
-  width: 85px;*/
+  border: 1px solid black;
+  /*
+    width: 85px;*/
   /*margin: 5px;*/
   height: 98px;
 }
@@ -157,7 +161,7 @@ $game-height: 800px;
   &.activeCard {
     position: relative;
     z-index: 11;
-    transform: scale(1.5,1.5) !important;
+    transform: scale(1.5, 1.5) !important;
   }
 }
 
@@ -184,7 +188,7 @@ $game-height: 800px;
 
 }
 
-.gwent-lives{
+.gwent-lives {
   i {
     display: block;
     float: left;
@@ -195,56 +199,56 @@ $game-height: 800px;
       background: url("../../assets/ruby.png");
     }
   }
+}
 
-  .field {
-    &.field-frost {
-      background: #ffffff; /* Old browsers */
-      background: -moz-linear-gradient(top,  #ffffff 0%, #2365ff 100%); /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#2365ff)); /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(top,  #ffffff 0%,#2365ff 100%); /* Chrome10+,Safari5.1+ */
-      background: -o-linear-gradient(top,  #ffffff 0%,#2365ff 100%); /* Opera 11.10+ */
-      background: -ms-linear-gradient(top,  #ffffff 0%,#2365ff 100%); /* IE10+ */
-      background: linear-gradient(to bottom,  #ffffff 0%,#2365ff 100%); /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#2365ff',GradientType=0 ); /* IE6-9 */
+.field {
+  &.field-frost {
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #2365ff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #2365ff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #2365ff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #2365ff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%, #2365ff 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #2365ff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#2365ff', GradientType=0); /* IE6-9 */
 
-    }
-    &.field-fog {
-      background: #ffffff; /* Old browsers */
-      background: -moz-linear-gradient(top,  #ffffff 0%, #232f30 100%); /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#232f30)); /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(top,  #ffffff 0%,#232f30 100%); /* Chrome10+,Safari5.1+ */
-      background: -o-linear-gradient(top,  #ffffff 0%,#232f30 100%); /* Opera 11.10+ */
-      background: -ms-linear-gradient(top,  #ffffff 0%,#232f30 100%); /* IE10+ */
-      background: linear-gradient(to bottom,  #ffffff 0%,#232f30 100%); /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#232f30',GradientType=0 ); /* IE6-9 */
-    }
-    &.field-rain {
-      background: #ffffff; /* Old browsers */
-      background: -moz-linear-gradient(top,  #ffffff 0%, #9b9b9b 100%); /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#9b9b9b)); /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(top,  #ffffff 0%,#9b9b9b 100%); /* Chrome10+,Safari5.1+ */
-      background: -o-linear-gradient(top,  #ffffff 0%,#9b9b9b 100%); /* Opera 11.10+ */
-      background: -ms-linear-gradient(top,  #ffffff 0%,#9b9b9b 100%); /* IE10+ */
-      background: linear-gradient(to bottom,  #ffffff 0%,#9b9b9b 100%); /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#9b9b9b',GradientType=0 ); /* IE6-9 */
-
-    }
   }
+  &.field-fog {
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #232f30 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #232f30)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #232f30 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #232f30 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%, #232f30 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #232f30 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#232f30', GradientType=0); /* IE6-9 */
+  }
+  &.field-rain {
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #9b9b9b 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #9b9b9b)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #9b9b9b 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #9b9b9b 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%, #9b9b9b 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #9b9b9b 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#9b9b9b', GradientType=0); /* IE6-9 */
 
-  .playcard-banner {
-    position: fixed;
-    border: 1px solid red;
-    background: orangered;
-    width: 100%;
-    height: 250px;
-    left: 0;
-    text-align: center;
-    top: 200px;
-    z-index: 200;
-    .card {
-      position: relative;
-      left: 50%;
-      top: 30%;
-    }
+  }
+}
+
+.playcard-banner {
+  position: fixed;
+  border: 1px solid red;
+  background: orangered;
+  width: 100%;
+  height: 250px;
+  left: 0;
+  text-align: center;
+  top: 200px;
+  z-index: 200;
+  .card {
+    position: relative;
+    left: 50%;
+    top: 30%;
   }
 }

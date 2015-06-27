@@ -348,7 +348,7 @@ let BattleView = Backbone.View.extend({
     });
 
     if(key === "decoy"){
-      console.log("its decoy!!!");
+      //console.log("its decoy!!!");
       this.user.set("waitForDecoy", id);
       this.render();
     }
@@ -369,7 +369,7 @@ let BattleView = Backbone.View.extend({
     if(this.user.get("setAgile")){
       let $field = $(e.target).closest(".field.active").find(".field-close, .field-range");
 
-      console.log($field);
+      //console.log($field);
       let target = $field.hasClass("field-close") ? 0 : 1;
       this.app.send("agile:field", {
         field: target
@@ -379,7 +379,7 @@ let BattleView = Backbone.View.extend({
     if(this.user.get("setHorn")){
       let $field = $(e.target).closest(".field.active").find(".field-close, .field-range, .field-siege");
 
-      console.log($field);
+      //console.log($field);
       let target = $field.hasClass("field-close") ? 0 : ($field.hasClass("field-range") ? 1 : 2);
       this.app.send("horn:field", {
         field: target
@@ -399,7 +399,7 @@ let BattleView = Backbone.View.extend({
   },
   openDiscard: function(e){
     let $discard = $(e.target).closest(".field-discard");
-    console.log("opened discard");
+    //console.log("opened discard");
     let side;
     if($discard.parent().hasClass("player")){
       side = this.yourSide;
@@ -477,7 +477,7 @@ let BattleView = Backbone.View.extend({
     if(!$card.parent().hasClass("player")) return;
     if($card.find(".card").hasClass("disabled")) return;
 
-    console.log("click leader");
+    //console.log("click leader");
 
 
     this.app.send("activate:leader")
@@ -582,7 +582,7 @@ let MedicModal = Modal.extend({
     "click .card": "onCardClick"
   },
   onCardClick: function(e){
-    console.log($(e.target).closest(".card"));
+    //console.log($(e.target).closest(".card"));
     let id = $(e.target).closest(".card").data().id;
     this.model.get("app").send("medic:chooseCardFromDiscard", {
       cardID: id
@@ -604,7 +604,7 @@ let ReDrawModal = Modal.extend({
     "click .card": "onCardClick"
   },
   onCardClick: function(e){
-    console.log($(e.target).closest(".card"));
+    //console.log($(e.target).closest(".card"));
     let id = $(e.target).closest(".card").data().id;
     this.model.get("app").send("redraw:reDrawCard", {
       cardID: id
@@ -638,7 +638,7 @@ let User = Backbone.Model.extend({
     });
 
     app.receive("init:battle", function(data){
-      console.log("opponent found!");
+      //console.log("opponent found!");
       self.set("roomSide", data.side);
       /*
             self.set("channel:battle", app.socket.subscribe(self.get("room")));*/
@@ -653,7 +653,7 @@ let User = Backbone.Model.extend({
 
     app.receive("response:joinRoom", function(roomID){
       self.set("room", roomID);
-      console.log("room id", self.get("room"));
+      //console.log("room id", self.get("room"));
     })
 
     app.receive("set:waiting", function(data){
@@ -667,25 +667,25 @@ let User = Backbone.Model.extend({
     })
 
     app.receive("foe:left", function(){
-      console.log("your foe left the room");
+      //console.log("your foe left the room");
       $(".container").prepend('<div class="alert alert-danger">Your foe left the battle!</div>')
     })
 
     app.receive("played:medic", function(data){
       let cards = JSON.parse(data.cards);
-      console.log("played medic");
+      //console.log("played medic");
       self.set("medicDiscard", {
         cards: cards
       });
     })
 
     app.receive("played:agile", function(data){
-      console.log("played agile");
+      //console.log("played agile");
       self.set("setAgile", data.cardID);
     })
 
     app.receive("played:horn", function(data){
-      console.log("played horn");
+      //console.log("played horn");
       self.set("setHorn", data.cardID);
     })
 
@@ -710,7 +710,7 @@ let User = Backbone.Model.extend({
     app.receive("gameover", function(data){
       let winner = data.winner;
 
-      console.log("gameover");
+      //console.log("gameover");
 
       let model = Backbone.Model.extend({});
       let modal = new WinnerModal({model: new model({winner: winner})});
@@ -742,7 +742,7 @@ let User = Backbone.Model.extend({
     this.get("app").send("request:name", {name: name});
   },
   setDeck: function(deckKey){
-    console.log("deck: ", deckKey);
+    //console.log("deck: ", deckKey);
     this.set("deckKey", deckKey);
     this.get("app").send("set:deck", {deck: deckKey});
   }
