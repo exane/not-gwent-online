@@ -1,6 +1,6 @@
 module.exports = {
 
-  "northern_realm": [
+  "northern": [
     "redanian_foot_soldier",
     "redanian_foot_soldier",
     "poor_fucking_infantry",
