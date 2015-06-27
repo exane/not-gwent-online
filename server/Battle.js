@@ -74,14 +74,14 @@ var Battle = (function(){
     this.p1.hand.add(Card("villentretenmerth"));
     this.p2.hand.add(Card("villentretenmerth"));
 
-   /* this.p1.hand.add(Card("impenetrable_fog"));
+    this.p1.hand.add(Card("impenetrable_fog"));
     this.p2.hand.add(Card("impenetrable_fog"));
     this.p1.hand.add(Card("biting_frost"));
     this.p2.hand.add(Card("biting_frost"));
     this.p1.hand.add(Card("torrential_rain"));
     this.p2.hand.add(Card("torrential_rain"));
     this.p1.hand.add(Card("clear_weather"));
-    this.p2.hand.add(Card("clear_weather"));*/
+    this.p2.hand.add(Card("clear_weather"));
 
 
 

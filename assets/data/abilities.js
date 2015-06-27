@@ -240,7 +240,7 @@ module.exports = {
   },
   "scorch": {
     name: "scorch",
-    description: "Scorch: Discard after playing. Kills the strongest card(s) in the battlefield.",
+    description: "Scorch: Kills the strongest card(s) in the battlefield.",
     scorch: true
   },
   "commanders_horn": {
