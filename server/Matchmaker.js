@@ -1,4 +1,3 @@
-var Promise = require("promise");
 
 var Matchmaker = (function(){
   var Matchmaker = function(){

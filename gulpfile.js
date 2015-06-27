@@ -112,7 +112,7 @@ gulp.task("sprite", ["resize lg"], function(){
   }*/
   sprity.src({
     src: "./assets/cards/**/*.png",
-    style: "_cards.scss",
+    style: "cards.css",
     //"style-type": "scss",
     processor: "css",
     engine: "gm",
@@ -124,7 +124,8 @@ gulp.task("sprite", ["resize lg"], function(){
     margin: 0
     //template: "./client/scss/_cards.hbs"
   })
-  .pipe(gulpif("*.png", gulp.dest("./public/build/"), gulp.dest("./client/scss/")));
+  //.pipe(gulpif("*.png", gulp.dest("./public/build/"), gulp.dest("./client/scss/")));
+  .pipe(gulp.dest("./public/build/"));
 
 
 })
