@@ -70,7 +70,7 @@ var User = (function(){
   }
 
   r.getDeck = function() {
-    return this._deck || "northern_realm";
+    return this._deck || "northern";
   }
 
   r.addRoom = function(room) {
