@@ -3,6 +3,8 @@ node_modules
 public/build
 public/index.html
 test/spec
+assets/cards/*
+client/scss/_cards.scss
 
 /site/.idea
 /site/server/vendor

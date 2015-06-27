@@ -2,10 +2,8 @@
   <h3 class="bbm-modal__title">Choose up to 2 cards you wish to redraw!</h3>
 </div>
 <div class="bbm-modal__section">
-  {{#each handCards}}
-  <div class="card" data-key="{{_key}}" data-id="{{_id}}">
-    <img src="../assets/cards/{{_data.img}}.png">
-  </div>
+  {{#each handCards as |val key|}}
+    {{>card val}}
   {{/each}}
 </div>
 <div class="bbm-modal__bottombar">
