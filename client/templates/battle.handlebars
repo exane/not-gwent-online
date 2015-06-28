@@ -1,3 +1,10 @@
+{{#if isWaiting}}
+  <div class="col-xs-12">
+    <div class="waiting-for-opponent">
+      ~~ Waiting for opponent ~~
+    </div>
+  </div>
+{{/if}}
 <div class="col-xs-3 left-side">
   <div class="col-xs-12 game-info game-info-foe foe">
   </div>
@@ -54,7 +61,7 @@
   <div class="row">
     <div class="col-xs-12 field field-hand">
       {{#each cards as |val key|}}
-      {{>card val}}
+        {{>card val}}
       {{/each}}
     </div>
   </div>

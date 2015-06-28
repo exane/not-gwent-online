@@ -252,3 +252,97 @@ $game-height: 800px;
     top: 30%;
   }
 }
+
+.waiting-for-opponent {
+  position: absolute;
+  //left: 43%;
+  left: 30%;
+  top: 505px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 0px 200px;
+  z-index: 300;
+  color: #ff8927;
+  //text-shadow: 0px 0px 1px #000;
+  background: #444ba1;
+}
+
+.waiting-for-opponent{
+   animation: waitForOpponent linear 2s;
+   animation-iteration-count: infinite;
+   transform-origin: 50% 50%;
+   -webkit-animation: waitForOpponent linear 2s;
+   -webkit-animation-iteration-count: infinite;
+   -webkit-transform-origin: 50% 50%;
+   -moz-animation: waitForOpponent linear 2s;
+   -moz-animation-iteration-count: infinite;
+   -moz-transform-origin: 50% 50%;
+   -o-animation: waitForOpponent linear 2s;
+   -o-animation-iteration-count: infinite;
+   -o-transform-origin: 50% 50%;
+   -ms-animation: waitForOpponent linear 2s;
+   -ms-animation-iteration-count: infinite;
+   -ms-transform-origin: 50% 50%;
+ }
+
+
+
+@keyframes waitForOpponent{
+  0% {
+    opacity:1;
+  }
+  50% {
+    opacity:0.8;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes waitForOpponent{
+  0% {
+    opacity:1;
+  }
+  50% {
+    opacity:0.8;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes waitForOpponent {
+  0% {
+    opacity:1;
+  }
+  50% {
+    opacity:0.8;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes waitForOpponent {
+  0% {
+    opacity:1;
+  }
+  50% {
+    opacity:0.8;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes waitForOpponent {
+  0% {
+    opacity:1;
+  }
+  50% {
+    opacity:0.8;
+  }
+  100% {
+    opacity:1;
+  }
+}

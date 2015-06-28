@@ -420,7 +420,8 @@ let BattleView = Backbone.View.extend({
         close: self.user.get("setAgile") || self.user.get("setHorn"),
         range: self.user.get("setAgile") || self.user.get("setHorn"),
         siege: self.user.get("setHorn")
-      }
+      },
+      isWaiting: self.user.get("waiting")
     }));
     if(!(this.otherSide && this.yourSide)) return;
     this.otherSide.render();
