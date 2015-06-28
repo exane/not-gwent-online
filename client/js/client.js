@@ -274,6 +274,7 @@ let BattleView = Backbone.View.extend({
     this.listenTo(user, "change:setAgile", this.render);
     this.listenTo(user, "change:setHorn", this.render);
     this.listenTo(user, "change:isReDrawing", this.render);
+    this.listenTo(user, "change:chooseSide", this.render);
     /*this.listenTo(user, "change:handCards", this.render);*/
 
     this.$hand = this.$el.find(".field-hand");
@@ -437,9 +438,12 @@ let BattleView = Backbone.View.extend({
       let modal = new ReDrawModal({model: this.user});
       this.$el.prepend(modal.render().el);
     }
-
-    if(this.user.get("openDiscard")){
+    if(this.user.get("openDiscard")) {
       let modal = new Modal({model: this.user});
+      this.$el.prepend(modal.render().el);
+    }
+    if(this.user.get("chooseSide")){
+      let modal = new ChooseSideModal({model: this.user});
       this.$el.prepend(modal.render().el);
     }
     if(this.user.get("medicDiscard")){
@@ -621,6 +625,29 @@ let ReDrawModal = Modal.extend({
 let WinnerModal = Modal.extend({
   template: require("../templates/modal.winner.handlebars")
 });
+let ChooseSideModal = Modal.extend({
+  template: require("../templates/modal.side.handlebars"),
+  events: {
+    "click .btn": "onBtnClick"
+  },
+  beforeCancel: function() {
+    return false;
+  },
+  onBtnClick: function(e) {
+    var id = $(e.target).closest(".btn").data().id;
+
+    this.model.set("chooseSide", false);
+    if(id === "you") {
+      //this.model.set("chosenSide", this.model.get("roomSide"));
+      this.model.chooseSide(this.model.get("roomSide"));
+      this.remove();
+      return;
+    }
+    //this.model.set("chosenSide", this.model.get("roomFoeSide"));
+    this.model.chooseSide(this.model.get("roomFoeSide"));
+    this.remove();
+  }
+});
 
 let User = Backbone.Model.extend({
   defaults: {
@@ -632,6 +659,8 @@ let User = Backbone.Model.extend({
     let user = this;
     let app = user.get("app");
 
+    self.set("chooseSide", false);
+
     this.listenTo(this.attributes, "change:room", this.subscribeRoom);
 
     app.receive("response:name", function(data){
@@ -641,16 +670,12 @@ let User = Backbone.Model.extend({
     app.receive("init:battle", function(data){
       //console.log("opponent found!");
       self.set("roomSide", data.side);
+      self.set("roomFoeSide", data.foeSide);
       /*
             self.set("channel:battle", app.socket.subscribe(self.get("room")));*/
       //app.navigate("battle", {trigger: true});
       app.battleRoute();
     })
-
-    /*app.receive("response:createRoom", function(roomID){
-      self.set("room", roomID);
-      console.log("room created", roomID);
-    });*/
 
     app.receive("response:joinRoom", function(roomID){
       self.set("room", roomID);
@@ -717,6 +742,9 @@ let User = Backbone.Model.extend({
       let modal = new WinnerModal({model: new model({winner: winner})});
       $("body").prepend(modal.render().el);
     })
+    app.receive("request:chooseWhichSideBegins", function() {
+      self.set("chooseSide", true);
+    })
 
     app.on("startMatchmaking", this.startMatchmaking, this);
     app.on("joinRoom", this.joinRoom, this);
@@ -746,6 +774,11 @@ let User = Backbone.Model.extend({
     //console.log("deck: ", deckKey);
     this.set("deckKey", deckKey);
     this.get("app").send("set:deck", {deck: deckKey});
+  },
+  chooseSide: function(roomSide) {
+    this.get("app").send("response:chooseWhichSideBegins", {
+      side: roomSide
+    })
   }
 });
 

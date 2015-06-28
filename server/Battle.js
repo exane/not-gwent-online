@@ -1,5 +1,6 @@
 var Battleside = require("./Battleside");
 var Card = require("./Card");
+var Deck = require("./Deck");
 var shortid = require("shortid");
 var Promise = require("jquery-deferred");
 
@@ -54,7 +55,6 @@ var Battle = (function(){
     this.p1.setUpWeatherFieldWith(this.p2);
 
 
-
     this.start();
   }
 
@@ -63,26 +63,27 @@ var Battle = (function(){
     this.p2.setLeadercard();
     this.p1.draw(10);
     this.p2.draw(10);
+    /*
 
-    this.p1.placeCard("ves");
-    this.p2.placeCard("ves");
-    this.p1.placeCard("yarpen_zigrin");
-    this.p2.placeCard("yarpen_zigrin");
+        this.p1.placeCard("ves");
+        this.p2.placeCard("ves");
+        this.p1.placeCard("yarpen_zigrin");
+        this.p2.placeCard("yarpen_zigrin");
 
-    this.p1.hand.add(Card("scorch"));
-    this.p2.hand.add(Card("scorch"));
-    this.p1.hand.add(Card("villentretenmerth"));
-    this.p2.hand.add(Card("villentretenmerth"));
+        this.p1.hand.add(Card("scorch"));
+        this.p2.hand.add(Card("scorch"));
+        this.p1.hand.add(Card("villentretenmerth"));
+        this.p2.hand.add(Card("villentretenmerth"));
 
-    this.p1.hand.add(Card("impenetrable_fog"));
-    this.p2.hand.add(Card("impenetrable_fog"));
-    this.p1.hand.add(Card("biting_frost"));
-    this.p2.hand.add(Card("biting_frost"));
-    this.p1.hand.add(Card("torrential_rain"));
-    this.p2.hand.add(Card("torrential_rain"));
-    this.p1.hand.add(Card("clear_weather"));
-    this.p2.hand.add(Card("clear_weather"));
-
+        this.p1.hand.add(Card("impenetrable_fog"));
+        this.p2.hand.add(Card("impenetrable_fog"));
+        this.p1.hand.add(Card("biting_frost"));
+        this.p2.hand.add(Card("biting_frost"));
+        this.p1.hand.add(Card("torrential_rain"));
+        this.p2.hand.add(Card("torrential_rain"));
+        this.p1.hand.add(Card("clear_weather"));
+        this.p2.hand.add(Card("clear_weather"));
+    */
 
 
     this.update();
@@ -121,9 +122,10 @@ var Battle = (function(){
 
   r.startNextRound = function(){
     var loser = this.checkRubies();
+    var winner = loser.foe;
     if(this.checkIfIsOver()){
       console.log("its over!");
-      this.gameOver(loser.foe);
+      this.gameOver(winner);
       this.update();
       return;
     }
@@ -133,11 +135,41 @@ var Battle = (function(){
 
     console.log("start new round!");
 
+    if(winner.deck.getFaction() === Deck.FACTION.NORTHERN_REALM){
+      winner.draw(1);
+      console.log(winner.getName() + " draws 1 extra card! (Northern ability)");
+    }
+
     this.update();
-    this.switchTurn(loser);
+
+    if(winner.deck.getFaction() === Deck.FACTION.SCOIATAEL){
+      this.waitForScoiatael(winner);
+    }
+    else if(this.p1.deck.getFaction() === Deck.FACTION.SCOIATAEL){
+      this.waitForScoiatael(this.p1);
+    }
+    else if(this.p2.deck.getFaction() === Deck.FACTION.SCOIATAEL){
+      this.waitForScoiatael(this.p2);
+    }
+    else {
+      this.switchTurn(loser);
+    }
   }
 
-  r.gameOver = function(winner) {
+  r.waitForScoiatael = function(side){
+    var self = this;
+    side.send("request:chooseWhichSideBegins", null, true);
+    side.socket.once("response:chooseWhichSideBegins", function(data){
+      console.log("which side? ", data.side);
+
+      if(data.side !== "p1" && data.side !== "p2")
+        throw new Error("Unknown side property! - ", data.side);
+
+      self.switchTurn(self[data.side]);
+    })
+  }
+
+  r.gameOver = function(winner){
     this.send("gameover", {
       winner: winner.getName()
     })
@@ -149,7 +181,7 @@ var Battle = (function(){
     this._update(this.p2);
   }
 
-  r.updateSelf = function(side) {
+  r.updateSelf = function(side){
     this._update(side, true);
   }
 
@@ -161,7 +193,7 @@ var Battle = (function(){
     }, isPrivate)
     p.send("update:hand", {
       cards: JSON.stringify(p.hand.getCards())
-    },isPrivate);
+    }, isPrivate);
     p.send("update:fields", {
       close: p.field[Card.TYPE.CLOSE_COMBAT].getInfo(),
       ranged: p.field[Card.TYPE.RANGED].getInfo(),
@@ -265,6 +297,19 @@ var Battle = (function(){
     }
 
     //tie
+
+    //check if is nilfgaardian faction ability
+    if(this.p1.deck.getFaction() === Deck.FACTION.NILFGAARDIAN_EMPIRE && this.p1.deck.getFaction() !== this.p2.deck.getFaction()){
+      this.p2.removeRuby();
+      console.log(this.p1.getName() + " wins the tie! (nilfgaardian ability)");
+      return this.p2;
+    }
+    if(this.p2.deck.getFaction() === Deck.FACTION.NILFGAARDIAN_EMPIRE && this.p1.deck.getFaction() !== this.p2.deck.getFaction()){
+      this.p1.removeRuby();
+      console.log(this.p2.getName() + " wins the tie! (nilfgaardian ability)");
+      return this.p1;
+    }
+
     this.p1.removeRuby();
     this.p2.removeRuby();
     return Math.random() > 0.5 ? this.p1 : this.p2;

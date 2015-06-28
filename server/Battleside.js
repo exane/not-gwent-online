@@ -166,6 +166,19 @@ Battleside = (function(){
     return -1;
   }
 
+  r.getRandomCardOnField = function() {
+    var close, range, siege;
+
+    close = this.field[Card.TYPE.CLOSE_COMBAT].get();
+    range = this.field[Card.TYPE.RANGED].get();
+    siege = this.field[Card.TYPE.SIEGE].get();
+
+    var allCards = close.concat(range.concat(siege));
+    var rnd = (Math.random() * allCards.length) | 0 ;
+
+    return allCards[rnd];
+  }
+
   r.getCardFromDiscard = function(id){
     for(var i = 0; i < this._discard.length; i++) {
       var c = this._discard[i];
@@ -558,6 +571,10 @@ Battleside = (function(){
   }
 
   r.clearMainFields = function(){
+    var rndCard = null;
+    if(this.deck.getFaction() === Deck.FACTION.MONSTERS) {
+      rndCard = this.getRandomCardOnField();
+    }
     var cards1 = this.field[Card.TYPE.CLOSE_COMBAT].removeAll();
     var cards2 = this.field[Card.TYPE.RANGED].removeAll();
     var cards3 = this.field[Card.TYPE.SIEGE].removeAll();
@@ -565,6 +582,12 @@ Battleside = (function(){
 
     var cards = cards1.concat(cards2.concat(cards3.concat(cards4)));
     this.addToDiscard(cards);
+
+    if(rndCard) {
+      this.removeFromDiscard(rndCard);
+      this.placeCard(rndCard, {disabled: true}); //disabled == no abilities get triggered
+      console.log("Monsters faction ability triggered!");
+    }
   }
 
   r.addToDiscard = function(cards){

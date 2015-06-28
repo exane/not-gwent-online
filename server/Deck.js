@@ -11,8 +11,11 @@ var Deck = (function(){
      */
     this._deck = [];
 
+    if(typeof deck !== "object") throw new Error("Deck is not an object!");
+
     this._originalDeck = [];
-    this.setDeck(deck);
+    this._faction = deck.faction;
+    this.setDeck(deck.data);
   };
   var r = Deck.prototype;
   /**
@@ -23,6 +26,14 @@ var Deck = (function(){
   r._deck = null;
   r._owner = null;
   r._originalDeck = null;
+  r._faction = null;
+
+  Deck.FACTION = {
+    NORTHERN_REALM: "northern",
+    SCOIATAEL: "scoiatael",
+    NILFGAARDIAN_EMPIRE: "nilfgaardian",
+    MONSTERS: "monster"
+  }
 
   r.setDeck = function(deckData){
     this._originalDeck = deckData.slice();
@@ -30,6 +41,10 @@ var Deck = (function(){
 
     this._loadCards();
     this.shuffle();
+  }
+
+  r.getFaction = function() {
+    return this._faction;
   }
 
   r.getLength = function(){
@@ -99,7 +114,7 @@ var Deck = (function(){
     }
   }
 
-  r.add = function(card) {
+  r.add = function(card){
     this._deck.push(card);
   }
 
