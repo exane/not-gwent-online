@@ -1,6 +1,6 @@
 {{#each this}}
   <div class="card{{#if _disabled}} disabled{{/if}}" data-key="{{_key}}" data-id="{{_id}}">
-    {{#if diff}}<span class="card-attr-power {{#if diffPos}}card-attr-positive{{/if}}">{{diff}}</span>{{/if}}
+    {{#if diff}}<span class="card-attr-power {{#if diffPos}}card-attr-positive{{/if}}">{{power}}</span>{{/if}}
     <i class="card-sm-{{_data.faction}} card-sm-{{_data.faction}}-{{_data.img}}"></i>
   </div>
 {{/each}}
