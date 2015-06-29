@@ -176,6 +176,8 @@ Battleside = (function(){
     var allCards = close.concat(range.concat(siege));
     var rnd = (Math.random() * allCards.length) | 0 ;
 
+    if(allCards[rnd].getType === 4) return null;
+
     return allCards[rnd];
   }
 
@@ -332,6 +334,7 @@ Battleside = (function(){
       if(!field){
         field = obj.targetSide.field[card.getType()];
       }
+
       field.add(card);
     }
 

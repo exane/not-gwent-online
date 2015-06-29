@@ -59,7 +59,7 @@ var Room = (function(){
   r.initBattle = function(){
     this._battle = Battle(this._id, this._users[0], this._users[1], io);
     this._users[0].send("init:battle", {side: "p1", foeSide: "p2"});
-    this._users[1].send("init:battle", {side: "p2", foeSide: "p2"});
+    this._users[1].send("init:battle", {side: "p2", foeSide: "p1"});
   }
 
   r.setReady = function(user, b){

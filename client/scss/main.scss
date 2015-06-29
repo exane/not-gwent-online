@@ -18,7 +18,7 @@ $game-height: 800px;
 
 .large-field-counter {
   line-height: 20px;
-  border: 1px solid black;
+  //border: 1px solid black;
   border-radius: 30px;
   height: 40px;
   padding: 10px;
@@ -295,7 +295,26 @@ $game-height: 800px;
    -ms-transform-origin: 50% 50%;
  }
 
+.container {
+  position: relative;
+}
 
+.notifications {
+  position: absolute;
+  top: 0;
+  z-index: 200;
+  width: 100%;
+}
+.notification {
+  height: 0;
+  margin-left: 250px;
+  margin-right: 250px;
+
+  .alert {
+    margin-bottom: 0;
+    //padding: 0;
+  }
+}
 
 @keyframes waitForOpponent{
   0% {

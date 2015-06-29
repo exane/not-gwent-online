@@ -121,7 +121,8 @@ var Battle = (function(){
   }
 
   r.startNextRound = function(){
-    var loser = this.checkRubies();
+    var lastRound = this.checkRubies();
+    var loser = lastRound.loser;
     var winner = loser.foe;
     if(this.checkIfIsOver()){
       console.log("its over!");
@@ -134,10 +135,13 @@ var Battle = (function(){
     this.p2.resetNewRound();
 
     console.log("start new round!");
+    this.sendNotification("Start new round!");
 
-    if(winner.deck.getFaction() === Deck.FACTION.NORTHERN_REALM){
+
+    if(winner.deck.getFaction() === Deck.FACTION.NORTHERN_REALM && !lastRound.isTie){
       winner.draw(1);
       console.log(winner.getName() + " draws 1 extra card! (Northern ability)");
+      this.sendNotification(winner.getName() + " draws 1 extra card! (Northern ability)");
     }
 
     this.update();
@@ -158,6 +162,7 @@ var Battle = (function(){
 
   r.waitForScoiatael = function(side){
     var self = this;
+    self.sendNotification(side.getName() + " decides whos starts first");
     side.send("request:chooseWhichSideBegins", null, true);
     side.socket.once("response:chooseWhichSideBegins", function(data){
       console.log("which side? ", data.side);
@@ -289,11 +294,17 @@ var Battle = (function(){
 
     if(scoreP1 > scoreP2){
       this.p2.removeRuby();
-      return this.p2;
+      return {
+        loser: this.p2,
+        isTie: false
+      }
     }
     if(scoreP2 > scoreP1){
       this.p1.removeRuby();
-      return this.p1;
+      return {
+        loser: this.p1,
+        isTie: false
+      }
     }
 
     //tie
@@ -302,17 +313,28 @@ var Battle = (function(){
     if(this.p1.deck.getFaction() === Deck.FACTION.NILFGAARDIAN_EMPIRE && this.p1.deck.getFaction() !== this.p2.deck.getFaction()){
       this.p2.removeRuby();
       console.log(this.p1.getName() + " wins the tie! (nilfgaardian ability)");
-      return this.p2;
+      self.sendNotification(this.p1.getName() + " wins the tie! (nilfgaardian ability)");
+      return {
+        loser: this.p2,
+        isTie: false
+      }
     }
     if(this.p2.deck.getFaction() === Deck.FACTION.NILFGAARDIAN_EMPIRE && this.p1.deck.getFaction() !== this.p2.deck.getFaction()){
       this.p1.removeRuby();
       console.log(this.p2.getName() + " wins the tie! (nilfgaardian ability)");
-      return this.p1;
+      self.sendNotification(this.p2.getName() + " wins the tie! (nilfgaardian ability)");
+      return {
+        loser: this.p1,
+        isTie: false
+      }
     }
 
     this.p1.removeRuby();
     this.p2.removeRuby();
-    return Math.random() > 0.5 ? this.p1 : this.p2;
+    return {
+      loser: Math.random() > 0.5 ? this.p1 : this.p2,
+      isTie: true
+    }
   }
 
   r.userLeft = function(sideName){
@@ -324,6 +346,12 @@ var Battle = (function(){
 
   r.shutDown = function(){
     this.channel = null;
+  }
+
+  r.sendNotification = function(msg){
+    this.send("notification", {
+      message: msg
+    })
   }
 
   return Battle;

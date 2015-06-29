@@ -255,17 +255,15 @@ let calculateCardMargin = function($selector, totalWidth, cardWidth, n){
 }
 
 let BattleView = Backbone.View.extend({
-  className: "container",
-  template: require("../templates/battle.handlebars"), /*
-  templatePreview: require("../templates/preview.handlebars"),*/
+  el: ".gwent-battle",
+  template: require("../templates/battle.handlebars"),
   initialize: function(options){
     let self = this;
     let user = this.user = options.user;
     let app = this.app = options.app;
     let yourSide, otherSide;
 
-
-    $(this.el).prependTo('body');
+    $(this.el).prependTo('gwent-battle');
 
     this.listenTo(user, "change:showPreview", this.renderPreview);
     this.listenTo(user, "change:waiting", this.render);
@@ -438,7 +436,7 @@ let BattleView = Backbone.View.extend({
       let modal = new ReDrawModal({model: this.user});
       this.$el.prepend(modal.render().el);
     }
-    if(this.user.get("openDiscard")) {
+    if(this.user.get("openDiscard")){
       let modal = new Modal({model: this.user});
       this.$el.prepend(modal.render().el);
     }
@@ -467,7 +465,7 @@ let BattleView = Backbone.View.extend({
   renderPreview: function(){
     /*let preview = new Preview({key: this.user.get("showPreview")});*/
     let preview = this.user.get("showPreview");
-    if(!preview) {
+    if(!preview){
       return;
     }
     this.$el.find(".card-preview").html(preview.render().el);
@@ -625,19 +623,20 @@ let ReDrawModal = Modal.extend({
 let WinnerModal = Modal.extend({
   template: require("../templates/modal.winner.handlebars")
 });
+
 let ChooseSideModal = Modal.extend({
   template: require("../templates/modal.side.handlebars"),
   events: {
     "click .btn": "onBtnClick"
   },
-  beforeCancel: function() {
+  beforeCancel: function(){
     return false;
   },
-  onBtnClick: function(e) {
-    var id = $(e.target).closest(".btn").data().id;
+  onBtnClick: function(e){
+    var id = $(e.target).data().id;
 
     this.model.set("chooseSide", false);
-    if(id === "you") {
+    if(id === "you"){
       //this.model.set("chosenSide", this.model.get("roomSide"));
       this.model.chooseSide(this.model.get("roomSide"));
       this.remove();
@@ -742,7 +741,7 @@ let User = Backbone.Model.extend({
       let modal = new WinnerModal({model: new model({winner: winner})});
       $("body").prepend(modal.render().el);
     })
-    app.receive("request:chooseWhichSideBegins", function() {
+    app.receive("request:chooseWhichSideBegins", function(){
       self.set("chooseSide", true);
     })
 
@@ -751,6 +750,10 @@ let User = Backbone.Model.extend({
     app.on("setName", this.setName, this);
     app.on("setDeck", this.setDeck, this);
 
+
+    app.receive("notification", function(data) {
+      new Notification(data).render();
+    })
 
     app.send("request:name", this.get("name") == "unnamed" ? null : {name: this.get("name")});
   },
@@ -775,7 +778,7 @@ let User = Backbone.Model.extend({
     this.set("deckKey", deckKey);
     this.get("app").send("set:deck", {deck: deckKey});
   },
-  chooseSide: function(roomSide) {
+  chooseSide: function(roomSide){
     this.get("app").send("response:chooseWhichSideBegins", {
       side: roomSide
     })
@@ -786,21 +789,25 @@ let Lobby = Backbone.View.extend({
   defaults: {
     id: ""
   },
-  className: "container",
 
   template: require("../templates/lobby.handlebars"),
   initialize: function(options){
     this.user = options.user;
     this.app = options.app;
     this.listenTo(this.app.user, "change", this.render);
-    $(this.el).prependTo('body');
+    //$(this.el).prependTo('body');
+    $(".gwent-battle").html(this.el);
     this.render();
   },
   events: {
     "click .startMatchmaking": "startMatchmaking",
     /*"click .join-room": "joinRoom",*/
     "blur .name-input": "changeName",
-    "change #deckChoice": "setDeck"
+    "change #deckChoice": "setDeck",
+    "click .note": "debugNote"
+  },
+  debugNote: function() {
+    new Notification({message: "yoyo TEST"}).render();
   },
   render: function(){
     this.$el.html(this.template(this.user.attributes));
@@ -852,6 +859,36 @@ let Preview = Backbone.View.extend({
     })
     this.$el.html(html);
     return this;
+  }
+});
+
+let Notification = Backbone.View.extend({
+  className: "notification",
+  template: require("../templates/notification.handlebars"),
+  initialize: function(opt){
+    this.opt = opt;
+    $(".notifications").append(this.el);
+  },
+  render: function(){
+    this.$el.html(this.template(this.opt));
+    this.show();
+    return this;
+  },
+  show: function(){
+    this.$el.animate({
+      "height": "60px"
+    }, {
+      duration: 600,
+      complete: this.hide.bind(this)
+    }).delay(2500);
+
+  },
+  hide: function(){
+    this.$el.animate({
+      "height": "0"
+    }, {
+      complete: this.remove.bind(this)
+    })
   }
 });
 
