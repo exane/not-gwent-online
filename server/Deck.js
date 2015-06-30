@@ -1,5 +1,6 @@
 var Card = require("./Card");
 /*var CardManager = require("./CardManager");*/
+var DeckData = require("../assets/data/deck");
 
 var Deck = (function(){
   var Deck = function(deck, side){
@@ -40,6 +41,9 @@ var Deck = (function(){
   }
 
   r.setDeck = function(deckData){
+    if(!Array.isArray(deckData)) {
+      deckData = DeckData["northern"];
+    }
     this._originalDeck = deckData.slice();
     this._deck = deckData.slice();
 

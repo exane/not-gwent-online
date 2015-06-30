@@ -144,11 +144,12 @@ var Field = (function(){
     var highest = 0;
 
     this.get().forEach(function(card) {
-      if(noHeroes && card.getAbility("hero")) return;
+      if(noHeroes && card.hasAbility("hero")) return;
       highest = card.getPower() > highest ? card.getPower() : highest;
     })
 
     this.get().forEach(function(card) {
+      if(noHeroes && card.hasAbility("hero")) return;
       if(card.getPower() === highest) res.push(card);
     });
 

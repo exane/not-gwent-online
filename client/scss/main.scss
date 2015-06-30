@@ -301,7 +301,7 @@ $game-height: 800px;
 }
 
 .notifications {
-  position: absolute;
+  position: fixed;
   top: 0;
   z-index: 200;
   width: 500px;

@@ -14,8 +14,12 @@ var Card = (function(){
     this.boost = 0;
     this._uidEvents = {};
     this.setDisabled(false);
+    this._data = CardData[key] ? CardData[key] : CardData["none"];
+    if(!(this._data = CardData[key])) {
+      this._data = CardData["none"];
+      key = "none";
+    }
     this._key = key;
-    this._data = CardData[key];
     this._data.key = key;
     this._boost = {};
     this._forcedPower = -1;

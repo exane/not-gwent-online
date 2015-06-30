@@ -283,7 +283,6 @@ let BattleView = Backbone.View.extend({
     this.listenTo(user, "change:setHorn", this.render);
     this.listenTo(user, "change:isReDrawing", this.render);
     this.listenTo(user, "change:chooseSide", this.render);
-    /*this.listenTo(user, "change:handCards", this.render);*/
 
     this.$hand = this.$el.find(".field-hand");
     this.$preview = this.$el.find(".card-preview");
