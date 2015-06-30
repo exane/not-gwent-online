@@ -54,7 +54,7 @@ Battleside = (function(){
 
       var ability = leaderCard.getAbility();
 
-      ability.onActivate.apply(self);
+      ability.onActivate.apply(self, [leaderCard]);
       leaderCard.setDisabled(true);
       self.battle.sendNotification(self.getName() + " activated " + leaderCard.getName() + "! (leadercard)");
       self.update();
@@ -95,6 +95,19 @@ Battleside = (function(){
       self.removeFromDiscard(card);
 
       self.playCard(card);
+    })
+    this.receive("emreis_leader4:chooseCardFromDiscard", function(data){
+      if(!data){
+        //self.runEvent("NextTurn", null, [self.foe]);
+        return;
+      }
+      var cardID = data.cardID;
+      var card = self.foe.getCardFromDiscard(cardID);
+      if(card === -1) throw new Error("emreis_leader4:chooseCardFromDiscard | unknown card: ", card);
+
+      self.foe.removeFromDiscard(card);
+
+      self.placeCard(card);
     })
     this.receive("agile:field", function(data){
       var fieldType = data.field;
@@ -413,8 +426,9 @@ Battleside = (function(){
 
     if(!field.isOnField(card)){
       field.get().forEach(function(_card){
-        if(_card.getID() == id) return;
-        if(_card.getType() != card.getType()) return;
+        if(_card.getID() === id) return;
+        if(_card.getID() === card.getID()) return;
+        if(_card.getType() !== card.getType()) return;
         if(_card.hasAbility("hero")) return;
         _card.setBoost(id, 0);
       })
@@ -423,7 +437,8 @@ Battleside = (function(){
     }
 
     field.get().forEach(function(_card){
-      if(_card.getID() == id) return;
+      if(_card.getID() === id) return;
+      if(_card.getID() === card.getID()) return;
       if(_card.getType() != card.getType()) return;
       if(_card.hasAbility("hero")) return;
       _card.setBoost(id, 0);
@@ -524,9 +539,18 @@ Battleside = (function(){
     }
   }
 
-  r.checkAbilityOnAfterPlace = function(card, obj){
-    var ability = card.getAbility();
-    if(ability){
+  r.checkAbilityOnAfterPlace = function(card, obj, __flag){
+    //var ability = card.getAbility();
+    var ability = Array.isArray(__flag) ? __flag : card.getAbility();
+
+    if(Array.isArray(ability) && ability.length){
+      var ret = ability.slice();
+      ret.splice(0, 1);
+      this.checkAbilityOnAfterPlace(card, obj, ret);
+      ability = ability[0];
+    }
+
+    if(ability && !Array.isArray(ability)){
       if(ability.name && ability.name === obj.suppress){
         //this.update();
         return;
@@ -582,13 +606,12 @@ Battleside = (function(){
       _card.setForcedPower(forcedPower);
     });
     this.runEvent("WeatherChange");
-    //this.update();
   }
 
   r.scorch = function(card){
     var side = this.foe;
     var field = side.field[Card.TYPE.CLOSE_COMBAT];
-    var cards = field.getHighestCards();
+    var cards = field.getHighestCards(true);
     var removeCards = field.removeCard(cards);
 
 
@@ -603,9 +626,6 @@ Battleside = (function(){
     this.battle.sendNotification(txt);
 
     side.addToDiscard(removeCards);
-    /*
-        this.hand.remove(card);
-        this.addToDiscard(card);*/
   }
 
   r.clearMainFields = function(){
@@ -743,6 +763,10 @@ Battleside = (function(){
 
     return deferred;
 
+  }
+
+  r.sendNotification = function(msg) {
+    this.battle.sendNotification(msg);
   }
 
   return Battleside;

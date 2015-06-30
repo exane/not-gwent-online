@@ -458,6 +458,10 @@ let BattleView = Backbone.View.extend({
       let modal = new MedicModal({model: this.user});
       this.$el.prepend(modal.render().el);
     }
+    if(this.user.get("emreis_leader4")){
+      let modal = new LeaderEmreis4Modal({model: this.user});
+      this.$el.prepend(modal.render().el);
+    }
     if(this.user.get("setAgile")){
       let id = this.user.get("setAgile");
       this.$el.find("[data-id='" + id + "']").addClass("activeCard");
@@ -608,6 +612,24 @@ let MedicModal = Modal.extend({
   }
 });
 
+let LeaderEmreis4Modal = Modal.extend({
+  template: require("../templates/modal.emreis_leader4.handlebars"),
+  events: {
+    "click .card": "onCardClick"
+  },
+  onCardClick: function(e){
+    let id = $(e.target).closest(".card").data().id;
+    this.model.get("app").send("emreis_leader4:chooseCardFromDiscard", {
+      cardID: id
+    })
+    this.model.set("emreis_leader4", false);
+  },
+  cancel: function(){
+    this.model.get("app").send("emreis_leader4:chooseCardFromDiscard")
+    this.model.set("emreis_leader4", false);
+  }
+});
+
 let ReDrawModal = Modal.extend({
   template: require("../templates/modal.redraw.handlebars"),
   initialize: function(){
@@ -708,8 +730,14 @@ let User = Backbone.Model.extend({
 
     app.receive("played:medic", function(data){
       let cards = JSON.parse(data.cards);
-      //console.log("played medic");
       self.set("medicDiscard", {
+        cards: cards
+      });
+    })
+
+    app.receive("played:emreis_leader4", function(data){
+      let cards = JSON.parse(data.cards);
+      self.set("emreis_leader4", {
         cards: cards
       });
     })
