@@ -865,6 +865,9 @@ let Preview = Backbone.View.extend({
 let Notification = Backbone.View.extend({
   className: "notification",
   template: require("../templates/notification.handlebars"),
+  events: {
+    "click .alert": "onClick"
+  },
   initialize: function(opt){
     this.opt = opt;
     $(".notifications").append(this.el);
@@ -880,7 +883,7 @@ let Notification = Backbone.View.extend({
     }, {
       duration: 600,
       complete: this.hide.bind(this)
-    }).delay(2500);
+    }).delay(2000);
 
   },
   hide: function(){
@@ -889,6 +892,9 @@ let Notification = Backbone.View.extend({
     }, {
       complete: this.remove.bind(this)
     })
+  },
+  onClick: function(e) {
+    this.remove();
   }
 });
 

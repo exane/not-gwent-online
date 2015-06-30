@@ -56,6 +56,7 @@ Battleside = (function(){
 
       ability.onActivate.apply(self);
       leaderCard.setDisabled(true);
+      self.battle.sendNotification(self.getName() + " activated " + leaderCard.getName() + "! (leadercard)");
       self.update();
     })
     this.receive("play:cardFromHand", function(data){
@@ -78,6 +79,8 @@ Battleside = (function(){
     this.receive("set:passing", function(){
       self.setPassing(true);
       self.update();
+
+      self.battle.sendNotification(self.getName() + " passed!");
       self.runEvent("NextTurn", null, [self.foe]);
     })
     this.receive("medic:chooseCardFromDiscard", function(data){
@@ -141,7 +144,7 @@ Battleside = (function(){
   r.battle = null;
   r.deck = null;
 
-  r.createCard = function(key) {
+  r.createCard = function(key){
     return this.cm.create(key, this.n);
   }
 
@@ -171,7 +174,7 @@ Battleside = (function(){
     return -1;
   }
 
-  r.getRandomCardOnField = function() {
+  r.getRandomCardOnField = function(){
     var close, range, siege;
 
     close = this.field[Card.TYPE.CLOSE_COMBAT].get();
@@ -179,7 +182,7 @@ Battleside = (function(){
     siege = this.field[Card.TYPE.SIEGE].get();
 
     var allCards = close.concat(range.concat(siege));
-    var rnd = (Math.random() * allCards.length) | 0 ;
+    var rnd = (Math.random() * allCards.length) | 0;
 
     if(allCards[rnd].getType === 4) return null;
 
@@ -321,8 +324,12 @@ Battleside = (function(){
     }
 
     this.checkAbilities(card, obj);
-    if(obj._cancelPlacement && !obj.forceField) return 0;
-    if(obj._nextTurn && !obj.forceField) {
+    if(obj._cancelPlacement && !obj.forceField){
+
+      //this.battle.sendNotification(this.getName() + " played " + card.getName() + "!");
+      return 0;
+    }
+    if(obj._nextTurn && !obj.forceField){
       this.update();
       this.runEvent("NextTurn", null, [this.foe]);
       return 0;
@@ -390,6 +397,8 @@ Battleside = (function(){
         disabled: true
       });
       self.hand.remove(card);
+
+      self.battle.sendNotification(self.getName() + " played " + card.getName());
     })
   }
 
@@ -453,13 +462,13 @@ Battleside = (function(){
       if(ability.cancelPlacement && !obj.forcePlace){
         obj._cancelPlacement = true;
       }
-      if(ability.nextTurn) {
+      if(ability.nextTurn){
         obj._nextTurn = ability.nextTurn;
       }
-      if(ability.scorch) {
+      if(ability.scorch){
         this.scorch(card);
       }
-      if(ability.removeImmediately) {
+      if(ability.removeImmediately){
         this.hand.remove(card);
         this.addToDiscard(card);
       }
@@ -495,6 +504,7 @@ Battleside = (function(){
 
           self.update();
           self.runEvent("NextTurn", null, [self.foe]);
+          self.battle.sendNotification(self.getName() + " played Decoy!");
         })
       }
       if(ability.onEachTurn){
@@ -527,14 +537,19 @@ Battleside = (function(){
     }
   }
 
-  r.setWeather = function(weather){
+  r.setWeather = function(weather, opt){
     var targetRow = weather;
     var field;
     if(typeof targetRow === "undefined") return;
+    opt = opt || {};
+    var onRoundEnd = opt.onTurnEnd || false;
 
 
     //console.log(this.field[Card.TYPE.WEATHER]);
     if(targetRow === Card.TYPE.WEATHER){
+      if(!onRoundEnd){
+        this.battle.sendNotification(this.getName() + " played Clear Weather!");
+      }
       field = this.field[targetRow];
       field.removeAll();
 
@@ -570,20 +585,32 @@ Battleside = (function(){
     //this.update();
   }
 
-  r.scorch = function(card) {
+  r.scorch = function(card){
     var side = this.foe;
     var field = side.field[Card.TYPE.CLOSE_COMBAT];
     var cards = field.getHighestCards();
     var removeCards = field.removeCard(cards);
 
-    side.addToDiscard(removeCards);/*
-    this.hand.remove(card);
-    this.addToDiscard(card);*/
+
+    this.battle.sendNotification(this.getName() + " played " + card.getName());
+
+    var txt = "Scorch destroyed:\n";
+    for (var i = 0; i < removeCards.length; i++) {
+      var c = removeCards[i];
+      txt += c.getName() + "\n";
+    }
+
+    this.battle.sendNotification(txt);
+
+    side.addToDiscard(removeCards);
+    /*
+        this.hand.remove(card);
+        this.addToDiscard(card);*/
   }
 
   r.clearMainFields = function(){
     var rndCard = null;
-    if(this.deck.getFaction() === Deck.FACTION.MONSTERS) {
+    if(this.deck.getFaction() === Deck.FACTION.MONSTERS){
       rndCard = this.getRandomCardOnField();
     }
     var cards1 = this.field[Card.TYPE.CLOSE_COMBAT].removeAll();
@@ -594,7 +621,7 @@ Battleside = (function(){
     var cards = cards1.concat(cards2.concat(cards3.concat(cards4)));
     this.addToDiscard(cards);
 
-    if(rndCard) {
+    if(rndCard){
       this.removeFromDiscard(rndCard);
       this.placeCard(rndCard, {disabled: true}); //disabled == no abilities get triggered
       console.log("Monsters faction ability triggered!");
@@ -603,8 +630,8 @@ Battleside = (function(){
 
   r.addToDiscard = function(cards){
     var self = this;
-    if(!Array.isArray(cards)) {
-      cards =  [cards];
+    if(!Array.isArray(cards)){
+      cards = [cards];
     }
     cards.forEach(function(_card){
       self._discard.push(_card);
@@ -631,7 +658,9 @@ Battleside = (function(){
 
   r.resetNewRound = function(){
     this.clearMainFields();
-    this.setWeather(5); //clear weather
+    this.setWeather(5, {
+      onTurnEnd: true
+    }); //clear weather
     this.setPassing(false);
   }
 
@@ -696,7 +725,7 @@ Battleside = (function(){
       self.deck.add(card);
       self.deck.shuffle();
       self.draw(1);
-      if(!left) {
+      if(!left){
         self.send("redraw:close", null, true);
         console.log("redraw finished");
         deferred.resolve("done");
@@ -706,7 +735,7 @@ Battleside = (function(){
       self.battle.updateSelf(self);
     })
 
-    this.receive("redraw:close_client", function() {
+    this.receive("redraw:close_client", function(){
       console.log("redraw finished!");
       deferred.resolve("done");
       //self.socket.off("redraw:close_client", h2);

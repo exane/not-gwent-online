@@ -304,13 +304,15 @@ $game-height: 800px;
   position: absolute;
   top: 0;
   z-index: 200;
-  width: 100%;
+  width: 500px;
+  left: calc(50% - (500px/2));
 }
 
 .notification {
   height: 0;
-  margin-left: 250px;
-  margin-right: 250px;
+  /*margin-left: 250px;
+  margin-right: 250px;*/
+
 
   .alert {
     margin-bottom: 0;

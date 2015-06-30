@@ -133,6 +133,7 @@ var Battle = (function(){
       this.waitForScoiatael(this.p2);
     }
     else {
+      this.sendNotification(loser.getName() + " begins!");
       this.switchTurn(loser);
     }
   }
@@ -147,6 +148,7 @@ var Battle = (function(){
       if(data.side !== "p1" && data.side !== "p2")
         throw new Error("Unknown side property! - ", data.side);
 
+      self.sendNotification(side.getName() + " choose " + self[data.side].getName());
       self.switchTurn(self[data.side]);
     })
   }
