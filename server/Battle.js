@@ -62,6 +62,7 @@ var Battle = (function(){
     this.p2.draw(10);
 
 
+
     this.update();
 
 

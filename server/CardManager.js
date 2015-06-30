@@ -10,6 +10,7 @@ var CardManager = (function(){
      */
 
     this._id = 0;
+    this._cards = {};
   };
   var r = CardManager.prototype;
   /**
@@ -19,6 +20,7 @@ var CardManager = (function(){
    */
 
   r._id = null;
+  r._cards = null;
 
   r.create = function(key, owner) {
     return this._cards[this._id] = Card(key, owner, this._id++);

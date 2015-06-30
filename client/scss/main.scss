@@ -120,9 +120,7 @@ $game-height: 800px;
   margin: 3px;
   height: 90px;
   overflow: hidden;
-  /*img {
-    height: 120px;
-  }*/
+
 
   i {
     display: block;
@@ -139,29 +137,32 @@ $game-height: 800px;
     font-size: 20px;
     color: black;
   }*/
-  .card-attr-positive {
-    color: #00b000;
+  .card-attr-positive span {
+    color: #00b000 !important;
   }
 
-  span {
-    color: #ff2d00;
-    font-weight: bold;
-    font-size: 16px;
+  .card-attr-power {
     position: absolute;
-    text-shadow: 1px 1px 1px #101010;
-    text-align: center;
-    //margin-top: 62px;
-    //margin-left: 3px;
+    margin-top: -3px;
+    margin-left: -4px;
     //margin-top: 2px;
     cursor: default;
-    //background: #ffffff;
-    //border-radius: 10px;
-    //padding: 2px;
     padding-top: 4px;
     //padding-left: -4px;
     height: 37px;
     width: 30px;
     background: url("../../assets/card_strength_border.png") no-repeat;
+
+    span {
+      color: #ff2d00;
+      text-shadow: 1px 1px 1px #101010;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      width: 30px;
+      display: block;
+      margin-left: -2px;
+    }
   }
 
   &.disabled {
@@ -305,6 +306,7 @@ $game-height: 800px;
   z-index: 200;
   width: 100%;
 }
+
 .notification {
   height: 0;
   margin-left: 250px;
