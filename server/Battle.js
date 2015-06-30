@@ -62,6 +62,25 @@ var Battle = (function(){
     this.p2.draw(10);
 
 
+    /*this.p1.placeCard("ves");
+    this.p2.placeCard("ves");
+    this.p1.placeCard("yarpen_zigrin");
+    this.p2.placeCard("yarpen_zigrin");
+
+    this.p1.hand.add(this.p1.createCard("scorch"));
+    this.p2.hand.add(this.p2.createCard("scorch"));
+    this.p1.hand.add(this.p1.createCard("villentretenmerth"));
+    this.p2.hand.add(this.p2.createCard("villentretenmerth"));
+
+    this.p1.hand.add(this.p1.createCard("impenetrable_fog"));
+    this.p2.hand.add(this.p2.createCard("impenetrable_fog"));
+    this.p1.hand.add(this.p1.createCard("biting_frost"));
+    this.p2.hand.add(this.p2.createCard("biting_frost"));
+    this.p1.hand.add(this.p1.createCard("torrential_rain"));
+    this.p2.hand.add(this.p2.createCard("torrential_rain"));
+    this.p1.hand.add(this.p1.createCard("clear_weather"));
+    this.p2.hand.add(this.p2.createCard("clear_weather"));
+*/
 
     this.update();
 

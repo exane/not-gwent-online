@@ -594,10 +594,10 @@ Battleside = (function(){
 
     this.battle.sendNotification(this.getName() + " played " + card.getName());
 
-    var txt = "Scorch destroyed:\n";
+    var txt = "Scorch destroyed:";
     for (var i = 0; i < removeCards.length; i++) {
       var c = removeCards[i];
-      txt += c.getName() + "\n";
+      txt += "\n" + c.getName();
     }
 
     this.battle.sendNotification(txt);

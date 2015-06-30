@@ -22,6 +22,16 @@ Handlebars.registerHelper("health", function(lives){
   }
   return out;
 });
+Handlebars.registerHelper("formatMessage", function(msg){
+  let out = "";
+  var lines = msg.split(/\n/g);
+
+  lines.forEach(function(line) {
+    out += line + "<br>";
+  })
+
+  return out;
+});
 
 let App = Backbone.Router.extend({
   routes: {
@@ -807,7 +817,7 @@ let Lobby = Backbone.View.extend({
     "click .note": "debugNote"
   },
   debugNote: function() {
-    new Notification({message: "yoyo TEST"}).render();
+    new Notification({message: "yoyo TEST\nhallo\n\ntest"}).render();
   },
   render: function(){
     this.$el.html(this.template(this.user.attributes));
@@ -878,23 +888,16 @@ let Notification = Backbone.View.extend({
     return this;
   },
   show: function(){
-    this.$el.animate({
-      "height": "60px"
-    }, {
-      duration: 600,
-      complete: this.hide.bind(this)
-    }).delay(2000);
+    let $alert = this.$el.find(".alert");
+    $alert.slideDown(600).delay(2000).queue(this.hide.bind(this));
 
   },
   hide: function(){
-    this.$el.animate({
-      "height": "0"
-    }, {
-      complete: this.remove.bind(this)
-    })
+    let $alert = this.$el.find(".alert");
+    $alert.stop().slideUp().queue(this.remove.bind(this));
   },
-  onClick: function(e) {
-    this.remove();
+  onClick: function() {
+    this.hide();
   }
 });
 

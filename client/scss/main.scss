@@ -316,9 +316,11 @@ $game-height: 800px;
 
   .alert {
     margin-bottom: 0;
+    display: none;
     //padding: 0;
   }
 }
+
 
 @keyframes waitForOpponent{
   0% {
