@@ -22,6 +22,8 @@ Battleside = (function(){
     this._isWaiting = true;
     this.socket = user.socket;
 
+    this.cm = battle.cm;
+
     this.field = {};
     this.field[Card.TYPE.LEADER] = Field(this);
     this.field[Card.TYPE.CLOSE_COMBAT] = Field(this, true);
@@ -32,7 +34,7 @@ Battleside = (function(){
     this._name = user.getName();
     this.battle = battle;
     this.hand = Hand();
-    this.deck = Deck(DeckData[deck]);
+    this.deck = Deck(DeckData[deck], this);
     this._discard = [];
 
     this.runEvent = this.battle.runEvent.bind(this.battle);
@@ -132,10 +134,16 @@ Battleside = (function(){
   r.socket = null;
   r.n = null;
 
+  r.cm = null;
+
   r.foe = null;
   r.hand = null;
   r.battle = null;
   r.deck = null;
+
+  r.createCard = function(key) {
+    return this.cm.create(key, this.n);
+  }
 
   r.isPassing = function(){
     return this._passing;
@@ -308,7 +316,8 @@ Battleside = (function(){
     obj = _.extend({}, obj);
 
     if(typeof card === "string"){
-      card = Card(card);
+      //card = Card(card);
+      card = this.createCard(card);
     }
 
     this.checkAbilities(card, obj);
@@ -357,7 +366,9 @@ Battleside = (function(){
     field = typeof field === "undefined" ? null : field;
 
     if(typeof card === "string"){
-      card = Card(card);
+      //card = Card(card);
+      //card = this.cm.create(card);
+      card = this.createCard(card);
     }
 
     if(typeof field === "number"){

@@ -2,13 +2,15 @@ var CardData = require("../assets/data/cards");
 var AbilityData = require("../assets/data/abilities");
 
 var Card = (function(){
-  var Card = function(key){
+  var Card = function(key, owner, id){
     if(!(this instanceof Card)){
-      return (new Card(key));
+      return (new Card(key, owner, id));
     }
     /**
      * constructor here
      */
+    this._owner = owner;
+    this._id = id;
     this.boost = 0;
     this._uidEvents = {};
     this.setDisabled(false);
@@ -17,7 +19,7 @@ var Card = (function(){
     this._data.key = key;
     this._boost = {};
     this._forcedPower = -1;
-    this._init();
+    //this._init();
   };
   var r = Card.prototype;
   /**
@@ -33,7 +35,7 @@ var Card = (function(){
   r._forcedPower = null;
   r._disabled = null;
   r._changedType = null;
-  Card.__id = 0;
+  //Card.__id = 0;
   Card.TYPE = {
     CLOSE_COMBAT: 0,
     RANGED: 1,
@@ -54,7 +56,7 @@ var Card = (function(){
   }
 
   r._init = function(){
-    this._id = ++Card.__id;
+    //this._id = ++Card.__id;
   }
 
   r.getName = function(){

@@ -3,6 +3,7 @@ var Card = require("./Card");
 var Deck = require("./Deck");
 var shortid = require("shortid");
 var Promise = require("jquery-deferred");
+var CardManager = require("./CardManager")
 
 
 var Battle = (function(){
@@ -13,12 +14,12 @@ var Battle = (function(){
     /**
      * constructor here
      */
+    this.cm = CardManager();
     this.events = {};
     this._id = id;
     this._user1 = p1;
     this._user2 = p2;
     this.socket = socket;
-    this.channel = {};
   };
   var r = Battle.prototype;
   /**
@@ -32,6 +33,8 @@ var Battle = (function(){
   r._user1 = null;
   r._user2 = null;
   r.turn = 0;
+
+  r.cm = null;
 
   r.socket = null;
 
@@ -57,27 +60,6 @@ var Battle = (function(){
     this.p2.setLeadercard();
     this.p1.draw(10);
     this.p2.draw(10);
-    /*
-
-        this.p1.placeCard("ves");
-        this.p2.placeCard("ves");
-        this.p1.placeCard("yarpen_zigrin");
-        this.p2.placeCard("yarpen_zigrin");
-
-        this.p1.hand.add(Card("scorch"));
-        this.p2.hand.add(Card("scorch"));
-        this.p1.hand.add(Card("villentretenmerth"));
-        this.p2.hand.add(Card("villentretenmerth"));
-
-        this.p1.hand.add(Card("impenetrable_fog"));
-        this.p2.hand.add(Card("impenetrable_fog"));
-        this.p1.hand.add(Card("biting_frost"));
-        this.p2.hand.add(Card("biting_frost"));
-        this.p1.hand.add(Card("torrential_rain"));
-        this.p2.hand.add(Card("torrential_rain"));
-        this.p1.hand.add(Card("clear_weather"));
-        this.p2.hand.add(Card("clear_weather"));
-    */
 
 
     this.update();

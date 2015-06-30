@@ -2,13 +2,15 @@ var Card = require("./Card");
 /*var CardManager = require("./CardManager");*/
 
 var Deck = (function(){
-  var Deck = function(deck){
+  var Deck = function(deck, side){
     if(!(this instanceof Deck)){
-      return (new Deck(deck));
+      return (new Deck(deck, side));
     }
     /**
      * constructor here
      */
+
+    this.side = side;
     this._deck = [];
 
     if(typeof deck !== "object") throw new Error("Deck is not an object!");
@@ -27,6 +29,8 @@ var Deck = (function(){
   r._owner = null;
   r._originalDeck = null;
   r._faction = null;
+
+  r.side = null;
 
   Deck.FACTION = {
     NORTHERN_REALM: "northern",
@@ -66,8 +70,10 @@ var Deck = (function(){
   }
 
   r._loadCards = function(){
+    var self = this;
     this._deck = this.getDeck().map(function(cardkey){
-      return Card(cardkey);
+      //return Card(cardkey);
+      return self.side.createCard(cardkey);
     });
   }
 
