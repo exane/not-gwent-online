@@ -864,5 +864,242 @@ module.exports = {
     img: "earth_elemental",
     faction: "monster",
     type: 2
+  },
+
+
+  //nilfgaardian
+  "tibor_eggebracht": {
+    name: "test",
+    power: 10,
+    ability: "hero",
+    img: "eggebracht",
+    faction: "nilfgaardian",
+    type: 1
+  },
+  "letho_of_gulet": {
+    name: "Letho of Gulet",
+    power: 10,
+    ability: "hero",
+    img: "letho",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "morvran_voorhis": {
+    name: "Morvran Voorhis",
+    power: 10,
+    ability: "hero",
+    img: "voorhis",
+    faction: "nilfgaardian",
+    type: 2
+  },
+  "menno_coehoorn": {
+    name: "Menno Coehoorn",
+    power: 10,
+    ability: ["hero", "medic"],
+    img: "menno",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "siege_technician": {
+    name: "Siege Technician",
+    power: 0,
+    ability: "medic",
+    img: "siege_tech",
+    faction: "nilfgaardian",
+    type: 2
+  },
+  "etolian_auxiliary_archers": {
+    name: "Etolian Auxiliary Archers",
+    power: 1,
+    ability: "medic",
+    img: "aux_archers1",
+    faction: "nilfgaardian",
+    type: 1
+  },
+  "albrich": {
+    name: "Albrich",
+    power: 2,
+    ability: null,
+    img: "albrich",
+    faction: "nilfgaardian",
+    type: 1
+  },
+  "sweers": {
+    name: "test",
+    power: 0,
+    ability: null,
+    img: null,
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "nausicaa_cavalry_rider": {
+    name: "Nausicaa Cavalry Rider",
+    power: 2,
+    ability: "tight_bond",
+    img: "nausicaa_cavalry_rider",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "vreemde": {
+    name: "Vreemde",
+    power: 2,
+    ability: null,
+    img: "vreemde",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "rotten_mangonel": {
+    name: "Rotten Mangonel",
+    power: 3,
+    ability: null,
+    img: "rotten_mangonel",
+    faction: "nilfgaardian",
+    type: 2
+  },
+  "morteisen": {
+    name: "Morteisen",
+    power: 3,
+    ability: null,
+    img: "morteisen",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "puttkammer": {
+    name: "Puttkammer",
+    power: 3,
+    ability: null,
+    img: "puttkammer",
+    faction: "nilfgaardian",
+    type: 1
+  },
+  "impera_brigade_guard": {
+    name: "Impera Brigade Guard",
+    power: 3,
+    ability: "tight_bond",
+    img: "impera_brigade_guard",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "vanhemar": {
+    name: "Vanhemar",
+    power: 4,
+    ability: null,
+    img: "vanhemar",
+    faction: "nilfgaardian",
+    type: 1
+  },
+  "vattier_de_rideaux": {
+    name: "Vattier de Rideaux",
+    power: 4,
+    ability: "spy",
+    img: "vattier",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "rainfarn": {
+    name: "Rainfarn",
+    power: 4,
+    ability: null,
+    img: "rainfarn",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "cynthia": {
+    name: "Cynthia",
+    power: 4,
+    ability: null,
+    img: "cynthia",
+    faction: "nilfgaardian",
+    type: 1
+  },
+  "zerrikanian_fire_scorpion": {
+    name: "Zerrikanian Fire Scorpion",
+    power: 5,
+    ability: null,
+    img: "fire_scorpion",
+    faction: "nilfgaardian",
+    type: 2
+  },
+  "young_emmisary": {
+    name: "Young Emissary",
+    power: 5,
+    ability: "tight_bond",
+    img: "young_emissary1",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "renuald_aep_matsen": {
+    name: "Renuald aep Matsen",
+    power: 5,
+    ability: null,
+    img: "renauld",
+    faction: "nilfgaardian",
+    type: 1
+  },
+  "siege_engineer": {
+    name: "Siege Engineer",
+    power: 6,
+    ability: null,
+    img: "siege_engineer",
+    faction: "nilfgaardian",
+    type: 2
+  },
+  "cahir_mawr_dyffryn_aep_ceallach": {
+    name: "Cahir Mawr Dyffryn aep Ceallach",
+    power: 6,
+    ability: null,
+    img: "ceallach",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "fringilla_vigo": {
+    name: "Fringilla Vigo",
+    power: 6,
+    ability: null,
+    img: "vigo",
+    faction: "nilfgaardian",
+    type: 1
+  },
+  "assire_var_anahid": {
+    name: "Assire var Anahid",
+    power: 6,
+    ability: null,
+    img: "assire_var_anahid",
+    faction: "nilfgaardian",
+    type: 1
+  },
+  "shilard_fitz_oesterlen": {
+    name: "Shilard Fitz-Oesterlen",
+    power: 7,
+    ability: "spy",
+    img: "shilard",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "stefan_skellen": {
+    name: "Stefan Skellen",
+    power: 9,
+    ability: "spy",
+    img: "stefan_skellen",
+    faction: "nilfgaardian",
+    type: 0
+  },
+  "heavy_zerrikanian_fire_scorpion": {
+    name: "Heavy Zerrikanian Fire Scorpion",
+    power: 10,
+    ability: null,
+    img: "heavy_fire_scorpion",
+    faction: "nilfgaardian",
+    type: 2
+  },
+  "black_infantry_archer": {
+    name: "Black Infantry Archer",
+    power: 10,
+    ability: null,
+    img: "black_infantry_archer1",
+    faction: "nilfgaardian",
+    type: 1
   }
+
+
 }
