@@ -34,22 +34,16 @@ var Battle = (function(){
   r.turn = 0;
 
   r.socket = null;
-  r.channel = null;
 
   r._id = null;
 
   r.events = null;
 
   r.init = function(){
-    /*PubSub.subscribe("update", this.update.bind(this));*/
     this.on("Update", this.update);
-    /*
-        this.on("AfterPlace", this.checkAbilityOnAfterPlace)*/
 
-
-    //this.channel = this.socket.subscribe(this._id);
-    this.p1 = Battleside(this._user1.getName(), 0, this, this._user1);
-    this.p2 = Battleside(this._user2.getName(), 1, this, this._user2);
+    this.p1 = Battleside(this._user1, 0, this);
+    this.p2 = Battleside(this._user2, 1, this);
     this.p1.foe = this.p2;
     this.p2.foe = this.p1;
     this.p1.setUpWeatherFieldWith(this.p2);

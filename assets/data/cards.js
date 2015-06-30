@@ -470,6 +470,7 @@ module.exports = {
     name: "Havekar Smuggler",
     power: 5,
     ability: "muster",
+    musterType: "smuggler",
     img: "smuggler1",
     faction: "scoiatael",
     type: 0

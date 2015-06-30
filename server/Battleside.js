@@ -9,9 +9,9 @@ var Promise = require("jquery-deferred");
 
 var Battleside;
 Battleside = (function(){
-  var Battleside = function(name, n, battle, user){
+  var Battleside = function(user, n, battle){
     if(!(this instanceof Battleside)){
-      return (new Battleside(name, n, battle, user));
+      return (new Battleside(user, n, battle));
     }
     /**
      * constructor here
@@ -21,18 +21,15 @@ Battleside = (function(){
     var self = this;
     this._isWaiting = true;
     this.socket = user.socket;
+
     this.field = {};
     this.field[Card.TYPE.LEADER] = Field(this);
     this.field[Card.TYPE.CLOSE_COMBAT] = Field(this, true);
     this.field[Card.TYPE.RANGED] = Field(this, true);
     this.field[Card.TYPE.SIEGE] = Field(this, true);
-    /*this.field[Card.TYPE.HORN] = {
-      close: Field(this),
-      range: Field(this),
-      siege: Field(this)
-    };*/
+
     this.n = n ? "p2" : "p1";
-    this._name = name;
+    this._name = user.getName();
     this.battle = battle;
     this.hand = Hand();
     this.deck = Deck(DeckData[deck]);
