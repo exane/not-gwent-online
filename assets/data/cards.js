@@ -10,6 +10,14 @@
 
 
 module.exports = {
+  "none": {
+    name: "none",
+    power: 0,
+    ability: null,
+    img: "foot_soldier1",
+    faction: "northern",
+    type: 0
+  },
   "redanian_foot_soldier": {
     name: "Redanian Foot Soldier",
     power: 1,
@@ -868,6 +876,14 @@ module.exports = {
 
 
   //nilfgaardian
+  "emreis_relentless": {
+    name: "Emhyr vas Emreis the Relentless",
+    power: -1,
+    ability: "emreis_leader4",
+    img: "emhyr_relentless",
+    faction: "nilfgaardian",
+    type: 3
+  },
   "tibor_eggebracht": {
     name: "test",
     power: 10,
@@ -925,12 +941,12 @@ module.exports = {
     type: 1
   },
   "sweers": {
-    name: "test",
-    power: 0,
+    name: "Sweers",
+    power: 2,
     ability: null,
-    img: null,
+    img: "sweers",
     faction: "nilfgaardian",
-    type: 0
+    type: 2
   },
   "nausicaa_cavalry_rider": {
     name: "Nausicaa Cavalry Rider",

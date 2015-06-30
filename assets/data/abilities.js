@@ -2,7 +2,7 @@ module.exports = {
 
   "agile": {
     name: "agile",
-    description: "Can be placed in either the Close Combat or Ranged Combat row. Cannot be moved once placed.",
+    description: "Agile: Can be placed in either the Close Combat or Ranged Combat row. Cannot be moved once placed.",
     cancelPlacement: true,
     onBeforePlace: function(card){
       var self = this;
@@ -19,7 +19,7 @@ module.exports = {
   },
   "medic": {
     name: "medic",
-    description: "Choose one card from your discard pile (excluding heroes / special cards) to play instantly.",
+    description: "Medic: Choose one card from your discard pile (excluding heroes / special cards) to play instantly.",
     waitResponse: true,
     onAfterPlace: function(card){
       var discard = this.getDiscard();
@@ -36,7 +36,7 @@ module.exports = {
   },
   "morale_boost": {
     name: "morale_boost",
-    description: "Adds +1 strength to all units in the row, excluding itself.",
+    description: "Morale Boost: Adds +1 strength to all units in the row, excluding itself.",
     onEachCardPlace: function(card){
       var field = this.field[card.getType()];
       var id = card.getID();
@@ -61,7 +61,7 @@ module.exports = {
   },
   "muster": {
     name: "muster",
-    description: "Find any cards with the same name in your deck and play them instantly.",
+    description: "Muster: Find any cards with the same name in your deck and play them instantly.",
     onAfterPlace: function(card){
       var musterType = card.getMusterType();
       var self = this;
@@ -87,7 +87,7 @@ module.exports = {
   },
   "tight_bond": {
     name: "tight_bond",
-    description: "Place next to a card with the name same to double the strength of both cards.",
+    description: "Tight Bond: Place next to a card with the name same to double the strength of both cards.",
     onAfterPlace: function(card){
       var field = this.field[card.getType()];
       var cards = field.get();
@@ -103,10 +103,11 @@ module.exports = {
   },
   "spy": {
     name: "spy",
-    description: "Place on your opponents battlefield (counts towards their total strength) then draw two new cards from your deck.",
+    description: "Spy: Place on your opponents battlefield (counts towards their total strength) then draw two new cards from your deck.",
     changeSide: true,
     onAfterPlace: function(){
       this.draw(2);
+      this.sendNotification(this.getName() + " activated Spy! Draws +2 cards.")
     }
   },
   "weather_fog": {
@@ -245,7 +246,7 @@ module.exports = {
   },
   "commanders_horn": {
     name: "commanders_horn",
-    description: "Commander's Horn: Doubles the strength of all unit cards in a row. Limited to 1 per row.",
+    description: "Commander's Horn: Doubles the strength of all unit cards in a row. Except this card.",
     commandersHorn: true
   },
   "commanders_horn_card": {
@@ -339,6 +340,22 @@ module.exports = {
     description: "",
     onActivate: function(){
       this.setHorn("commanders_horn", 0);
+    }
+  },
+  "emreis_leader4": {
+    name: "Emhyr vas Emreis the Relentless",
+    description: "Draw a card from your opponent's discard pile.",
+    onActivate: function(card){
+      var discard = this.foe.getDiscard();
+
+      discard = this.filter(discard, {
+        "ability": "hero",
+        "type": [card.constructor.TYPE.SPECIAL, card.constructor.TYPE.WEATHER]
+      })
+
+      this.send("played:emreis_leader4", {
+        cards: JSON.stringify(discard)
+      }, true);
     }
   },
   "hero": {
