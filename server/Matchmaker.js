@@ -52,7 +52,7 @@ var Matchmaker = (function(){
   }
 
   r._getInQueue = function(user){
-    console.log(user.getName() + " joined in queue");
+    //console.log(user.getName() + " joined in queue");
     this._queue.push(user);
     user._inQueue = true;
   }

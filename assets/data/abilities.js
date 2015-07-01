@@ -287,8 +287,8 @@ module.exports = {
     }
   },
   "francesca_leader2": {
-    name: "",
-    description: "",
+    name: "Francesca Findabair the Beautiful",
+    description: "Doubles the strength of all your Ranged Combat units (unless a Commander's Horn is also present on that row).",
     onActivate: function(){
       this.setHorn("commanders_horn", 1);
     }
@@ -325,8 +325,8 @@ module.exports = {
     }
   },
   "eredin_leader4": {
-    name: "",
-    description: "",
+    name: "Eredin King of the Wild Hunt",
+    description: "Double the strength of all your Close Combat units (unless a Commander's Horn is also present on that row).",
     onActivate: function(){
       this.setHorn("commanders_horn", 0);
     }

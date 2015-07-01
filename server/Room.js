@@ -17,7 +17,7 @@ var Room = (function(){
     //this.socket = scServer.global;
 
 
-    console.log("room created: " + this.getID());
+    //console.log("room created: " + this.getID());
   };
   var r = Room.prototype;
   /**

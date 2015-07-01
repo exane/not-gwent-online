@@ -50,7 +50,7 @@ Battleside = (function(){
       var leaderCard = self.getLeader();
       if(leaderCard.isDisabled()) return;
 
-      console.log("leader activated");
+      //console.log("leader activated");
 
       var ability = leaderCard.getAbility();
 
@@ -740,7 +740,8 @@ Battleside = (function(){
       rndCard = this.getRandomCardOnField();
       if(rndCard) {
         rndCard.__lock = true;
-        console.log("Monsters faction ability triggered!");
+        //console.log("Monsters faction ability triggered!");
+
         this.sendNotification(this.getName() + ": Monsters faction ability triggered! " + rndCard.getName());
       } else {
         this.sendNotification(this.getName() + ": Monsters faction ability triggered! But no card found.");
@@ -848,13 +849,13 @@ Battleside = (function(){
       if(!left) return;
       left--;
       var card = self.hand.remove(id)[0];
-      console.log("hand -> deck: ", card.getName());
+      //console.log("hand -> deck: ", card.getName());
       self.deck.add(card);
       self.deck.shuffle();
       self.draw(1);
       if(!left){
         self.send("redraw:close", null, true);
-        console.log("redraw finished");
+        //console.log("redraw finished");
         deferred.resolve("done");
         //self.socket.off("redraw:reDrawCard", h1);
       }
@@ -863,7 +864,8 @@ Battleside = (function(){
     })
 
     this.receive("redraw:close_client", function(){
-      console.log("redraw finished!");
+      //console.log("redraw finished!");
+      self.wait();
       deferred.resolve("done");
       //self.socket.off("redraw:close_client", h2);
     })

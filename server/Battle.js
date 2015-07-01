@@ -111,7 +111,7 @@ var Battle = (function(){
     Promise.when(this.p1.reDraw(2), this.p2.reDraw(2))
     .then(function(){
       this.on("NextTurn", this.switchTurn);
-      this.switchTurn(Math.random() > .5 ? this.p1 : this.p2);
+      this.switchTurn(Math.random() > 0.5 ? this.p1 : this.p2);
     }.bind(this));
 
   }
@@ -136,7 +136,7 @@ var Battle = (function(){
 
     this.runEvent("Turn" + side.getID());
 
-    console.log("current Turn: ", side.getName());
+    //console.log("current Turn: ", side.getName());
   }
 
   r.startNextRound = function(){
@@ -144,7 +144,7 @@ var Battle = (function(){
     var loser = lastRound.loser;
     var winner = loser.foe;
     if(this.checkIfIsOver()){
-      console.log("its over!");
+      //console.log("its over!");
       this.gameOver(winner);
       this.update();
       return;
@@ -153,13 +153,13 @@ var Battle = (function(){
     this.p1.resetNewRound();
     this.p2.resetNewRound();
 
-    console.log("start new round!");
+    //console.log("start new round!");
     this.sendNotification("Start new round!");
 
 
     if(winner.deck.getFaction() === Deck.FACTION.NORTHERN_REALM && !lastRound.isTie){
       winner.draw(1);
-      console.log(winner.getName() + " draws 1 extra card! (Northern ability)");
+      //console.log(winner.getName() + " draws 1 extra card! (Northern ability)");
       this.sendNotification(winner.getName() + " draws 1 extra card! (Northern ability)");
     }
 
@@ -182,10 +182,12 @@ var Battle = (function(){
 
   r.waitForScoiatael = function(side){
     var self = this;
-    self.sendNotification(side.getName() + " decides whos starts first");
+    side.turn();
+    side.foe.wait();
+    self.sendNotification(side.getName() + " decides who starts first");
     side.send("request:chooseWhichSideBegins", null, true);
     side.socket.once("response:chooseWhichSideBegins", function(data){
-      console.log("which side? ", data.side);
+      //console.log("which side? ", data.side);
 
       if(data.side !== "p1" && data.side !== "p2")
         throw new Error("Unknown side property! - ", data.side);
@@ -202,7 +204,7 @@ var Battle = (function(){
   }
 
   r.update = function(){
-    console.log("update called");
+    //console.("update called");
     this._update(this.p1);
     this._update(this.p2);
   }
@@ -333,7 +335,7 @@ var Battle = (function(){
     //check if is nilfgaardian faction ability
     if(this.p1.deck.getFaction() === Deck.FACTION.NILFGAARDIAN_EMPIRE && this.p1.deck.getFaction() !== this.p2.deck.getFaction()){
       this.p2.removeRuby();
-      console.log(this.p1.getName() + " wins the tie! (nilfgaardian ability)");
+      //console.log(this.p1.getName() + " wins the tie! (nilfgaardian ability)");
       this.sendNotification(this.p1.getName() + " wins the tie! (nilfgaardian ability)");
       return {
         loser: this.p2,
@@ -342,7 +344,7 @@ var Battle = (function(){
     }
     if(this.p2.deck.getFaction() === Deck.FACTION.NILFGAARDIAN_EMPIRE && this.p1.deck.getFaction() !== this.p2.deck.getFaction()){
       this.p1.removeRuby();
-      console.log(this.p2.getName() + " wins the tie! (nilfgaardian ability)");
+      //console.log(this.p2.getName() + " wins the tie! (nilfgaardian ability)");
       this.sendNotification(this.p2.getName() + " wins the tie! (nilfgaardian ability)");
       return {
         loser: this.p1,
