@@ -916,7 +916,7 @@ let Notification = Backbone.View.extend({
   },
   show: function(){
     let $alert = this.$el.find(".alert");
-    $alert.slideDown(600).delay(2000).queue(this.hide.bind(this));
+    $alert.slideDown(600).delay(Config.Gwent.notification_duration).queue(this.hide.bind(this));
 
   },
   hide: function(){
