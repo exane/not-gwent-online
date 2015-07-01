@@ -1,6 +1,7 @@
 var Card = require("./Card");
 /*var CardManager = require("./CardManager");*/
 var DeckData = require("../assets/data/deck");
+var _ = require("underscore");
 
 var Deck = (function(){
   var Deck = function(deck, side){
@@ -14,11 +15,10 @@ var Deck = (function(){
     this.side = side;
     this._deck = [];
 
-    if(typeof deck !== "object") throw new Error("Deck is not an object!");
+    //if(typeof deck !== "object") throw new Error("Deck is not an object!");
 
     this._originalDeck = [];
-    this._faction = deck.faction;
-    this.setDeck(deck.data);
+    this.setDeck(deck);
   };
   var r = Deck.prototype;
   /**
@@ -40,18 +40,23 @@ var Deck = (function(){
     MONSTERS: "monster"
   }
 
-  r.setDeck = function(deckData){
-    if(!Array.isArray(deckData)) {
-      deckData = DeckData["northern"];
+  r.setDeck = function(deckKey){
+    var deck = DeckData[deckKey] ? DeckData[deckKey] : DeckData["northern"];
+
+    if(deckKey === "random"){
+      var decks = _.allKeys(DeckData);
+      deck = DeckData[decks[(Math.random() * decks.length) | 0]];
     }
-    this._originalDeck = deckData.slice();
-    this._deck = deckData.slice();
+
+    this._originalDeck = deck.data.slice();
+    this._deck = deck.data.slice();
+    this._faction = deck.faction;
 
     this._loadCards();
     this.shuffle();
   }
 
-  r.getFaction = function() {
+  r.getFaction = function(){
     return this._faction;
   }
 

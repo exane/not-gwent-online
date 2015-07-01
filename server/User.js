@@ -45,8 +45,7 @@ var User = (function(){
   }
 
   r.generateName = function(){
-    var name = "Player" + (((Math.random() * 8999) + 1000) | 0);
-    //if(lobby.hasUser(name)) return generateName();
+    var name = "Guest" + (((Math.random() * 8999) + 1000) | 0);
     this._name = name;
     return name;
   }
@@ -70,7 +69,7 @@ var User = (function(){
   }
 
   r.getDeck = function() {
-    return this._deck || "northern";
+    return this._deck;
   }
 
   r.addRoom = function(room) {

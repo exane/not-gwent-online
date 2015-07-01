@@ -26,7 +26,7 @@ Handlebars.registerHelper("formatMessage", function(msg){
   let out = "";
   var lines = msg.split(/\n/g);
 
-  lines.forEach(function(line) {
+  lines.forEach(function(line){
     out += line + "<br>";
   })
 
@@ -49,6 +49,14 @@ let App = Backbone.Router.extend({
   },
   connect: function(){
     this.socket = socket(Config.Server.hostname + ":" + Config.Server.port);
+    var self = this;
+    console.log(this.socket.connected);
+    this.socket.on("connect", function(socket){
+      self.user.set("serverOffline", false);
+    })
+    this.socket.on("disconnect", function(socket){
+      self.user.set("serverOffline", true);
+    })
   },
   receive: function(event, cb){
     this.socket.on(event, cb);
@@ -681,8 +689,9 @@ let ChooseSideModal = Modal.extend({
 
 let User = Backbone.Model.extend({
   defaults: {
-    name: "",
-    deckKey: "northern"
+    name: localStorage["userName"] || null,
+    deck: localStorage["userDeck"] || null,
+    serverOffline: true
   },
   initialize: function(){
     let self = this;
@@ -788,11 +797,12 @@ let User = Backbone.Model.extend({
     app.on("setDeck", this.setDeck, this);
 
 
-    app.receive("notification", function(data) {
+    app.receive("notification", function(data){
       new Notification(data).render();
     })
 
-    app.send("request:name", this.get("name") == "unnamed" ? null : {name: this.get("name")});
+    app.send("request:name", this.get("name") === null ? null : {name: this.get("name")});
+    app.send("set:deck", this.get("deck") === null ? null : {deck: this.get("deck")});
   },
   startMatchmaking: function(){
     this.set("inMatchmakerQueue", true);
@@ -809,10 +819,12 @@ let User = Backbone.Model.extend({
   },
   setName: function(name){
     this.get("app").send("request:name", {name: name});
+    localStorage["userName"] = name;
   },
   setDeck: function(deckKey){
     //console.log("deck: ", deckKey);
     this.set("deckKey", deckKey);
+    localStorage["userDeck"] = deckKey;
     this.get("app").send("set:deck", {deck: deckKey});
   },
   chooseSide: function(roomSide){
@@ -832,7 +844,6 @@ let Lobby = Backbone.View.extend({
     this.user = options.user;
     this.app = options.app;
     this.listenTo(this.app.user, "change", this.render);
-    //$(this.el).prependTo('body');
     $(".gwent-battle").html(this.el);
     this.render();
   },
@@ -843,12 +854,12 @@ let Lobby = Backbone.View.extend({
     "change #deckChoice": "setDeck",
     "click .note": "debugNote"
   },
-  debugNote: function() {
+  debugNote: function(){
     new Notification({message: "yoyo TEST\nhallo\n\ntest"}).render();
   },
   render: function(){
     this.$el.html(this.template(this.user.attributes));
-    /*this.$el.find("#deckChoice option[value='" + this.app.user.get("setDeck") + "']").attr("selected", "selected")*/
+    this.$el.find("#deckChoice").val(this.user.get("deck")).attr("selected", true);
     return this;
   },
   startMatchmaking: function(){
@@ -923,7 +934,7 @@ let Notification = Backbone.View.extend({
     let $alert = this.$el.find(".alert");
     $alert.stop().slideUp().queue(this.remove.bind(this));
   },
-  onClick: function() {
+  onClick: function(){
     this.hide();
   }
 });

@@ -34,7 +34,7 @@ Battleside = (function(){
     this._name = user.getName();
     this.battle = battle;
     this.hand = Hand();
-    this.deck = Deck(DeckData[deck], this);
+    this.deck = Deck(deck, this);
     this._discard = [];
 
     this.runEvent = this.battle.runEvent.bind(this.battle);

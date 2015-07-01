@@ -321,6 +321,20 @@ $game-height: 800px;
   }
 }
 
+.startMatchmaking {
+  height: 50px;
+  line-height: 35px;
+  width: 200px;
+  text-align: left;
+}
+.image-gif-loader {
+  background: url("../../assets/content-load.gif");
+  display: block;
+  height: 32px;
+  width: 32px;
+  margin-left: 10px;
+
+}
 
 @keyframes waitForOpponent{
   0% {
