@@ -58,6 +58,11 @@ Battleside = (function(){
       leaderCard.setDisabled(true);
       self.battle.sendNotification(self.getName() + " activated " + leaderCard.getName() + "! (leadercard)");
       self.update();
+      if(ability.waitResponse) {
+        return;
+      }
+      //self.runEvent("NextTurn", null, [self.foe]);
+      self.endTurn();
     })
     this.receive("play:cardFromHand", function(data){
       if(self._isWaiting) return;
@@ -81,11 +86,14 @@ Battleside = (function(){
       self.update();
 
       self.battle.sendNotification(self.getName() + " passed!");
-      self.runEvent("NextTurn", null, [self.foe]);
+      //self.runEvent("NextTurn", null, [self.foe]);
+      self.endTurn();
     })
     this.receive("medic:chooseCardFromDiscard", function(data){
       if(!data){
-        self.runEvent("NextTurn", null, [self.foe]);
+        //self.runEvent("NextTurn", null, [self.foe]);
+
+        self.endTurn();
         return;
       }
       var cardID = data.cardID;
@@ -98,6 +106,7 @@ Battleside = (function(){
     })
     this.receive("emreis_leader4:chooseCardFromDiscard", function(data){
       if(!data){
+        self.endTurn();
         //self.runEvent("NextTurn", null, [self.foe]);
         return;
       }
@@ -108,12 +117,17 @@ Battleside = (function(){
       self.foe.removeFromDiscard(card);
 
       self.placeCard(card);
+
+      self.endTurn();
+      // self.runEvent("NextTurn", null, [self.foe]);
     })
     this.receive("agile:field", function(data){
       var fieldType = data.field;
       if(!(fieldType in [0, 1])) throw new Error("set field agile: false fieldtype " + fieldType);
       self.runEvent("agile:setField", null, [fieldType]);
-      self.runEvent("NextTurn", null, [self.foe]);
+
+      self.endTurn();
+      //self.runEvent("NextTurn", null, [self.foe]);
     })
     this.receive("cancel:agile", function(){
       self.off("agile:setField");
@@ -122,7 +136,9 @@ Battleside = (function(){
       var fieldType = data.field;
       if(!(fieldType in [0, 1, 2])) throw new Error("set field horn: false fieldtype " + fieldType);
       self.runEvent("horn:setField", null, [fieldType]);
-      self.runEvent("NextTurn", null, [self.foe]);
+
+      self.endTurn();
+      //self.runEvent("NextTurn", null, [self.foe]);
     })
     this.receive("cancel:horn", function(){
       self.off("horn:setField");
@@ -188,16 +204,9 @@ Battleside = (function(){
   }
 
   r.getRandomCardOnField = function(){
-    var close, range, siege;
-
-    close = this.field[Card.TYPE.CLOSE_COMBAT].get();
-    range = this.field[Card.TYPE.RANGED].get();
-    siege = this.field[Card.TYPE.SIEGE].get();
-
-    var allCards = close.concat(range.concat(siege));
+    var allCards = this.getFieldCards();
     var rnd = (Math.random() * allCards.length) | 0;
 
-    //if(allCards[rnd].getType === 4) return null;
 
     return allCards[rnd];
   }
@@ -208,6 +217,16 @@ Battleside = (function(){
       if(c.getID() === id) return c;
     }
     return -1;
+  }
+
+  r.getFieldCards = function() {
+    var close, range, siege;
+
+    close = this.field[Card.TYPE.CLOSE_COMBAT].get();
+    range = this.field[Card.TYPE.RANGED].get();
+    siege = this.field[Card.TYPE.SIEGE].get();
+
+    return close.concat(range.concat(siege));
   }
 
   r.setPassing = function(b){
@@ -325,6 +344,13 @@ Battleside = (function(){
     this.update();
 
 
+    //this.runEvent("NextTurn", null, [this.foe]);
+    this.endTurn();
+  }
+
+  r.endTurn = function() {
+    this.update();
+
     this.runEvent("NextTurn", null, [this.foe]);
   }
 
@@ -344,7 +370,8 @@ Battleside = (function(){
     }
     if(obj._nextTurn && !obj.forceField){
       this.update();
-      this.runEvent("NextTurn", null, [this.foe]);
+      //this.runEvent("NextTurn", null, [this.foe]);
+      this.endTurn();
       return 0;
     }
 
@@ -509,6 +536,9 @@ Battleside = (function(){
       if(ability.scorch){
         this.scorch(card);
       }
+      if(ability.scorchMelee){
+        this.scorchMelee(card);
+      }
       if(ability.removeImmediately){
         this.hand.remove(card);
         this.addToDiscard(card);
@@ -544,7 +574,8 @@ Battleside = (function(){
           self.hand.remove(card);
 
           self.update();
-          self.runEvent("NextTurn", null, [self.foe]);
+          //self.runEvent("NextTurn", null, [self.foe]);
+          self.endTurn();
           self.battle.sendNotification(self.getName() + " played Decoy!");
         })
       }
@@ -635,14 +666,20 @@ Battleside = (function(){
     this.runEvent("WeatherChange");
   }
 
-  r.scorch = function(card){
+  r.scorchMelee = function(card) {
     var side = this.foe;
     var field = side.field[Card.TYPE.CLOSE_COMBAT];
+
+    this.battle.sendNotification(this.getName() + " played " + card.getName());
+
+    if(field.getScore() < 10) {
+      this.battle.sendNotification("Scorch: Score is under 10! Nothing happens.");
+      return;
+    }
+
     var cards = field.getHighestCards(true);
     var removeCards = field.removeCard(cards);
 
-
-    this.battle.sendNotification(this.getName() + " played " + card.getName());
 
     var txt = "Scorch destroyed:";
     for (var i = 0; i < removeCards.length; i++) {
@@ -653,6 +690,48 @@ Battleside = (function(){
     this.battle.sendNotification(txt);
 
     side.addToDiscard(removeCards);
+  }
+
+  r.scorch = function(card){/*
+    var side = this.foe;
+    var field = side.field[Card.TYPE.CLOSE_COMBAT];
+    var cards = field.getHighestCards(true);
+    var removeCards = field.removeCard(cards);*/
+    var cards = this.getFieldCards();
+    cards = cards.concat(this.foe.getFieldCards());
+    var noHeroes = true;
+    var res = [];
+    var highest = 0;
+    var self = this;
+
+    this.battle.sendNotification(this.getName() + " played " + card.getName());
+
+    cards.forEach(function(card){
+      if(noHeroes && card.hasAbility("hero")) return;
+      highest = card.getPower() > highest ? card.getPower() : highest;
+    })
+
+    cards.forEach(function(card){
+      if(noHeroes && card.hasAbility("hero")) return;
+      if(card.getPower() === highest) res.push(card);
+    });
+
+    res.forEach(function(card) {
+      var side = self;
+      if(self.foe.field[card.getType()].isOnField(card)) {
+        side = self.foe;
+      }
+      var removed = side.field[card.getType()].removeCard(card);
+      side.addToDiscard(removed);
+    })
+
+    var txt = "Scorch destroyed:";
+    for (var i = 0; i < res.length; i++) {
+      var c = res[i];
+      txt += "\n" + c.getName();
+    }
+
+    this.battle.sendNotification(txt);
   }
 
   r.clearMainFields = function(){

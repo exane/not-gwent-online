@@ -130,8 +130,8 @@ module.exports = {
       "decoy",
       "decoy",
       "biting_frost",
-      "biting_frost",
       "torrential_rain",
+      "clear_weather",
       "clear_weather"
     ]
   },

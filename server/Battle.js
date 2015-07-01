@@ -61,6 +61,16 @@ var Battle = (function(){
     this.p1.draw(10);
     this.p2.draw(10);
 
+    /*this.p1.placeCard("ves");
+    this.p2.placeCard("ves");
+    this.p1.placeCard("yarpen_zigrin");
+    this.p2.placeCard("yarpen_zigrin");
+
+    this.p1.hand.add(this.p1.createCard("scorch"));
+    this.p2.hand.add(this.p2.createCard("scorch"));
+    this.p1.hand.add(this.p1.createCard("villentretenmerth"));
+    this.p2.hand.add(this.p2.createCard("villentretenmerth"));*/
+
     /*this.p1.hand.add(this.p1.createCard("blue_stripes_commando"));
     this.p2.hand.add(this.p2.createCard("blue_stripes_commando"));
     this.p1.hand.add(this.p1.createCard("blue_stripes_commando"));
@@ -324,7 +334,7 @@ var Battle = (function(){
     if(this.p1.deck.getFaction() === Deck.FACTION.NILFGAARDIAN_EMPIRE && this.p1.deck.getFaction() !== this.p2.deck.getFaction()){
       this.p2.removeRuby();
       console.log(this.p1.getName() + " wins the tie! (nilfgaardian ability)");
-      self.sendNotification(this.p1.getName() + " wins the tie! (nilfgaardian ability)");
+      this.sendNotification(this.p1.getName() + " wins the tie! (nilfgaardian ability)");
       return {
         loser: this.p2,
         isTie: false
@@ -333,7 +343,7 @@ var Battle = (function(){
     if(this.p2.deck.getFaction() === Deck.FACTION.NILFGAARDIAN_EMPIRE && this.p1.deck.getFaction() !== this.p2.deck.getFaction()){
       this.p1.removeRuby();
       console.log(this.p2.getName() + " wins the tie! (nilfgaardian ability)");
-      self.sendNotification(this.p2.getName() + " wins the tie! (nilfgaardian ability)");
+      this.sendNotification(this.p2.getName() + " wins the tie! (nilfgaardian ability)");
       return {
         loser: this.p1,
         isTie: false

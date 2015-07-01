@@ -230,8 +230,8 @@ module.exports = {
   },
   "scorch": {
     name: "scorch",
-    description: "Scorch: Kills the strongest card(s) in the battlefield.",
-    scorch: true
+    description: "Scorch: Destroy your enemy's strongest close combat unit(s) if the combined strength of all of his or her combat unit(s) is 10 or more.",
+    scorchMelee: true
   },
   "commanders_horn": {
     name: "commanders_horn",
@@ -334,6 +334,7 @@ module.exports = {
   "emreis_leader4": {
     name: "Emhyr vas Emreis the Relentless",
     description: "Draw a card from your opponent's discard pile.",
+    waitResponse: true,
     onActivate: function(card){
       var discard = this.foe.getDiscard();
 
