@@ -197,7 +197,7 @@ Battleside = (function(){
     var allCards = close.concat(range.concat(siege));
     var rnd = (Math.random() * allCards.length) | 0;
 
-    if(allCards[rnd].getType === 4) return null;
+    //if(allCards[rnd].getType === 4) return null;
 
     return allCards[rnd];
   }
@@ -632,6 +632,13 @@ Battleside = (function(){
     var rndCard = null;
     if(this.deck.getFaction() === Deck.FACTION.MONSTERS){
       rndCard = this.getRandomCardOnField();
+      if(rndCard) {
+        rndCard.__lock = true;
+        console.log("Monsters faction ability triggered!");
+        this.sendNotification(this.getName() + ": Monsters faction ability triggered! " + rndCard.getName());
+      } else {
+        this.sendNotification(this.getName() + ": Monsters faction ability triggered! But no card found.");
+      }
     }
     var cards1 = this.field[Card.TYPE.CLOSE_COMBAT].removeAll();
     var cards2 = this.field[Card.TYPE.RANGED].removeAll();
@@ -640,12 +647,6 @@ Battleside = (function(){
 
     var cards = cards1.concat(cards2.concat(cards3.concat(cards4)));
     this.addToDiscard(cards);
-
-    if(rndCard){
-      this.removeFromDiscard(rndCard);
-      this.placeCard(rndCard, {disabled: true}); //disabled == no abilities get triggered
-      console.log("Monsters faction ability triggered!");
-    }
   }
 
   r.addToDiscard = function(cards){

@@ -1,3 +1,5 @@
+var _ = require("underscore");
+
 var Field = (function(){
   var Field = function(side, hasHornField){
     if(!(this instanceof Field)){
@@ -29,7 +31,7 @@ var Field = (function(){
       this.setHorn(card);
       return;
     }*/
-    if(isHorn && this._hasHornField) {
+    if(isHorn && this._hasHornField){
       this.setHorn(card);
       return;
     }
@@ -86,14 +88,28 @@ var Field = (function(){
   r.removeAll = function(){
     var tmp = this._cards.slice();
     var self = this;
-    tmp.forEach(function(card){
+    /*tmp.forEach(function(card){
       card.reset();
       for(var event in card._uidEvents) {
         self.side.off(event, card.getUidEvents(event));
       }
-    })
-    this._cards = [];
-    if(this.getHorn()) {
+    })*/
+    for(var i = 0; i < tmp.length; i++) {
+      var card = tmp[i];
+      if(card.__lock){
+        delete card.__lock;
+        continue;
+      }
+      card.reset();
+      for(var event in card._uidEvents) {
+        self.side.off(event, card.getUidEvents(event));
+      }
+      this._cards[i] = null;
+    }
+
+    this._cards = _.without(this._cards, null);
+
+    if(this.getHorn()){
       var card = this.getHorn();
       card.reset();
       this.setHorn(null);
@@ -105,21 +121,21 @@ var Field = (function(){
     return tmp;
   }
 
-  r.removeCard = function(cards) {
+  r.removeCard = function(cards){
     var res = [];
     var _cards = this.get();
-    if(!Array.isArray(cards)) {
-      cards =  [cards];
+    if(!Array.isArray(cards)){
+      cards = [cards];
     }
     var self = this;
-    cards.forEach(function(card) {
+    cards.forEach(function(card){
       res.push(_cards.splice(self.getPosition(card), 1)[0]);
     })
 
     return res;
   }
 
-  r.getInfo = function() {
+  r.getInfo = function(){
     var self = this;
     return {
       cards: self._cards,
@@ -128,27 +144,27 @@ var Field = (function(){
     }
   }
 
-  r.getHorn = function() {
+  r.getHorn = function(){
     if(!this._hasHornField) return null;
     return this._hornCard;
   }
 
-  r.setHorn = function(card) {
+  r.setHorn = function(card){
     if(!this._hasHornField) return null;
     this._hornCard = card;
   }
 
-  r.getHighestCards = function(noHeroes) {
+  r.getHighestCards = function(noHeroes){
     noHeroes = noHeroes || false;
     var res = [];
     var highest = 0;
 
-    this.get().forEach(function(card) {
+    this.get().forEach(function(card){
       if(noHeroes && card.hasAbility("hero")) return;
       highest = card.getPower() > highest ? card.getPower() : highest;
     })
 
-    this.get().forEach(function(card) {
+    this.get().forEach(function(card){
       if(noHeroes && card.hasAbility("hero")) return;
       if(card.getPower() === highest) res.push(card);
     });
