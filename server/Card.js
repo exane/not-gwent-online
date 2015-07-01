@@ -15,7 +15,7 @@ var Card = (function(){
     this._uidEvents = {};
     this.setDisabled(false);
     this._data = CardData[key] ? CardData[key] : CardData["none"];
-    if(!(this._data = CardData[key])) {
+    if(!(this._data = CardData[key])){
       this._data = CardData["none"];
       key = "none";
     }
@@ -139,9 +139,20 @@ var Card = (function(){
 
   r.getBoost = function(){
     var res = 0;
+    var doubles = 0;
     for(var key in this._boost) {
-      if(key === "commanders_horn" || key === "commanders_horn_card") continue;
+      if(key === "commanders_horn" || key === "commanders_horn_card") continue
+      if(this._boost[key] === "tight_bond"){
+        doubles++;
+        continue;
+      }
       res += this._boost[key];
+    }
+
+    if(doubles){ //tight bond
+      for(var i = 0; i < doubles; i++) {
+        res += res + this.getBasePower();
+      }
     }
 
     if(this._boost["commanders_horn"] || this._boost["commanders_horn_card"]){

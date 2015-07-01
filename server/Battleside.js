@@ -446,6 +446,25 @@ Battleside = (function(){
     })
   }
 
+  r.setTightBond = function(card) {
+    var field = this.field[card.getType()];
+    var pos = field.getPosition(card);
+    var cards = field.get();
+
+    if(pos < 0) return;
+    if(pos >= 1 && cards[pos-1].getName() === cards[pos].getName()) {
+      cards[pos].setBoost(cards[pos].getID()+"|left", "tight_bond");
+    } else {
+      cards[pos].setBoost(cards[pos].getID()+"|left", 0);
+    }
+
+    if(pos < cards.length-1 && cards[pos+1].getName() === cards[pos].getName()) {
+      cards[pos].setBoost(cards[pos].getID()+"|right", "tight_bond");
+    } else {
+      cards[pos].setBoost(cards[pos].getID()+"|right", 0);
+    }
+  }
+
   r.checkAbilities = function(card, obj, __flag){
     var self = this;
     obj.targetSide = this;
@@ -459,11 +478,12 @@ Battleside = (function(){
       ability = ability[0];
     }
 
-    if(ability && ability.name === obj.suppress){
+    /*if(ability && ability.name === obj.suppress){
       //this.update();
-    }
+    }*/
 
     if(ability && !Array.isArray(ability)){
+
       if(ability.onBeforePlace){
         ability.onBeforePlace.apply(this, [card]);
       }
@@ -479,6 +499,12 @@ Battleside = (function(){
       }
       if(ability.nextTurn){
         obj._nextTurn = ability.nextTurn;
+      }
+      if(ability.tightBond){
+        //this.setTightBond(card);
+        ability.onAfterPlace = this.setTightBond;
+        ability.onEachCardPlace = this.setTightBond;
+        //ability.onWeatherChange = this.setTightBond;
       }
       if(ability.scorch){
         this.scorch(card);
@@ -536,6 +562,7 @@ Battleside = (function(){
       }
 
       //this.update();
+
     }
   }
 

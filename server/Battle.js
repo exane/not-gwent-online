@@ -61,10 +61,18 @@ var Battle = (function(){
     this.p1.draw(10);
     this.p2.draw(10);
 
-    /*this.p1.hand.add(this.p1.createCard("scorch"));
-    this.p2.hand.add(this.p2.createCard("scorch"));
-    this.p1.hand.add(this.p1.createCard("vernon_roche"));
-    this.p2.hand.add(this.p2.createCard("vernon_roche"));*/
+    /*this.p1.hand.add(this.p1.createCard("blue_stripes_commando"));
+    this.p2.hand.add(this.p2.createCard("blue_stripes_commando"));
+    this.p1.hand.add(this.p1.createCard("blue_stripes_commando"));
+    this.p2.hand.add(this.p2.createCard("blue_stripes_commando"));
+    this.p1.hand.add(this.p1.createCard("blue_stripes_commando"));
+    this.p2.hand.add(this.p2.createCard("blue_stripes_commando"));
+    this.p1.hand.add(this.p1.createCard("blue_stripes_commando"));
+    this.p2.hand.add(this.p2.createCard("blue_stripes_commando"));
+    this.p1.hand.add(this.p1.createCard("blue_stripes_commando"));
+    this.p2.hand.add(this.p2.createCard("blue_stripes_commando"));
+    this.p1.hand.add(this.p1.createCard("dandelion"));
+    this.p2.hand.add(this.p2.createCard("dandelion"));*/
 
 
     /*this.p1.placeCard("ves");

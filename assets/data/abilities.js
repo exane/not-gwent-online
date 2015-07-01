@@ -88,18 +88,7 @@ module.exports = {
   "tight_bond": {
     name: "tight_bond",
     description: "Tight Bond: Place next to a card with the name same to double the strength of both cards.",
-    onAfterPlace: function(card){
-      var field = this.field[card.getType()];
-      var cards = field.get();
-      var lastInsert = cards.length;
-
-      if(lastInsert < 2) return;
-
-      if(cards[lastInsert - 2].getName() == cards[lastInsert - 1].getName()){
-        cards[lastInsert - 2].setBoost(cards[lastInsert - 2].getID(), +cards[lastInsert - 2].getPower());
-        cards[lastInsert - 1].setBoost(cards[lastInsert - 1].getID(), +cards[lastInsert - 1].getPower());
-      }
-    }
+    tightBond: true
   },
   "spy": {
     name: "spy",
