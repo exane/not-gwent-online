@@ -843,7 +843,10 @@ let Lobby = Backbone.View.extend({
   initialize: function(options){
     this.user = options.user;
     this.app = options.app;
-    this.listenTo(this.app.user, "change", this.render);
+
+    this.app.receive("update:playerOnline", this.renderStatus.bind(this));
+
+    this.listenTo(this.app.user, "change:serverOffline", this.render);
     $(".gwent-battle").html(this.el);
     this.render();
   },
@@ -863,6 +866,7 @@ let Lobby = Backbone.View.extend({
     return this;
   },
   startMatchmaking: function(){
+    this.$el.find(".image-gif-loader").show();
     this.app.trigger("startMatchmaking");
   },
   joinRoom: function(){
@@ -876,6 +880,9 @@ let Lobby = Backbone.View.extend({
   changeName: function(e){
     let name = $(e.target).val();
     this.app.trigger("setName", name);
+  },
+  renderStatus: function(n) {
+    this.$el.find(".nr-player-online").html(n);
   }
 });
 

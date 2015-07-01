@@ -64,7 +64,7 @@ var User = (function(){
   }
 
   r.setDeck = function(deck) {
-    console.log("set deck: ", deck);
+    //console.log("set deck: ", deck);
     this._deck = deck;
   }
 
@@ -96,7 +96,7 @@ var User = (function(){
     this._rooms.forEach(function(room) {
       room.leave(self);
       if(!room.hasUser()) {
-        console.log("Remove room: ", room.getID());
+        //console.log("Remove room: ", room.getID());
         room = null;
       }
     })
@@ -121,12 +121,12 @@ var User = (function(){
     });
 
     socket.on("request:gameLoaded", function(data){
-      console.log(data);
+      //console.log(data);
       connections.roomCollection[data._roomID].setReady(self);
     })
 
     socket.on("set:deck", function(data) {
-      console.log(data);
+      //console.log(data);
       if(data && data.deck){
         self.setDeck(data.deck);
       }

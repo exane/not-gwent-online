@@ -39,6 +39,9 @@ io.on("connection", function(socket) { //global connection
     user.disconnect();
     console.log("user ", user.getName(), " disconnected");
     user = null;
+    //io.emit("update:playerOnline", connections.length());
   })
 
+
+  io.emit("update:playerOnline", connections.length());
 })
