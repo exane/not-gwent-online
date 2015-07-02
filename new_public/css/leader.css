@@ -1,0 +1,53 @@
+.leader-wrap {
+  float: left;
+  width: 200px;
+}
+
+.leader-card-wrap {
+  position: relative;
+  bottom: 75px;
+}
+
+.leader-card {
+  float: left;
+  position: relative;
+  width: 113px;
+  bottom: 15px;
+  height: 148px;
+}
+
+  .leader-card .shadow {
+    left: 11px;
+  }
+
+.leader-card i {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 105px;
+  height: 140px;
+  background: silver;
+  z-index: 10;
+}
+
+.btn-pass {
+  float: left;
+  padding: 4px;
+  color: #fff;
+  backgorund: #000;
+  clear: both;
+  width: 106px;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin: 0 0 0 4px;
+
+  background: #243141;
+  background: -moz-linear-gradient(left, #243141 0%, #334152 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#243141), color-stop(100%,#334152));
+  background: -webkit-linear-gradient(left, #243141 0%,#334152 100%);
+  background: -o-linear-gradient(left, #243141 0%,#334152 100%);
+  background: -ms-linear-gradient(left, #243141 0%,#334152 100%);
+  background: linear-gradient(to right, #243141 0%,#334152 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#243141', endColorstr='#334152',GradientType=1 );
+}
