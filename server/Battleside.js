@@ -58,7 +58,7 @@ Battleside = (function(){
       leaderCard.setDisabled(true);
       self.battle.sendNotification(self.getName() + " activated " + leaderCard.getName() + "! (leadercard)");
       self.update();
-      if(ability.waitResponse) {
+      if(ability.waitResponse){
         return;
       }
       //self.runEvent("NextTurn", null, [self.foe]);
@@ -219,7 +219,7 @@ Battleside = (function(){
     return -1;
   }
 
-  r.getFieldCards = function() {
+  r.getFieldCards = function(){
     var close, range, siege;
 
     close = this.field[Card.TYPE.CLOSE_COMBAT].get();
@@ -348,7 +348,7 @@ Battleside = (function(){
     this.endTurn();
   }
 
-  r.endTurn = function() {
+  r.endTurn = function(){
     this.update();
 
     this.runEvent("NextTurn", null, [this.foe]);
@@ -473,22 +473,24 @@ Battleside = (function(){
     })
   }
 
-  r.setTightBond = function(card) {
+  r.setTightBond = function(card){
     var field = this.field[card.getType()];
     var pos = field.getPosition(card);
     var cards = field.get();
 
     if(pos < 0) return;
-    if(pos >= 1 && cards[pos-1].getName() === cards[pos].getName()) {
-      cards[pos].setBoost(cards[pos].getID()+"|left", "tight_bond");
-    } else {
-      cards[pos].setBoost(cards[pos].getID()+"|left", 0);
+    if(pos >= 1 && cards[pos - 1].getName() === cards[pos].getName()){
+      cards[pos].setBoost(cards[pos].getID() + "|left", "tight_bond");
+    }
+    else {
+      cards[pos].setBoost(cards[pos].getID() + "|left", 0);
     }
 
-    if(pos < cards.length-1 && cards[pos+1].getName() === cards[pos].getName()) {
-      cards[pos].setBoost(cards[pos].getID()+"|right", "tight_bond");
-    } else {
-      cards[pos].setBoost(cards[pos].getID()+"|right", 0);
+    if(pos < cards.length - 1 && cards[pos + 1].getName() === cards[pos].getName()){
+      cards[pos].setBoost(cards[pos].getID() + "|right", "tight_bond");
+    }
+    else {
+      cards[pos].setBoost(cards[pos].getID() + "|right", 0);
     }
   }
 
@@ -666,13 +668,13 @@ Battleside = (function(){
     this.runEvent("WeatherChange");
   }
 
-  r.scorchMelee = function(card) {
+  r.scorchMelee = function(card){
     var side = this.foe;
     var field = side.field[Card.TYPE.CLOSE_COMBAT];
 
     this.battle.sendNotification(this.getName() + " played " + card.getName());
 
-    if(field.getScore() < 10) {
+    if(field.getScore() < 10){
       this.battle.sendNotification("Scorch: Score is under 10! Nothing happens.");
       return;
     }
@@ -682,7 +684,7 @@ Battleside = (function(){
 
 
     var txt = "Scorch destroyed:";
-    for (var i = 0; i < removeCards.length; i++) {
+    for(var i = 0; i < removeCards.length; i++) {
       var c = removeCards[i];
       txt += "\n" + c.getName();
     }
@@ -716,9 +718,9 @@ Battleside = (function(){
       if(card.getPower() === highest) res.push(card);
     });
 
-    res.forEach(function(card) {
+    res.forEach(function(card){
       var side = self;
-      if(self.foe.field[card.getType()].isOnField(card)) {
+      if(self.foe.field[card.getType()].isOnField(card)){
         side = self.foe;
       }
       var removed = side.field[card.getType()].removeCard(card);
@@ -726,7 +728,7 @@ Battleside = (function(){
     })
 
     var txt = "Scorch destroyed:";
-    for (var i = 0; i < res.length; i++) {
+    for(var i = 0; i < res.length; i++) {
       var c = res[i];
       txt += "\n" + c.getName();
     }
@@ -738,12 +740,11 @@ Battleside = (function(){
     var rndCard = null;
     if(this.deck.getFaction() === Deck.FACTION.MONSTERS){
       rndCard = this.getRandomCardOnField();
-      if(rndCard) {
+      if(rndCard){
         rndCard.__lock = true;
-        //console.log("Monsters faction ability triggered!");
-
         this.sendNotification(this.getName() + ": Monsters faction ability triggered! " + rndCard.getName());
-      } else {
+      }
+      else {
         this.sendNotification(this.getName() + ": Monsters faction ability triggered! But no card found.");
       }
     }
@@ -762,6 +763,10 @@ Battleside = (function(){
       cards = [cards];
     }
     cards.forEach(function(_card){
+      if(_card.__lock){
+        delete _card.__lock;
+        return;
+      }
       self._discard.push(_card);
     });
   }
@@ -837,7 +842,7 @@ Battleside = (function(){
   }
 
   r.reDraw = function(n){
-    var hand = this.hand.getCards();
+    //var hand = this.hand.getCards();
     var self = this;
     var left = n;
     var deferred = Promise.Deferred();
@@ -875,7 +880,7 @@ Battleside = (function(){
 
   }
 
-  r.sendNotification = function(msg) {
+  r.sendNotification = function(msg){
     this.battle.sendNotification(msg);
   }
 

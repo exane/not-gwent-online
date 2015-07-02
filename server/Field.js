@@ -97,7 +97,7 @@ var Field = (function(){
     for(var i = 0; i < tmp.length; i++) {
       var card = tmp[i];
       if(card.__lock){
-        delete card.__lock;
+        //delete card.__lock;
         continue;
       }
       card.reset();

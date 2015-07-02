@@ -263,18 +263,6 @@ let SideView = Backbone.View.extend({
   }*/
 });
 
-let calculateCardMargin = function($selector, totalWidth, cardWidth, n){
-  let w = totalWidth, c = cardWidth;
-  let res;
-  if(n < 6)
-    res = 0;
-  else {
-    res = -((w - c) / (n - 1) - c) + 1
-  }
-
-  $selector.css("margin-left", -res);
-}
-
 let BattleView = Backbone.View.extend({
   el: ".gwent-battle",
   template: require("../templates/battle.handlebars"),
@@ -706,7 +694,7 @@ let ChooseSideModal = Modal.extend({
 let User = Backbone.Model.extend({
   defaults: {
     name: localStorage["userName"] || null,
-    deck: localStorage["userDeck"] || null,
+    deck: localStorage["userDeck"] || "random",
     serverOffline: true
   },
   initialize: function(){
@@ -863,6 +851,7 @@ let Lobby = Backbone.View.extend({
     this.app.receive("update:playerOnline", this.renderStatus.bind(this));
 
     this.listenTo(this.app.user, "change:serverOffline", this.render);
+    this.listenTo(this.app.user, "change:name", this.setName);
     $(".gwent-battle").html(this.el);
     this.render();
   },
@@ -892,6 +881,14 @@ let Lobby = Backbone.View.extend({
     let val = $(e.target).val();
     this.app.trigger("setDeck", val);
     this.$el.find("#deckChoice option[value='" + val + "']").attr("selected", "selected")
+  },
+  setName: function(){
+    /*let val = $(e.target).val();
+    this.app.trigger("setDeck", val);
+    this.$el.find("#deckChoice option[value='" + val + "']").attr("selected", "selected")*/
+    localStorage["userName"] = this.app.user.get("name");
+    /*this.render();*/
+    this.$el.find(".name-input").val(this.app.user.get("name"));
   },
   changeName: function(e){
     let name = $(e.target).val();
