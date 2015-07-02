@@ -89,7 +89,7 @@ var Card = (function(){
   }
   r.setForcedPower = function(nr){
     this._forcedPower = nr;
-    /*this.getBoost(); *///recalculate
+    this.getBoost(); //recalculate
   }
   r.getRawAbility = function(){
     return this._data.ability;

@@ -624,12 +624,15 @@ Battleside = (function(){
   r.setWeather = function(weather, opt){
     var targetRow = weather;
     var field;
-    if(typeof targetRow === "undefined") return;
+    if(typeof targetRow === "undefined") {
+      console.log("setWeather: targetRow undefined", targetRow);
+      console.trace(this);
+      return;
+    }
     opt = opt || {};
     var onRoundEnd = opt.onTurnEnd || false;
 
 
-    //console.log(this.field[Card.TYPE.WEATHER]);
     if(targetRow === Card.TYPE.WEATHER){
       if(!onRoundEnd){
         this.battle.sendNotification(this.getName() + " played Clear Weather!");
