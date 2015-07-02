@@ -856,6 +856,7 @@ Battleside = (function(){
       if(!left){
         self.send("redraw:close", null, true);
         //console.log("redraw finished");
+        self.wait();
         deferred.resolve("done");
         //self.socket.off("redraw:reDrawCard", h1);
       }

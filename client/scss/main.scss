@@ -4,6 +4,9 @@
 
 $height: 600px;
 $game-height: 800px;
+.container {
+  min-width: 960px;
+}
 
 .board {
   height: $game-height;
@@ -180,16 +183,18 @@ $game-height: 800px;
   div {
     position: fixed;
     //left:0;
-    z-index: 110;
+    z-index: 310;
     //height: 100px !important;
     i {
       display: block;
+      margin-left: -15px;
     }
     .preview-description {
       width: 238px;
       min-height: 200px;
       background: rgba(16, 16, 16, 0.57);
       color: #ffffff;
+      margin-left: -15px;
 
       p {
         padding: 10px;
@@ -265,13 +270,22 @@ $game-height: 800px;
 }
 
 .waiting-for-opponent {
-  position: absolute;
+  position: fixed;
   //left: 43%;
-  left: 30%;
-  top: 505px;
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 0px 200px;
+  cursor: default;
+  width: 100%;
+  text-align: center;
+  //left: calc(50% - 400px) ;
+  left: 0;
+  //top: calc(50% - 60px);
+  top: calc(100% - 60px);
+  //border: 1px solid black;
+  //border-radius: 10px;
+  /*
+  padding: 0px 200px;*/
+  font-size: 25px;
+  line-height: 20px;
+  padding: 20px;
   z-index: 300;
   color: #ff8927;
   //text-shadow: 0px 0px 1px #000;
@@ -327,6 +341,7 @@ $game-height: 800px;
   width: 200px;
   text-align: left;
 }
+
 .image-gif-loader {
   background: url("../../assets/content-load.gif");
   display: block;

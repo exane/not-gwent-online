@@ -180,7 +180,8 @@ let SideView = Backbone.View.extend({
       $field.addClass("field-frost");
     }
 
-    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
+    //calculateCardMargin($field.find(".card"), 351, 70, cards.length);
+    this.battleView.calculateMargin(this.$el.find(".field-close"));
   },
   renderRangeField: function(){
     if(!this.field.ranged) return;
@@ -208,7 +209,8 @@ let SideView = Backbone.View.extend({
       $field.addClass("field-fog");
     }
 
-    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
+    //calculateCardMargin($field.find(".card"), 351, 70, cards.length);
+    this.battleView.calculateMargin(this.$el.find(".field-range"));
   },
   renderSiegeField: function(){
     if(!this.field.siege) return;
@@ -236,7 +238,8 @@ let SideView = Backbone.View.extend({
       $field.addClass("field-rain");
     }
 
-    calculateCardMargin($field.find(".card"), 351, 70, cards.length);
+    //calculateCardMargin($field.find(".card"), 351, 70, cards.length);
+    this.battleView.calculateMargin(this.$el.find(".field-siege"));
   },
   renderWeatherField: function(){
     if(!this.field.weather) return;
@@ -295,6 +298,7 @@ let BattleView = Backbone.View.extend({
     this.$hand = this.$el.find(".field-hand");
     this.$preview = this.$el.find(".card-preview");
 
+    //$(window).on("resize", this.calculateMargin.bind(this, this.$hand));
 
     let interval = setInterval(function(){
       if(!user.get("room")) return;
@@ -445,7 +449,7 @@ let BattleView = Backbone.View.extend({
 
 
     if(this.handCards){
-      calculateCardMargin(this.$el.find(".field-hand .card"), 538, 70, this.handCards.length);
+      this.calculateMargin(this.$el.find(".field-hand"));
     }
 
     if(this.user.get("isReDrawing")){
@@ -589,6 +593,18 @@ let BattleView = Backbone.View.extend({
         side.render();
       }
     })*/
+  },
+  calculateMargin: function($container/*, totalWidth, cardWidth, n*/){
+    var n = $container.children().size();
+    let w = $container.width(), c = $container.find(".card").outerWidth() + 3;
+    let res;
+    if(n < 6)
+      res = 0;
+    else {
+      res = -((w - c) / (n - 1) - c) + 1
+    }
+
+    $container.find(".card").css("margin-left", -res);
   }
 });
 
@@ -881,7 +897,7 @@ let Lobby = Backbone.View.extend({
     let name = $(e.target).val();
     this.app.trigger("setName", name);
   },
-  renderStatus: function(n) {
+  renderStatus: function(n){
     this.$el.find(".nr-player-online").html(n);
   }
 });
