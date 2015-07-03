@@ -36,3 +36,41 @@ body {
   overflow: hidden;
   font-family: 'Titillium Web', sans-serif;
 }
+
+.card,
+.card-small-small {
+  border-radius: 0;
+}
+
+.bbm-wrapper {
+  background: rgba(6, 13, 22, 0.9);
+  padding: 7% 0 0 0;
+}
+
+.bbm-modal {
+  background: transparent;
+  box-shadow: none;
+  max-width: 100%;
+  border-radius: 0;
+  margin: auto;
+}
+
+.btn-sub {
+  font-size: 18px;
+}
+
+.bbm-modal__topbar {
+  text-align: center;
+}
+
+.bbm-modal__title {
+  font-size: 26px;
+  color: #8798ac;
+  margin: 0 0 20px 0;
+}
+
+.bbm-modal__section {
+  position: absolute;
+  transform: translate(-50%, 0px);
+  left: 50%;
+}
