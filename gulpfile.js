@@ -81,9 +81,9 @@ gulp.task("index", function(){
 })
 
 gulp.task('resize sm', function(done){
-  if(fs.existsSync(__dirname + "/assets/cards/sm/monster/arachas1.png")) {
+  if(fs.existsSync(__dirname + "/assets/cards/sm/monster/arachas1.png")){
     console.log("skip generating sm images");
-  return done();
+    return done();
   }
   return gulp.src('./assets/original_cards/**/*.png')
   .pipe(gm(function(gmfile){
@@ -93,8 +93,21 @@ gulp.task('resize sm', function(done){
   .pipe(gulp.dest('./assets/cards/sm/'));
 });
 
-gulp.task('resize lg', ["resize sm"], function(done){
-  if(fs.existsSync(__dirname + "/assets/cards/lg/monster/arachas1.png")) {
+gulp.task('resize md', function(done){
+  if(fs.existsSync(__dirname + "/assets/cards/md/monster/arachas1.png")){
+    console.log("skip generating md images");
+    return done();
+  }
+  return gulp.src('./assets/original_cards/**/*.png')
+  .pipe(gm(function(gmfile){
+    return gmfile.resize(null, 284);
+  }))
+  .pipe(imagemin())
+  .pipe(gulp.dest('./assets/cards/md/'));
+});
+
+gulp.task('resize lg', ["resize sm", "resize md"], function(done){
+  if(fs.existsSync(__dirname + "/assets/cards/lg/monster/arachas1.png")){
     console.log("skip generating lg images");
     return done();
   }
@@ -107,10 +120,13 @@ gulp.task('resize lg', ["resize sm"], function(done){
 });
 
 gulp.task("sprite", ["resize lg"], function(){
-  if(fs.existsSync(__dirname + "/public/build/cards-lg-monster.png")) {
+  if(fs.existsSync(__dirname + "/public/build/cards-lg-monster.png")){
     console.log("skip sprite generating");
     return;
   }
+
+
+  console.log("start sprite generating ...");
   sprity.src({
     src: "./assets/cards/**/*.png",
     style: "cards.css",
@@ -125,11 +141,9 @@ gulp.task("sprite", ["resize lg"], function(){
     margin: 0
     //template: "./client/scss/_cards.hbs"
   })
-  //.pipe(gulpif("*.png", gulp.dest("./public/build/"), gulp.dest("./client/scss/")));
+    //.pipe(gulpif("*.png", gulp.dest("./public/build/"), gulp.dest("./client/scss/")));
   .pipe(imagemin())
   .pipe(gulp.dest("./public/build/"));
-
-
 })
 
-gulp.task("default", ["watch", "browserify", "sass", "unit tests", "index", "resize lg", "resize sm"]);
+gulp.task("default", ["watch", "browserify", "sass", "unit tests", "index", "resize lg", "resize sm", "resize md", "sprite"]);
