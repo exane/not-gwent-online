@@ -181,7 +181,7 @@ let SideView = Backbone.View.extend({
     }
 
     //calculateCardMargin($field.find(".card"), 351, 70, cards.length);
-    this.battleView.calculateMargin(this.$el.find(".field-close"));
+    this.battleView.calculateMargin($field.find(".field-close"));
   },
   renderRangeField: function(){
     if(!this.field.ranged) return;
@@ -210,7 +210,7 @@ let SideView = Backbone.View.extend({
     }
 
     //calculateCardMargin($field.find(".card"), 351, 70, cards.length);
-    this.battleView.calculateMargin(this.$el.find(".field-range"));
+    this.battleView.calculateMargin($field.find(".field-range"));
   },
   renderSiegeField: function(){
     if(!this.field.siege) return;
@@ -239,7 +239,7 @@ let SideView = Backbone.View.extend({
     }
 
     //calculateCardMargin($field.find(".card"), 351, 70, cards.length);
-    this.battleView.calculateMargin(this.$el.find(".field-siege"));
+    this.battleView.calculateMargin($field.find(".field-siege"));
   },
   renderWeatherField: function(){
     if(!this.field.weather) return;
@@ -247,6 +247,7 @@ let SideView = Backbone.View.extend({
     let cards = this.field.weather.cards;
     $weatherField.html(this.templateCards(cards));
 
+    this.battleView.calculateMargin($weatherField, 0);
     return this;
   }
   /*,
@@ -582,11 +583,12 @@ let BattleView = Backbone.View.extend({
       }
     })*/
   },
-  calculateMargin: function($container/*, totalWidth, cardWidth, n*/){
+  calculateMargin: function($container, minSize){
+    minSize = typeof minSize === "number" && minSize >= 0 ? minSize : 6;
     var n = $container.children().size();
     let w = $container.width(), c = $container.find(".card").outerWidth() + 3;
     let res;
-    if(n < 6)
+    if(n < minSize)
       res = 0;
     else {
       res = -((w - c) / (n - 1) - c) + 1
