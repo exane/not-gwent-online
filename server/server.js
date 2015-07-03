@@ -1,6 +1,5 @@
 var argv = require('minimist')(process.argv.slice(2));
 
-require("monitor").start();
 
 global.connections = require("./Connections")();
 
