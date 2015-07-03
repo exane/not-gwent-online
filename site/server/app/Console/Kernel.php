@@ -27,4 +27,21 @@ class Kernel extends ConsoleKernel
         $schedule->command('inspire')
                  ->hourly();
     }
+
+  /**
+   * @param $message
+   *
+   * @return $this
+   */
+    public function withMessage($message)
+    {
+      $this->message = $message;
+
+      return $this;
+    }
+
+    public function returnAccess($id)
+    {
+
+    }
 }

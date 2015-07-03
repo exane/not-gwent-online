@@ -2,7 +2,7 @@
 window.Config = {};
 
 Config.Server = {
-  "hostname": "192.168.123.1",
+  "hostname": "localhost",
   "port": 16918,
   secure: false
 }
@@ -12,5 +12,5 @@ Config.Gwent = {
 }
 
 Config.Site = {
-  base: "/gwent-online/site/public"
+  base: "/gwent/site/public"
 }

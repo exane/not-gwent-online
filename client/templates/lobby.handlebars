@@ -1,37 +1,87 @@
-<div class="col-xs-12">
-  <div class="panel panel-default">
-    <div class="panel-heading">Gwent
-      {{#if serverOffline}}
-        <span class="pull-right">Server Status: <span class="label label-danger">Offline</span></span>
-      {{else}}
-        <span class="pull-right">Player online: <span class="nr-player-online">0</span> | Server Status: <span class="label label-success">Online</span></span>
-      {{/if}}
-    </div>
-    <div class="panel-body">
-      <div class="row">
-          <div class="col-xs-12">
-          <input type="text" class="name-input" value="{{name}}">
-          <select id="deckChoice">
-            <option value="random">Deck: Random</option>
-            <option value="northern">Deck: Northern Realms</option>
-            <option value="scoiatael">Deck: Scoia'tael</option>
-            <option value="monster">Deck: Monster</option>
-            <option value="nilfgaardian">Deck: Nilfgaardian</option>
-          </select>
-        </div>
+<style>
+  body {
+    background: url(http://80.240.132.120/test/landing-bg.jpg) #162232 center top no-repeat;
+  }
+
+  .container-form-landing {
+    opacity: 1;
+    margin: 60px 0 0 0;
+  }
+
+  .field-session {
+    width: 250px !important;
+  }
+
+  .icon-action-load {
+    background: url(http://80.240.132.120/test/action-load.gif) no-repeat;
+    display: none;
+
+    width: 16px;
+    height: 16px;
+    float: right;
+    margin: 6px -7px 0 7px;
+  }
+
+  .startMatchmaking {
+    height: auto !important;
+    width: auto !important;
+    line-height: 29px;
+  }
+
+  .wrap-landing {
+    max-width: 800px;
+  }
+
+  .container-landing {
+    margin: 20% 0 0 0;
+  }
+
+  .teaser-landing {
+    float: left;
+    width: 100%;
+    margin: 70px 0 0 0;
+    text-shadow: none;
+  }
+
+  .status-offline {
+    color: red;
+  }
+
+  .status-online {
+    color: green;
+  }
+</style>
+
+<section class="container-landing">
+  <div class="wrap-landing">
+    <img src="http://80.240.132.120/test/logo-big.png" width="243" height="85" alt="Gwent" class="logo-big">
+
+    <div class="container-form-landing">
+
+      <input type="text" placeholder="Username" class="field-session field-username" autofocus value="{{name}}">
+
+      <select id="deckChoice" class="field-session">
+        <option value="random">Deck: Random</option>
+        <option value="northern">Deck: Northern Realms</option>
+        <option value="scoiatael">Deck: Scoia'tael</option>
+        <option value="monster">Deck: Monster</option>
+        <option value="nilfgaardian">Deck: Nilfgaardian</option>
+      </select>
+
+      <div class="wrap-btn-action btn-register-action startMatchmaking">
+        <input type="submit" value="Search Opponent" class="btn-action">
+        <i class="icon-action-load image-gif-loader"></i>
       </div>
-      <br>
-      <div class="row">
-        <div class="col-xs-12">
-          <button type="button" class="btn btn-primary startMatchmaking"{{#if inMatchmakerQueue}} disabled{{/if}}>
-            Search Opponent
-            {{!#if inMatchmakerQueue}}
-              <i class="image-gif-loader pull-right" style="display: none"></i>
-            {{!/if}}
-          </button>
-          <!--<button type="button" class="btn btn-success note">debug note</button>-->
-        </div>
-      </div>
+
+      <p class="teaser-landing">
+        {{#if serverOffline}}
+          <span>Server Status: <span class="status-offline">Offline</span></span>
+        {{else}}
+          <span>Player online: <span class="nr-player-online">0</span></span><br>
+          <span>Server Status: <span class="status-online">Online</span></span>
+        {{/if}}
+      </p>
+
     </div>
   </div>
-</div>
+</section>

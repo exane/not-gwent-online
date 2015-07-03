@@ -81,29 +81,12 @@ gulp.task("index", function(){
 })
 
 gulp.task('resize sm', function(done){
-  if(fs.existsSync(__dirname + "/assets/cards/sm/monster/arachas1.png")) {
-    console.log("skip generating sm images");
-    return done();
-  }
-  return gulp.src('./assets/original_cards/**/*.png')
-  .pipe(gm(function(gmfile){
-    return gmfile.resize(null, 120);
-  }))
-  .pipe(imagemin())
-  .pipe(gulp.dest('./assets/cards/sm/'));
+
+  return done();
 });
 
 gulp.task('resize lg', ["resize sm"], function(done){
-  if(fs.existsSync(__dirname + "/assets/cards/lg/monster/arachas1.png")) {
-    console.log("skip generating lg images");
     return done();
-  }
-  return gulp.src('./assets/original_cards/**/*.png')
-  .pipe(gm(function(gmfile){
-    return gmfile.resize(null, 450);
-  }))
-  .pipe(imagemin())
-  .pipe(gulp.dest('./assets/cards/lg/'));
 });
 
 gulp.task("sprite", ["resize lg"], function(){
@@ -132,4 +115,4 @@ gulp.task("sprite", ["resize lg"], function(){
 
 })
 
-gulp.task("default", ["watch", "browserify", "sass", "unit tests", "index", "resize lg", "resize sm", "sprite"]);
+gulp.task("default", ["watch", "browserify", "sass", "unit tests", "index", "resize lg", "resize sm"]);
