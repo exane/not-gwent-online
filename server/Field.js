@@ -88,19 +88,12 @@ var Field = (function(){
   r.removeAll = function(){
     var tmp = this._cards.slice();
     var self = this;
-    /*tmp.forEach(function(card){
-      card.reset();
-      for(var event in card._uidEvents) {
-        self.side.off(event, card.getUidEvents(event));
-      }
-    })*/
     for(var i = 0; i < tmp.length; i++) {
       var card = tmp[i];
+      card.reset();
       if(card.__lock){
-        //delete card.__lock;
         continue;
       }
-      card.reset();
       for(var event in card._uidEvents) {
         self.side.off(event, card.getUidEvents(event));
       }
