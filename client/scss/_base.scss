@@ -17,6 +17,11 @@
   src: local('Titillium WebSemiBold'), local('TitilliumWeb-SemiBold'), url(http://fonts.gstatic.com/s/titilliumweb/v4/anMUvcNT0H1YN4FII8wpr6d1JQt-lS5nD-1TJX2NNl0.woff2) format('woff2'), url(http://fonts.gstatic.com/s/titilliumweb/v4/anMUvcNT0H1YN4FII8wprx3QmhlKDgQgT1VN2Ed1WFo.woff) format('woff');
 }
 
+select {
+  outline: 0;
+  border-radius: 0;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -74,4 +79,8 @@ body {
   transform: translate(-50%, 0px);
   left: 50%;
   width: 500px;
+}
+
+.card {
+  cursor: pointer;
 }
