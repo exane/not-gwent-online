@@ -398,9 +398,9 @@ let BattleView = Backbone.View.extend({
   },
   onMouseover: function(e){
     let target = $(e.target).closest(".card");
-    //this.user.set("showPreview", target.find("img").attr("src"));
-    //this.user.set("showPreview", target.data().key);
-    this.user.set("showPreview", new Preview({key: target.data().key}));
+    var hasPreviewB = target.parent().hasClass("preview-b");
+
+    this.user.set("showPreview", new Preview({key: target.data().key, previewB: hasPreviewB}));
   },
   onMouseleave: function(e){
     this.user.get("showPreview").remove();
@@ -837,6 +837,24 @@ let User = Backbone.Model.extend({
     this.get("app").send("response:chooseWhichSideBegins", {
       side: roomSide
     })
+  },
+  getCardData: function(card) {
+    if(!card || !card.ability) return;
+    var abilities;
+
+    if(Array.isArray(card.ability)){
+      abilities = card.ability.slice();
+    }
+    else {
+      abilities = [];
+      abilities.push(card.ability);
+    }
+
+    abilities = abilities.map((ability) => {
+      return abilityData[ability].description;
+    })
+
+    return abilities;
   }
 });
 
@@ -905,6 +923,10 @@ let Preview = Backbone.View.extend({
   template: require("../templates/preview.handlebars"),
   initialize: function(opt){
     this.card = cardData[opt.key];
+    this.size = opt.size || "lg";
+    this.previewB = opt.previewB || false;
+
+    this.$el.addClass(this.previewB ? "preview-b" : "");
 
     if(!this.card || !this.card.ability) return;
 
@@ -916,7 +938,7 @@ let Preview = Backbone.View.extend({
       this.abilities.push(this.card.ability);
     }
 
-    this.abilities = this.abilities.map((ability) =>{
+    this.abilities = this.abilities.map((ability) => {
       return abilityData[ability].description;
     })
 
@@ -925,7 +947,9 @@ let Preview = Backbone.View.extend({
   render: function(){
     let html = this.template({
       card: this.card,
-      abilities: this.abilities
+      abilities: this.abilities,
+      size: this.size,
+      previewB: this.previewB
     })
     this.$el.html(html);
     return this;

@@ -1,5 +1,5 @@
-<i class="card-lg-{{card.faction}} card-lg-{{card.faction}}-{{card.img}}"></i>
-<div class="preview-description">
+<i class="card-{{this.size}}-{{card.faction}} card-{{this.size}}-{{card.faction}}-{{card.img}}"></i>
+<div class="preview-description {{#if previewB}}preview-b{{/if}}">
   <p>{{card.name}}</p>
   {{#each abilities as |val key|}}
     <p>{{val}}</p>
