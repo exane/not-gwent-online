@@ -30,7 +30,7 @@ html {
 }
 
 body {
-  background: url(inner-bg.jpg) #162232 center top no-repeat;
+  background: url(http://80.240.132.120/test/inner-bg.jpg) #162232 center top no-repeat;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -73,4 +73,5 @@ body {
   position: absolute;
   transform: translate(-50%, 0px);
   left: 50%;
+  width: 500px;
 }
