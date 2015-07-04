@@ -555,6 +555,13 @@ $game-height: 800px;
   font-size: 17px;
 }
 
+.alert-success {
+  background: #3f4c5b;
+  color: #fff;
+  border-radius: 0;
+  border: 0;
+}
+
 .container {
   position: relative;
 }
