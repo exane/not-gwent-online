@@ -62,9 +62,6 @@ $game-height: 800px;
     -webkit-animation: WoobWoob linear 2s;
     -webkit-animation-iteration-count: infinite;
 
-    /*-moz-animation: WoobWoob linear 2s;
-    -moz-animation-iteration-count: infinite;
-*/
     -o-animation: WoobWoob linear 2s;
     -o-animation-iteration-count: infinite;
     
@@ -82,57 +79,47 @@ $game-height: 800px;
 
 @-webkit-keyframes WoobWoob {
   0% {
-    box-shadow:  0  0 15px #ffbb0b !important;
+    box-shadow: 0 0 15px #ffbb0b;
   }
   50% {
-    box-shadow:  0  0 40px #ffd135 !important;
+    box-shadow: 0 0 40px #ffd135;
   }
   100% {
-    box-shadow:  0  0 15px #ffbb0b !important;
+    box-shadow: 0 0 15px #ffbb0b;
   }
 }
-@-moz-keyframes WoobWoob {
-   0% {
-     box-shadow:  0  0 15px #ffbb0b !important;
-   }
-   50% {
-     box-shadow:  0  0 40px #ffd135 !important;
-   }
-   100% {
-     box-shadow:  0  0 15px #ffbb0b !important;
-   }
- }
+
 @-o-keyframes WoobWoob {
   0% {
-    box-shadow:  0  0 15px #ffbb0b !important;
+    box-shadow: 0 0 15px #ffbb0b;
   }
   50% {
-    box-shadow:  0  0 40px #ffd135 !important;
+    box-shadow: 0 0 40px #ffd135;
   }
   100% {
-    box-shadow:  0  0 15px #ffbb0b !important;
+    box-shadow: 0 0 15px #ffbb0b;
   }
 }
 @-ms-keyframes WoobWoob {
   0% {
-    box-shadow:  0  0 15px #ffbb0b !important;
+    box-shadow: 0 0 15px #ffbb0b;
   }
   50% {
-    box-shadow:  0  0 40px #ffd135 !important;
+    box-shadow: 0 0 40px #ffd135;
   }
   100% {
-    box-shadow:  0  0 15px #ffbb0b !important;
+    box-shadow: 0 0 15px #ffbb0b;
   }
 }
 @keyframes WoobWoob {
   0% {
-    box-shadow:  0  0 15px #ffbb0b !important;
+    box-shadow: 0 0 15px #ffbb0b;
   }
   50% {
-    box-shadow:  0  0 40px #ffd135 !important;
+    box-shadow: 0 0 40px #ffd135;
   }
   100% {
-    box-shadow:  0  0 15px #ffbb0b !important;
+    box-shadow: 0 0 15px #ffbb0b;
   }
 }
 
@@ -204,7 +191,6 @@ $game-height: 800px;
 .hand-card {
   color: #8798ac;
   text-align: center;
-  padding: 0 20px 0 0 !important;
 }
 
 .field-weather {
@@ -257,6 +243,7 @@ $game-height: 800px;
   div {
     margin-bottom: 5px;
     padding: 0;
+    font-size: 17px;
   }
 
   .icon-hand-card {
