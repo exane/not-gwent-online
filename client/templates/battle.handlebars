@@ -59,7 +59,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 field field-hand">
+    <div class="col-xs-12 field field-hand {{#if isWaiting}}{{else}}active{{/if}}">
       {{#each cards as |val key|}}
         {{>card val}}
       {{/each}}

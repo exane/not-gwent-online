@@ -464,7 +464,7 @@ let BattleView = Backbone.View.extend({
     }
     if(this.user.get("setAgile")){
       let id = this.user.get("setAgile");
-      this.$el.find("[data-id='" + id + "']").addClass("activeCard");
+      this.$el.find("[data-id='" + id + "']").parent().addClass("activeCard");
     }
     if(this.user.get("setHorn")){
       let id = this.user.get("setHorn");
@@ -585,16 +585,17 @@ let BattleView = Backbone.View.extend({
   },
   calculateMargin: function($container, minSize){
     minSize = typeof minSize === "number" && minSize >= 0 ? minSize : 6;
+    var Class = $container.find(".card-wrap").length ? ".card-wrap" : ".card";
     var n = $container.children().size();
-    let w = $container.width(), c = $container.find(".card").outerWidth() + 3;
+    let w = $container.width(), c = $container.find(Class).outerWidth();
     let res;
     if(n < minSize)
       res = 0;
     else {
-      res = -((w - c) / (n - 1) - c) + 1
+      res = 0;//-((w - c) / (n - 1) - c) + 1
     }
 
-    $container.find(".card").css("margin-left", -res);
+    $container.find(Class).css("margin-left", -res);
   }
 });
 
@@ -838,7 +839,7 @@ let User = Backbone.Model.extend({
       side: roomSide
     })
   },
-  getCardData: function(card) {
+  getCardData: function(card){
     if(!card || !card.ability) return;
     var abilities;
 
@@ -850,7 +851,7 @@ let User = Backbone.Model.extend({
       abilities.push(card.ability);
     }
 
-    abilities = abilities.map((ability) => {
+    abilities = abilities.map((ability) =>{
       return abilityData[ability].description;
     })
 
@@ -938,7 +939,7 @@ let Preview = Backbone.View.extend({
       this.abilities.push(this.card.ability);
     }
 
-    this.abilities = this.abilities.map((ability) => {
+    this.abilities = this.abilities.map((ability) =>{
       return abilityData[ability].description;
     })
 
