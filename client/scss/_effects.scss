@@ -120,20 +120,23 @@
 
 /** SHAME **/
 
-.card-wrap:hover .bla,
-.activeCard .bla,
-.grave:hover .bla,
-.leader-card:hover .bla {
+.card-wrap:hover .card-animation,
+.activeCard .card-animation,
+.grave:hover .card-animation,
+.leader-card:hover .card-animation {
   box-shadow: 0 0 2px 0 orange;
   opacity: 1;
 }
 
-.bla {
+.card-animation {
   width: 100%;
   height: 100%;
   position: absolute;
   opacity: 0;
   border-radius: 0;
+
+  background: linear-gradient(2deg, #000, #000, #000, #000);;
+  transition: all .05s ease-in-out 0s;
 }
 
 .shadow {
@@ -159,75 +162,40 @@
   animation: Shadow 4s ease-in-out infinite;
 }
 
-.ani {
-  background: linear-gradient(2deg, #000, #000, #000, #000);;
-  transition: all .05s ease-in-out 0s;
-}
-
-.card-wrap:hover .ani,
-.activeCard .ani,
-.grave:hover .ani,
-.leader-card:hover .ani {
+.card-wrap:hover .card-animation,
+.activeCard .card-animation,
+.grave:hover .card-animation,
+.leader-card:hover .card-animation {
   background: linear-gradient(2deg, #ffa500, #ffd68b, #ffa500, #ffa500);
   background-size: 800% 800%;
 
-  -webkit-animation: AnimationName 3s ease infinite;
-  -moz-animation: AnimationName 3s ease infinite;
-  animation: AnimationName 3s ease infinite;
+  -webkit-animation: CardAnimation 3s ease infinite;
+  -moz-animation: CardAnimation 3s ease infinite;
+  animation: CardAnimation 3s ease infinite;
 }
 
 @-webkit-keyframes Shadow {
-  0% {
-    opacity: 0;
-  }
-  25% {
-    opacity: .5;
-  }
-  50% {
-    opacity: 1;
-  }
-  75% {
-    opacity: .5;
-  }
-  100% {
-    opacity: 0;
-  }
+  0% { opacity: 0; }
+  25% { opacity: .5; }
+  50% { opacity: 1; }
+  75% { opacity: .5; }
+  100% { opacity: 0; }
 }
 
 @-webkit-keyframes Shadow {
-  0% {
-    opacity: 0;
-  }
-  25% {
-    opacity: .5;
-  }
-  50% {
-    opacity: 1;
-  }
-  75% {
-    opacity: .5;
-  }
-  100% {
-    opacity: 0;
-  }
+  0% { opacity: 0; }
+  25% { opacity: .5; }
+  50% { opacity: 1; }
+  75% { opacity: .5; }
+  100% { opacity: 0; }
 }
 
 @keyframes Shadow {
-  0% {
-    opacity: 0;
-  }
-  25% {
-    opacity: .5;
-  }
-  50% {
-    opacity: 1;
-  }
-  75% {
-    opacity: .5;
-  }
-  100% {
-    opacity: 0;
-  }
+  0% { opacity: 0; }
+  25% { opacity: .5; }
+  50% { opacity: 1; }
+  75% { opacity: .5; }
+  100% { opacity: 0; }
 }
 
 .overlay-card {
@@ -253,40 +221,22 @@
   animation: AnimationName 10s ease infinite;
 }
 
-@-webkit-keyframes AnimationName {
-  0% {
-    background-position: 51% 0%
-  }
-  50% {
-    background-position: 50% 100%
-  }
-  100% {
-    background-position: 51% 0%
-  }
+@-webkit-keyframes CardAnimation {
+  0% { background-position: 51% 0% }
+  50% { background-position: 50% 100% }
+  100% { background-position: 51% 0% }
 }
 
-@-moz-keyframes AnimationName {
-  0% {
-    background-position: 51% 0%
-  }
-  50% {
-    background-position: 50% 100%
-  }
-  100% {
-    background-position: 51% 0%
-  }
+@-moz-keyframes CardAnimation {
+  0% { background-position: 51% 0% }
+  50% { background-position: 50% 100% }
+  100% { background-position: 51% 0% }
 }
 
-@keyframes AnimationName {
-  0% {
-    background-position: 51% 0%
-  }
-  50% {
-    background-position: 50% 100%
-  }
-  100% {
-    background-position: 51% 0%
-  }
+@keyframes CardAnimation {
+  0% { background-position: 51% 0% }
+  50% { background-position: 50% 100% }
+  100% { background-position: 51% 0% }
 }
 
 /** SUB HAND **/
