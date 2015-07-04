@@ -167,7 +167,7 @@ let SideView = Backbone.View.extend({
     $field.find(".field-close").html(html)
     $field.find(".large-field-counter").html(score)
     if(horn){
-      this.$fields.find(".field-horn-close").html(this.template(horn));
+      this.$fields.find(".field-horn-close").html(this.templateCards([horn]));
     }
 
     let isInfluencedByWeather;
@@ -196,7 +196,7 @@ let SideView = Backbone.View.extend({
     $field.find(".field-range").html(html)
     $field.find(".large-field-counter").html(score)
     if(horn){
-      this.$fields.find(".field-horn-range").html(this.template(horn));
+      this.$fields.find(".field-horn-range").html(this.templateCards([horn]));
     }
 
     let isInfluencedByWeather;
@@ -225,7 +225,7 @@ let SideView = Backbone.View.extend({
     $field.find(".field-siege").html(html)
     $field.find(".large-field-counter").html(score)
     if(horn){
-      this.$fields.find(".field-horn-siege").html(this.template(horn));
+      this.$fields.find(".field-horn-siege").html(this.templateCards([horn]));
     }
 
     let isInfluencedByWeather;
@@ -438,7 +438,7 @@ let BattleView = Backbone.View.extend({
 
 
     if(this.handCards){
-      this.calculateMargin(this.$el.find(".field-hand"));
+      this.calculateMargin(this.$el.find(".handcard-wrap"));
     }
 
     if(this.user.get("isReDrawing")){
