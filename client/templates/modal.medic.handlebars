@@ -1,11 +1,9 @@
 <div class="bbm-modal__topbar">
   <h3 class="bbm-modal__title">Choose one card from your discard pile</h3>
+  <span class="btn-sub bbm-close">CLOSE</span>
 </div>
 <div class="bbm-modal__section">
   {{#each medicDiscard.cards as |val key|}}
     {{>card val}}
   {{/each}}
-</div>
-<div class="bbm-modal__bottombar">
-  <div class="bbm-button bbm-close">close</div>
 </div>

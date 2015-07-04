@@ -5,9 +5,17 @@
   <h1>{{winner}} wins the match!</h1>
   <p>If you want to give feedback, or want to contribute, please feel free to visit <a href="https://github.com/exane/gwent-online" target="_blank">Github Gwent-Online</a>.</p>
   <p>For another match reload the page und enqueue again!</p>
-  <p><button onclick="location.reload()">Reload</button></p>
+
+  <div class="wrap-btn-action btn-register-action startMatchmaking" onclick="location.reload()">
+    <input type="submit" value="Reload and play again" class="btn-action">
+  </div>
   <p><b>Thanks for playing the game!</b></p>
 </div>
-<div class="bbm-modal__bottombar">
-  <div class="bbm-button bbm-close">close</div>
-</div>
+
+<style>
+  .startMatchmaking {
+    line-height: 30px;
+    width: auto;
+    margin: 30px 0;
+  }
+</style>
