@@ -141,12 +141,17 @@ var Battle = (function(){
     //console.log("current Turn: ", side.getName());
   }
 
+  r.getWinner = function() {
+    return this.p1.getRubies() ? this.p1 : this.p2;
+  }
+
   r.startNextRound = function(){
     var lastRound = this.checkRubies();
     var loser = lastRound.loser;
     var winner = loser.foe;
     if(this.checkIfIsOver()){
       //console.log("its over!");
+      var winner = this.getWinner();
       this.gameOver(winner);
       this.update();
       return;
@@ -356,6 +361,21 @@ var Battle = (function(){
 
     this.p1.removeRuby();
     this.p2.removeRuby();
+
+    /*if(!this.p1.getRubies() && !this.p2.getRubies()) {
+      return {
+        loser: Math.random() > 0.5 ? this.p1 : this.p2,
+        isTie: false
+      }
+    }
+
+    if(!this.p1.getRubies()) {
+      return {
+        loser: this.p2,
+        isTie: false
+      }
+    }
+*/
     return {
       loser: Math.random() > 0.5 ? this.p1 : this.p2,
       isTie: true
