@@ -91,3 +91,13 @@ body {
 .card {
   cursor: pointer;
 }
+
+.rights {
+  position: fixed;
+  bottom: 20px;
+  font-size: 14px;
+  width: 100%;
+  text-align: right;
+  color: #8798ac;
+  right: 20px;
+}
