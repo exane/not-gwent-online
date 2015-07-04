@@ -918,7 +918,7 @@ let Lobby = Backbone.View.extend({
     this.$el.find("#deckChoice option[value='" + val + "']").attr("selected", "selected")*/
     localStorage["userName"] = this.app.user.get("name");
     /*this.render();*/
-    this.$el.find(".field-username").val(this.app.user.get("name"));
+    this.$el.find(".name-input").val(this.app.user.get("name"));
   },
   changeName: function(e){
     let name = $(e.target).val();
