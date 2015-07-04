@@ -200,6 +200,11 @@ $game-height: 800px;
   //height: $game-height;
 }
 
+.field-deck-number {
+  display: block;
+  text-align: center;
+}
+
 .score,
 .hand-card {
   color: #8798ac;

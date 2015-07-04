@@ -114,6 +114,7 @@ let SideView = Backbone.View.extend({
   template: require("../templates/cards.handlebars"),
   templateCards: require("../templates/fieldCards.handlebars"),
   templateInfo: require("../templates/info.handlebars"),
+  templateCardpiles: require("../templates/cardpiles.handlebars"),
   initialize: function(options){
     let self = this;
     this.side = options.side;
@@ -144,6 +145,14 @@ let SideView = Backbone.View.extend({
     })
 
     this.$info = this.$el.find(".game-info" + this.side).html(html);
+
+    /*let $deck = $(this.side + " .field-deck");
+    $deck*/
+
+    this.$deck = $(this.side + ".right-side");
+    this.$deck.html(this.templateCardpiles({
+      data: d
+    }));
 
 
     if(this.app.user.get("waiting") && this.side === ".player"){
