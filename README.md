@@ -1,6 +1,6 @@
 Gwent-Online
 ============
-
+Link to the demo: http://gwent-online.com/
 Introduction
 ------------
 
