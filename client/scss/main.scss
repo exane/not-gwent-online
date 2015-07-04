@@ -84,7 +84,7 @@ $game-height: 800px;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(6, 13, 22, .7);
+  background: rgba(6, 13, 22, .8);
   height: 110px;
   z-index: 20;
 
@@ -289,6 +289,22 @@ $game-height: 800px;
     z-index: 11;
     transform: scale(1.5, 1.5) !important;
   }*/
+}
+
+.field-discard {
+  background-color: rgba(0,0,0,.6);
+  float: left;
+  padding: 25px 15px;
+  width: auto;
+  cursor: pointer;
+  margin: 20px 0;
+}
+
+.discard-scull {
+  background: url(discard.png) no-repeat;
+  width: 35px;
+  height: 35px;
+  float: left;
 }
 
 .card-preview {
