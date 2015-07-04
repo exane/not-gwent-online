@@ -190,6 +190,9 @@ $game-height: 800px;
 .field-deck-number {
   display: block;
   text-align: center;
+  font-size: 14px;
+  margin: 3px 0 0 0;
+  color: #3f4c5b;
 }
 
 .score,
@@ -367,8 +370,8 @@ $game-height: 800px;
 .field-deck {
   background: rgba(0,0,0,.6);
   float: left;
-  padding: 25px 15px;
-  width: auto;
+  width: 65px;
+  height: 90px;
   cursor: pointer;
   margin: 20px 0;
   transition: all .2s ease-in-out 0s;
@@ -376,22 +379,26 @@ $game-height: 800px;
   &:hover {
     background: rgba(0,0,0,.9);
   }
+
+  i {
+    width: 35px;
+    height: 40px;
+    display: block;
+  }
 }
 
 .field-deck {
   margin: 20px 0 0 10px;
 }
 
-.discard-skull,
-.icon-deck {
+.discard-skull {
   background: url("../../assets/discard.png") no-repeat;
-  width: 35px;
-  height: 40px;
-  float: left;
+  margin: 23px auto 0 auto;
 }
 
 .icon-deck {
   background: url("../../assets/card_icon.png") no-repeat;
+  margin: 13px auto 0 auto;
 }
 
 .card-preview {
