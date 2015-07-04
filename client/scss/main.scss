@@ -296,12 +296,17 @@ $game-height: 800px;
 }
 
 .field-discard {
-  background-color: rgba(0,0,0,.6);
+  background: rgba(0,0,0,.6);
   float: left;
   padding: 25px 15px;
   width: auto;
   cursor: pointer;
   margin: 20px 0;
+  transition: all .2s ease-in-out 0s;
+
+  &:hover {
+    background: rgba(0,0,0,.9);
+  }
 }
 
 .discard-scull {
