@@ -60,9 +60,11 @@
   </div>
   <div class="row">
     <div class="col-xs-12 field field-hand {{#if isWaiting}}{{else}}active{{/if}}">
-      {{#each cards as |val key|}}
-        {{>card val}}
-      {{/each}}
+      <div class="handcard-wrap">
+        {{#each cards as |val key|}}
+          {{>card val}}
+        {{/each}}
+      </div>
     </div>
   </div>
 </div>
