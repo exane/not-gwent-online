@@ -32,6 +32,8 @@ module.exports = {
       this.send("played:medic", {
         cards: JSON.stringify(discard)
       }, true);
+
+      this.sendNotificationTo(this.foe, this.getName() + " chooses a card from discard pile.")
     }
   },
   "morale_boost": {
