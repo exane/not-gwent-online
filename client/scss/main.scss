@@ -1,7 +1,6 @@
 //@import "style";
 @import "backbone.modal";
 @import "backbone.modal.theme";
-
 @import "base";
 
 
@@ -9,17 +8,19 @@ $height: 600px;
 $game-height: 800px;
 .container {
   min-width: 960px;
+  background: rgba(5,5,5,0.25);
+  padding: 20px;
 }
 
 .board {
   height: $game-height;
-  border: 1px solid black;
+  //border: 1px solid black;
 }
 
 .battleside {
   width: 100%;
   height: $height/2;
-  border: 1px solid black;
+  //border: 1px solid black;
 }
 
 .large-field-counter {
@@ -100,7 +101,7 @@ $game-height: 800px;
 .game-info {
   height: $game-height/2 - 100px;
   width: 100%;
-  border: 1px solid black;
+  //border: 1px solid black;
   background: rgba(252, 219, 125, 0.51);
 }
 
