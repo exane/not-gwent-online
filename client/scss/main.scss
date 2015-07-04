@@ -295,7 +295,8 @@ $game-height: 800px;
   }*/
 }
 
-.field-discard, .field-deck {
+.field-discard,
+.field-deck {
   background: rgba(0,0,0,.6);
   float: left;
   padding: 25px 15px;
@@ -309,18 +310,20 @@ $game-height: 800px;
   }
 }
 
-.discard-skull {
+.field-deck {
+  margin: 20px 0 0 10px;
+}
+
+.discard-skull,
+.icon-deck {
   background: url("../../assets/discard.png") no-repeat;
   width: 35px;
-  height: 35px;
+  height: 40px;
   float: left;
 }
 
 .icon-deck {
   background: url("../../assets/card_icon.png") no-repeat;
-  width: 28px;
-  height: 40px;
-  float: left;
 }
 
 .card-preview {
