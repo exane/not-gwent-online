@@ -102,6 +102,9 @@ $game-height: 800px;
 }
 
 .passing {
+  color: #3f4c5b;
+  margin: 10px 0 0;
+  text-transform: uppercase;
   /*
     display: none;*/
 }
@@ -151,11 +154,19 @@ $game-height: 800px;
   .button-pass {
     width: 100%;
     border: 0;
-    background: #000;
+    background: #3f4c5b;
     padding: 5px 0;
     color: #fff;
     text-transform: uppercase;
     fon-size: 15px;
+
+    &:hover {
+      background: lighten(#3f4c5b, 10%);
+    }
+
+    &:active {
+      background: #3f4c5b;
+    }
   }
 
 .game-info {
