@@ -118,13 +118,15 @@ $game-height: 800px;
 }
 
 .game-info {
-  height: $game-height/2 - 100px;
+  height: $game-height/2 - 140px;
   width: 100%;
   //border: 1px solid black;
   background: rgba(252, 219, 125, 0.51);
   
   div {
     margin-bottom: 5px;
+
+    text-align: center;
   }
 
   .icon-hand-card {
@@ -138,7 +140,7 @@ $game-height: 800px;
 }
 
 .removeBackground {
-  background: 0;
+  background: rgba(19, 19, 19, 0.29);
 }
 
 .mid-line {
@@ -150,7 +152,7 @@ $game-height: 800px;
 
 .right-side {
   border: 1px solid black;
-  height: $game-height/2;
+  height: $height/2;
 }
 
 .field {
