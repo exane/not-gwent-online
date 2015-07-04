@@ -21,7 +21,7 @@
 
 .card {
   border: none !important;
-  margin: 0 !important;
+  margin: 0;
   border-radius: 0 !important;
   overflow: visible !important;
   height: 93px !important;
@@ -32,7 +32,9 @@
   height: 93px;
   width: 69px;
   position: relative;
-  transition: margin .05s ease-in-out 0s;
+
+  //causes weird bug when margin gets calculated
+  //transition: margin .05s ease-in-out 0s;
 }
 
 .card i {
@@ -79,13 +81,13 @@
   height: auto !important;
   width: auto !important;
   margin: 3px;
+
 }
 
-&.activeCard {
-    position: relative;
-    z-index: 19 !important;
-    transform: scale(1.1, 1.1) !important;
-  }
+.activeCard {
+  position: relative;
+  transform: scale(1.1, 1.1) !important;
+}
 
 .card-wrap .shadow,
 .grave .shadow {
@@ -99,7 +101,7 @@
   z-index: 20;
 }
 
-.card {
+/*.card {
   float: left;
   height: 93px;
   width: 69px;
@@ -114,7 +116,7 @@
   left: 3px;
   height: 87px;
   z-index: 10;
-}
+}*/
 
 /** SHAME **/
 
