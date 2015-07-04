@@ -111,7 +111,9 @@ var Battle = (function(){
     Promise.when(this.p1.reDraw(2), this.p2.reDraw(2))
     .then(function(){
       this.on("NextTurn", this.switchTurn);
-      this.switchTurn(Math.random() > 0.5 ? this.p1 : this.p2);
+      var side = Math.random() > 0.5 ? this.p1 : this.p2;
+      this.sendNotification(side.getName() + " begins!");
+      this.switchTurn(side);
     }.bind(this));
 
   }
@@ -375,6 +377,12 @@ var Battle = (function(){
     this.send("notification", {
       message: msg
     })
+  }
+
+  r.sendNotificationTo = function(side, msg) {
+    side.send("notification", {
+      message: msg
+    }, true)
   }
 
   return Battle;

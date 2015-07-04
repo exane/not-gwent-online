@@ -857,32 +857,37 @@ Battleside = (function(){
       if(!left) return;
       left--;
       var card = self.hand.remove(id)[0];
-      //console.log("hand -> deck: ", card.getName());
+
       self.deck.add(card);
       self.deck.shuffle();
       self.draw(1);
+
       if(!left){
         self.send("redraw:close", null, true);
-        //console.log("redraw finished");
+
         self.wait();
         deferred.resolve("done");
-        //self.socket.off("redraw:reDrawCard", h1);
+        self.sendNotificationTo(self.foe, self.getName() + " finished redraw phase.")
+
       }
-      /*self.update(self);*/
+
       self.battle.updateSelf(self);
     })
 
     this.receive("redraw:close_client", function(){
-      //console.log("redraw finished!");
+
       self.wait();
       deferred.resolve("done");
-      //self.socket.off("redraw:close_client", h2);
+      self.sendNotificationTo(self.foe, self.getName() + " finished redraw phase.")
     })
 
     return deferred;
 
   }
 
+  r.sendNotificationTo = function(side, msg){
+    this.battle.sendNotificationTo(side, msg);
+  }
   r.sendNotification = function(msg){
     this.battle.sendNotification(msg);
   }
