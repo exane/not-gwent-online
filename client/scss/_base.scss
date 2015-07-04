@@ -48,7 +48,8 @@ body {
 }
 
 .bbm-wrapper {
-  //background: rgba(6, 13, 22, 0.9);
+  background: rgba(6, 13, 22, .5);
+  //background: rgba(14, 27, 43, 0.5);
   padding: 7% 0 0 0;
 }
 
@@ -59,6 +60,7 @@ body {
   border-radius: 0;
   margin: auto;
   background: rgba(6, 13, 22, 0.9);
+  padding: 20px 0 0 0;
 }
 
 .btn-sub {
@@ -76,7 +78,7 @@ body {
 }
 
 .bbm-modal__section {
-  position: absolute;
+  position: relative;
   transform: translate(-50%, 0px);
   left: 50%;
   width: 500px;
