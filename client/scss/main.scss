@@ -53,12 +53,28 @@ $game-height: 800px;
   .card:first-child {
     margin-left: 0 !important;
   }
+
   &.active {
-    box-shadow: 0px 0px 15px #ffbb0b !important;
+    //box-shadow: 0px 0px 15px #ffbb0b !important;
+    animation: WoobWoob linear 2s;
+    animation-iteration-count: infinite;
+/*
     &:hover {
       box-shadow: 0px 0px 30px #ffd135 !important;
     }
+*/
+  }
+}
 
+@keyframes WoobWoob {
+  0% {
+    box-shadow: 0px 0px 15px #ffbb0b !important;
+  }
+  50% {
+    box-shadow: 0px 0px 40px #ffd135 !important;
+  }
+  100% {
+    box-shadow: 0px 0px 15px #ffbb0b !important;
   }
 }
 
