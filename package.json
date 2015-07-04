@@ -1,6 +1,6 @@
 {
   "name": "Gwent-online",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A standalone multiplayer version of Gwent (The Witcher 3)",
   "main": "gulpfile.js",
   "dependencies": {
@@ -35,6 +35,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "exane",
-  "license": "ISC"
+  "repository" : {
+    "type" : "git"
+  , "url" : "https://github.com/exane/gwent"
+  },
+  "author": {
+    "name": "Tim Meier",
+    "email": "raco0n@gmx.de"
+  },
+  "contributors": [{
+      "name": "Viktor Geringer",
+      "email": "devfakeplus@googlemail.com"
+    }],
+  "license": "MIT"
 }
