@@ -32,6 +32,7 @@ $game-height: 800px;
   padding: 10px;
   margin-top: 33px;
   text-align: center;
+  color: #3f4c5b;
 }
 
 .field {
@@ -67,7 +68,7 @@ $game-height: 800px;
 }
 
 .field:hover, .field-single:hover {
-  box-shadow: 0px 0px 10px #000;
+  //box-shadow: 0px 0px 10px #000;
 }
 
 .handcard-wrap {
@@ -84,8 +85,8 @@ $game-height: 800px;
   left: 0;
   width: 100%;
   background: rgba(6, 13, 22, .7);
-  height: auto;
-  z-index: 10;
+  height: 110px;
+  z-index: 20;
 
   .card {
     margin-left: -31px;
@@ -106,27 +107,67 @@ $game-height: 800px;
 }
 
 .field-single {
-  border: 1px solid black;
+  //border: 1px solid black;
   /*
     width: 85px;*/
   /*margin: 5px;*/
-  height: 98px;
+  //height: 98px;
+  padding: 0;
 }
 
 .left-side {
   //height: $game-height;
 }
 
+.score,
+.hand-card {
+  color: #8798ac;
+  text-align: center;
+  padding: 0 20px 0 0 !important;
+}
+
+.field-weather {
+  border: none;
+}
+
+.info-title {
+  color: #3f4c5b;
+}
+
+.info-name {
+  color: #8798ac;
+  font-size: 18px;
+  margin: 15px 0;
+}
+
+.button-pass-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin: 0 !important;
+}
+
+  .button-pass {
+    width: 100%;
+    border: 0;
+    background: #000;
+    padding: 5px 0;
+    color: #fff;
+    text-transform: uppercase;
+    fon-size: 15px;
+  }
+
 .game-info {
   height: $game-height/2 - 140px;
   width: 100%;
   //border: 1px solid black;
-  background: rgba(252, 219, 125, 0.51);
-  
+  background: rgba(252, 219, 125, 0.1);
+  position: relative;
+
   div {
     margin-bottom: 5px;
-
-    text-align: center;
+    padding: 0;
   }
 
   .icon-hand-card {
@@ -140,13 +181,13 @@ $game-height: 800px;
 }
 
 .removeBackground {
-  background: rgba(19, 19, 19, 0.29);
+  background: rgba(0,0,0, .4);
 }
 
 .mid-line {
   width: 100%;
   height: 1px;
-  border: 1px solid black;
+  //border: 1px solid black;
   margin: 5px;
 }
 
@@ -265,11 +306,14 @@ $game-height: 800px;
 }
 
 .gwent-lives {
+  margin: 20px 0;
+
   i {
     display: block;
     float: left;
     height: 40px;
     width: 40px;
+    margin: 0 10px 0 0;
     background: url("../../assets/ruby-grey.png");
     &.ruby {
       background: url("../../assets/ruby.png");
