@@ -245,13 +245,14 @@ $game-height: 800px;
   height: $game-height/2 - 140px;
   width: 100%;
   //border: 1px solid black;
-  background: rgba(252, 219, 125, 0.1);
+  //background: rgba(252, 219, 125, 0.1);
+  background: rgba(0,0,0, .4);
   position: relative;
 
   div {
     margin-bottom: 5px;
     padding: 0;
-    font-size: 17px;
+    font-size: 17px; 
   }
 
   .icon-hand-card {
