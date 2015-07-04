@@ -520,23 +520,37 @@ $game-height: 800px;
   background: #444ba1;
 }
 
-.waiting-for-opponent{
-   animation: waitForOpponent linear 2s;
+.waiting-for-opponent,
+.notification-left {
+   animation: Woob linear 2s;
    animation-iteration-count: infinite;
    transform-origin: 50% 50%;
-   -webkit-animation: waitForOpponent linear 2s;
+   -webkit-animation: Woob linear 2s;
    -webkit-animation-iteration-count: infinite;
    -webkit-transform-origin: 50% 50%;
-   -moz-animation: waitForOpponent linear 2s;
+   -moz-animation: Woob linear 2s;
    -moz-animation-iteration-count: infinite;
    -moz-transform-origin: 50% 50%;
-   -o-animation: waitForOpponent linear 2s;
+   -o-animation: Woob linear 2s;
    -o-animation-iteration-count: infinite;
    -o-transform-origin: 50% 50%;
-   -ms-animation: waitForOpponent linear 2s;
+   -ms-animation: Woob linear 2s;
    -ms-animation-iteration-count: infinite;
    -ms-transform-origin: 50% 50%;
  }
+
+.notification-left {
+  background: #c64b4b;
+  color: #fff;
+  left: 0;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 20;
+  text-align: center;
+  font-size: 17px;
+}
 
 .container {
   position: relative;
@@ -579,7 +593,7 @@ $game-height: 800px;
 
 }
 
-@keyframes waitForOpponent{
+@keyframes Woob{
   0% {
     opacity:1;
   }
@@ -591,7 +605,7 @@ $game-height: 800px;
   }
 }
 
-@-moz-keyframes waitForOpponent{
+@-moz-keyframes Woob{
   0% {
     opacity:1;
   }
@@ -603,7 +617,7 @@ $game-height: 800px;
   }
 }
 
-@-webkit-keyframes waitForOpponent {
+@-webkit-keyframes Woob {
   0% {
     opacity:1;
   }
@@ -615,7 +629,7 @@ $game-height: 800px;
   }
 }
 
-@-o-keyframes waitForOpponent {
+@-o-keyframes Woob {
   0% {
     opacity:1;
   }
@@ -627,7 +641,7 @@ $game-height: 800px;
   }
 }
 
-@-ms-keyframes waitForOpponent {
+@-ms-keyframes Woob {
   0% {
     opacity:1;
   }

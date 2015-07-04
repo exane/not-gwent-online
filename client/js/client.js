@@ -740,7 +740,7 @@ let User = Backbone.Model.extend({
 
     app.receive("foe:left", function(){
       //console.log("your foe left the room");
-      $(".container").prepend('<div class="alert alert-danger">Your foe left the battle!</div>')
+      $(".container").prepend('<div class="notification-left">Your foe left the battle!</div>')
     })
 
     app.receive("played:medic", function(data){
