@@ -56,21 +56,22 @@ $game-height: 800px;
 
   &.active {
     //box-shadow: 0px 0px 15px #ffbb0b !important;
-    animation: WoobWoob linear 2s;
-    animation-iteration-count: infinite;
     cursor: pointer;
 
     -webkit-animation: WoobWoob linear 2s;
     -webkit-animation-iteration-count: infinite;
 
-    -moz-animation: WoobWoob linear 2s;
+    /*-moz-animation: WoobWoob linear 2s;
     -moz-animation-iteration-count: infinite;
-
+*/
     -o-animation: WoobWoob linear 2s;
     -o-animation-iteration-count: infinite;
     
     -ms-animation: WoobWoob linear 2s;
     -ms-animation-iteration-count: infinite;
+
+    animation: WoobWoob linear 2s;
+    animation-iteration-count: infinite;
 
     /*&:hover {
       box-shadow: 0px 0px 30px #ffd135 !important;
@@ -80,57 +81,57 @@ $game-height: 800px;
 
 @-webkit-keyframes WoobWoob {
   0% {
-    box-shadow: 0px 0px 15px #ffbb0b !important;
+    box-shadow:  0  0 15px #ffbb0b !important;
   }
   50% {
-    box-shadow: 0px 0px 40px #ffd135 !important;
+    box-shadow:  0  0 40px #ffd135 !important;
   }
   100% {
-    box-shadow: 0px 0px 15px #ffbb0b !important;
+    box-shadow:  0  0 15px #ffbb0b !important;
   }
 }
 @-moz-keyframes WoobWoob {
    0% {
-     box-shadow: 0px 0px 15px #ffbb0b !important;
+     box-shadow:  0  0 15px #ffbb0b !important;
    }
    50% {
-     box-shadow: 0px 0px 40px #ffd135 !important;
+     box-shadow:  0  0 40px #ffd135 !important;
    }
    100% {
-     box-shadow: 0px 0px 15px #ffbb0b !important;
+     box-shadow:  0  0 15px #ffbb0b !important;
    }
  }
 @-o-keyframes WoobWoob {
   0% {
-    box-shadow: 0px 0px 15px #ffbb0b !important;
+    box-shadow:  0  0 15px #ffbb0b !important;
   }
   50% {
-    box-shadow: 0px 0px 40px #ffd135 !important;
+    box-shadow:  0  0 40px #ffd135 !important;
   }
   100% {
-    box-shadow: 0px 0px 15px #ffbb0b !important;
+    box-shadow:  0  0 15px #ffbb0b !important;
   }
 }
 @-ms-keyframes WoobWoob {
   0% {
-    box-shadow: 0px 0px 15px #ffbb0b !important;
+    box-shadow:  0  0 15px #ffbb0b !important;
   }
   50% {
-    box-shadow: 0px 0px 40px #ffd135 !important;
+    box-shadow:  0  0 40px #ffd135 !important;
   }
   100% {
-    box-shadow: 0px 0px 15px #ffbb0b !important;
+    box-shadow:  0  0 15px #ffbb0b !important;
   }
 }
 @keyframes WoobWoob {
   0% {
-    box-shadow: 0px 0px 15px #ffbb0b !important;
+    box-shadow:  0  0 15px #ffbb0b !important;
   }
   50% {
-    box-shadow: 0px 0px 40px #ffd135 !important;
+    box-shadow:  0  0 40px #ffd135 !important;
   }
   100% {
-    box-shadow: 0px 0px 15px #ffbb0b !important;
+    box-shadow:  0  0 15px #ffbb0b !important;
   }
 }
 
