@@ -122,6 +122,19 @@ $game-height: 800px;
   width: 100%;
   //border: 1px solid black;
   background: rgba(252, 219, 125, 0.51);
+  
+  div {
+    margin-bottom: 5px;
+  }
+
+  .icon-hand-card {
+    background: url("../../assets/card_icon.png") no-repeat;
+    height: 50px;
+    width: 50px;
+    display: block;
+    position: absolute;
+    margin-top: -8px;
+  }
 }
 
 .removeBackground {
