@@ -183,6 +183,7 @@ var Card = (function(){
 
   r.reset = function(){
     this._changedType = null;
+    this._forcedPower = -1;
     this._boost = {};
     this.boost = 0;
   }
