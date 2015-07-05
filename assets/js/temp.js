@@ -4,22 +4,24 @@ $(".video-self").tubeplayer({
   height: 0.001,
   initialVideo: "UE9fPWy1_o4",
   autoPlay: true,
+  onPlayerPlaying: function(id){
+    if(localStorage.getItem('volume') == 'off') {
+      $('.music-icon').removeClass('active');
+      $(".video-self").tubeplayer('mute');
+    }
+
+    if(localStorage.getItem('volumeValue') != null) {
+      $('.video-self').tubeplayer('volume', localStorage.getItem('volumeValue'));
+      $('.volume').val(localStorage.getItem('volumeValue'));
+    } else {
+      $('.volume').val('75');
+      $('.video-self').tubeplayer('volume', 75);
+    }
+  },
   onPlayerEnded: function(){
     $(".video-self").tubeplayer('play');
   }
 });
-
-if(localStorage.getItem('volume') == 'off') {
-  $('.music-icon').removeClass('active');
-}
-
-if(localStorage.getItem('volumeValue') != null) {
-  $('.video-self').tubeplayer('volume', localStorage.getItem('volumeValue'));
-  $('.volume').val(localStorage.getItem('volumeValue'));
-} else {
-  $('.volume').val('75');
-  $('.video-self').tubeplayer('volume', 75);
-}
 
 // Set volume.
 $('.volume').on('blur', function() {
