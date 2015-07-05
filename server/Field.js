@@ -75,7 +75,9 @@ var Field = (function(){
     this._cards[index] = newCard;
     oldCard.reset();
     for(var event in oldCard._uidEvents) {
-      this.side.off(event, oldCard.getUidEvents(event));
+      if(this.side && this.side.off){
+        this.side.off(event, oldCard.getUidEvents(event));
+      }
     }
     return oldCard;
   }
@@ -102,13 +104,15 @@ var Field = (function(){
       }
       this._cards[i] = null;
     }*/
-    tmp.forEach(function(card, i) {
+    tmp.forEach(function(card, i){
       card.reset();
       if(card.__lock){
         return;
       }
       for(var event in card._uidEvents) {
-        this.side.off(event, card.getUidEvents(event));
+        if(this.side && this.side.off){
+          this.side.off(event, card.getUidEvents(event));
+        }
       }
       this._cards[i] = null;
     }, this)
@@ -137,7 +141,9 @@ var Field = (function(){
     cards.forEach(function(card){
       card.reset();
       for(var event in card._uidEvents) {
-        this.side.off(event, card.getUidEvents(event));
+        if(this.side && this.side.off){
+          this.side.off(event, card.getUidEvents(event));
+        }
       }
       res.push(_cards.splice(self.getPosition(card), 1)[0]);
     })

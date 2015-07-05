@@ -389,8 +389,12 @@ var Battle = (function(){
   r.userLeft = function(sideName){
     var side = this[sideName];
 
-    side.foe.send("foe:left", null, true);
 
+    if(side.foe){
+      side.foe.send("foe:left", null, true);
+      return;
+    }
+    console.log("side foe not defined!", side.foe);
   }
 
   r.shutDown = function(){

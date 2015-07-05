@@ -77,7 +77,13 @@ Battleside = (function(){
     this.receive("decoy:replaceWith", function(data){
       if(self._isWaiting) return;
       var card = self.findCardOnFieldByID(data.cardID);
-      if(card === -1) throw new Error("decoy:replace | unknown card");
+      /*if(card === -1) throw new Error("decoy:replace | unknown card");*/
+      if(card === -1) {
+        console.log("decoy:replace | unknown card: ", card);
+        self.sendNotificationTo(self, "Possible bug occured: unknown card was chosen by playing decoy ability.");
+        //self.endTurn();
+        return;
+      }
       self.runEvent("Decoy:replaceWith", self, [card]);
     })
     this.receive("cancel:decoy", function(){
