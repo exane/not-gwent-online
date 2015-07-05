@@ -41,7 +41,7 @@ Battleside = (function(){
     this.on = this.battle.on.bind(this.battle);
     this.off = this.battle.off.bind(this.battle);
 
-    
+
 
 
     this.receive("activate:leader", function(){
@@ -100,7 +100,12 @@ Battleside = (function(){
       }
       var cardID = data.cardID;
       var card = self.getCardFromDiscard(cardID);
-      if(card === -1) throw new Error("medic:chooseCardFromDiscard | unknown card: ", card);
+      if(card === -1) {
+        console.log("medic:chooseCardFromDiscard | unknown card: ", card);
+        self.sendNotificationTo(self, "Possible bug occured: unknown card was chosen by playing medic ability.");
+        self.endTurn();
+        return;
+      }
 
       self.removeFromDiscard(card);
 
@@ -115,7 +120,12 @@ Battleside = (function(){
       }
       var cardID = data.cardID;
       var card = self.foe.getCardFromDiscard(cardID);
-      if(card === -1) throw new Error("emreis_leader4:chooseCardFromDiscard | unknown card: ", card);
+      if(card === -1) {
+        console.log("emreis_leader4:chooseCardFromDiscard | unknown card: ", card);
+        self.sendNotificationTo(self, "Possible bug occured: unknown card was chosen by playing nilfgaardian leader ability.");
+        self.endTurn();
+        return;
+      }
 
       self.foe.removeFromDiscard(card);
 
