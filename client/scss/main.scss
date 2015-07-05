@@ -223,11 +223,14 @@ $game-height: 800px;
   .button-pass {
     width: 100%;
     border: 0;
-    background: #3f4c5b;
+    background: #3f4c5b; 
     padding: 5px 0;
     color: #fff;
     text-transform: uppercase;
     fon-size: 15px;
+    position: absolute;
+    z-index: 21;
+    margin-top: -33px;
 
     &:hover {
       background: lighten(#3f4c5b, 10%);
