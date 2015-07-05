@@ -142,6 +142,9 @@ var Battle = (function(){
   }
 
   r.getWinner = function() {
+    if(!this.p1.getRubies() && !this.p2.getRubies()){
+      return null; //tie
+    }
     return this.p1.getRubies() ? this.p1 : this.p2;
   }
 
@@ -152,6 +155,7 @@ var Battle = (function(){
     if(this.checkIfIsOver()){
       //console.log("its over!");
       var winner = this.getWinner();
+      winner = winner ? winner.getName() : "nobody";
       this.gameOver(winner);
       this.update();
       return;
@@ -182,8 +186,8 @@ var Battle = (function(){
       this.waitForScoiatael(this.p2);
     }
     else {
-      this.sendNotification(loser.getName() + " begins!");
-      this.switchTurn(loser);
+      this.sendNotification(winner.getName() + " begins!");
+      this.switchTurn(winner);
     }
   }
 
@@ -204,9 +208,9 @@ var Battle = (function(){
     })
   }
 
-  r.gameOver = function(winner){
+  r.gameOver = function(winnerName){
     this.send("gameover", {
-      winner: winner.getName()
+      winner: winnerName
     })
   }
 
