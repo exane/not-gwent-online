@@ -102,3 +102,62 @@ body {
   color: #8798ac;
   right: 20px;
 }
+
+.music-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  transition: all .2s ease-in-out 0s;
+  z-index: 20;
+  padding: 30px;
+
+  &:hover .music-options {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.music-icon {
+  background: url(../../assets/music-mute.png) no-repeat;
+  float: right;
+  width: 35px;
+  height: 33px;
+  opacity: .8;
+  cursor: pointer;
+  transition: all .2s ease-in-out 0s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.active {
+    background: url(../../assets/music.png) no-repeat;
+  }
+}
+
+.music-options {
+  float: right;
+  background: rgba(#000, .5);
+  padding: 10px 20px;
+  color: #8798ac;
+  clear: both;
+  margin: 15px 0 0 0;
+  opacity: 0;
+  visibility: hidden;
+  width: 170px;
+
+  label {
+    float: left;
+    margin: 4px 10px 0 0;
+  }
+}
+
+.volume {
+  width: 40px;
+  background: #404d5b;
+  border: 0;
+  padding: 5px;
+  float: left;
+  margin: 0 15px 0 0;
+  text-align: center;
+}
