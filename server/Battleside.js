@@ -41,6 +41,8 @@ Battleside = (function(){
     this.on = this.battle.on.bind(this.battle);
     this.off = this.battle.off.bind(this.battle);
 
+    
+
 
     this.receive("activate:leader", function(){
       if(self._isWaiting) return;
@@ -107,6 +109,7 @@ Battleside = (function(){
     this.receive("emreis_leader4:chooseCardFromDiscard", function(data){
       if(!data){
         self.endTurn();
+        self.sendNotificationTo(self.foe, self.getName() + " takes no card from your discard pile (or there wasn't any card to choose)");
         //self.runEvent("NextTurn", null, [self.foe]);
         return;
       }
@@ -116,7 +119,9 @@ Battleside = (function(){
 
       self.foe.removeFromDiscard(card);
 
-      self.placeCard(card);
+      //self.placeCard(card);
+      self.sendNotificationTo(self.foe, self.getName() + " takes " + card.getName() + " from your discard pile into his hand.");
+      self.hand.add(card);
 
       self.endTurn();
       // self.runEvent("NextTurn", null, [self.foe]);
