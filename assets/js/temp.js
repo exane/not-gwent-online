@@ -1,5 +1,5 @@
 // Start music.
-$(".video-self2").tubeplayer({
+$(".video-self").tubeplayer({
   width: 0.001,
   height: 0.001,
   initialVideo: "UE9fPWy1_o4",
