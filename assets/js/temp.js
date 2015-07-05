@@ -15,6 +15,7 @@ if(localStorage.getItem('volume') == 'off') {
 
 if(localStorage.getItem('volumeValue') != null) {
   $('.video-self').tubeplayer('volume', localStorage.getItem('volumeValue'));
+  $('.volume').val(localStorage.getItem('volumeValue'));
 } else {
   $('.volume').val('75');
   $('.video-self').tubeplayer('volume', 75);
