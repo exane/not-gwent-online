@@ -80,6 +80,7 @@ body {
 
 .bbm-modal__section {
   position: relative;
+  -webkit-transform: translate(-50%, 0px);
   transform: translate(-50%, 0px);
   left: 50%;
   width: 500px;
