@@ -51,6 +51,7 @@ var User = (function(){
   }
 
   r.setName = function(name) {
+    name = name.slice(0, 20);
     console.log("user name changed from %s to %s", this._name, name);
     this._name = name;
   }

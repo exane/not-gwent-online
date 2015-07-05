@@ -705,7 +705,7 @@ let ChooseSideModal = Modal.extend({
 
 let User = Backbone.Model.extend({
   defaults: {
-    name: localStorage["userName"] || null,
+    name: typeof localStorage["userName"] === "string" ? localStorage["userName"].slice(0, 20) : null,
     deck: localStorage["userDeck"] || "random",
     serverOffline: true
   },
@@ -834,6 +834,7 @@ let User = Backbone.Model.extend({
     //app.socket.subscribe(room);
   },
   setName: function(name){
+    name = name.slice(0, 20);
     this.get("app").send("request:name", {name: name});
     localStorage["userName"] = name;
   },
@@ -916,6 +917,7 @@ let Lobby = Backbone.View.extend({
     /*let val = $(e.target).val();
     this.app.trigger("setDeck", val);
     this.$el.find("#deckChoice option[value='" + val + "']").attr("selected", "selected")*/
+
     localStorage["userName"] = this.app.user.get("name");
     /*this.render();*/
     this.$el.find(".name-input").val(this.app.user.get("name"));
