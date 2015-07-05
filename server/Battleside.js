@@ -474,11 +474,19 @@ Battleside = (function(){
   }
 
   r.setTightBond = function(card){
-    var field = this.field[card.getType()];
-    var pos = field.getPosition(card);
+    var field = this.field[card.getType()];/*
+    var pos = field.getPosition(card);*/
     var cards = field.get();
 
-    if(pos < 0) return;
+    card.resetTightBond();
+
+    cards.forEach(function(c) {
+      if(c.getID() === card.getID()) return;
+      if(c.getName() !== card.getName()) return;
+      card.setBoost(card.getID() + "|tight_bond|"+c.getID(), "tight_bond");
+    });
+
+    /*if(pos < 0) return;
     if(pos >= 1 && cards[pos - 1].getName() === cards[pos].getName()){
       cards[pos].setBoost(cards[pos].getID() + "|left", "tight_bond");
     }
@@ -491,7 +499,7 @@ Battleside = (function(){
     }
     else {
       cards[pos].setBoost(cards[pos].getID() + "|right", 0);
-    }
+    }*/
   }
 
   r.checkAbilities = function(card, obj, __flag){

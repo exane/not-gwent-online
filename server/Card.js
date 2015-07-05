@@ -137,6 +137,13 @@ var Card = (function(){
     return this._id;
   }
 
+  r.resetTightBond = function() {
+    for(var key in this._boost) {
+      if(this._boost[key] !== "tight_bond") continue;
+      delete this._boost[key];
+    }
+  }
+
   r.getBoost = function(){
     var res = 0;
     var doubles = 0;
