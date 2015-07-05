@@ -17,6 +17,9 @@ global.io = require("socket.io")(app);
 
 app.listen(16918);
 
+var admin = io.of("/admin");
+
+
 io.on("connection", function(socket) { //global connection
   var user;
   connections.add(user = User(socket));
@@ -32,4 +35,13 @@ io.on("connection", function(socket) { //global connection
 
 
   io.emit("update:playerOnline", connections.length());
+})
+
+admin.on("connection", function(socket) {
+  socket.on("sendMessage", function(msg) {
+    console.log("admin send msg: " + msg);
+    io.emit("notification", {
+      message: msg
+    })
+  })
 })
