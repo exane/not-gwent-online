@@ -1,5 +1,5 @@
 // Start music.
-$(".video-self").tubeplayer({
+$(".video-self2").tubeplayer({
   width: 0.001,
   height: 0.001,
   initialVideo: "UE9fPWy1_o4",
@@ -31,6 +31,17 @@ $('.volume').on('blur', function() {
 
   $('.video-self').tubeplayer('volume', val);
   localStorage.setItem('volumeValue', val);
+});
+
+// Show music options.
+var musicHover;
+$('.music-icon, .music-options').hover(function() {
+  clearTimeout(musicHover);
+  $('.music-options').fadeIn();
+}, function() {
+  musicHover = setTimeout(function() {
+    $('.music-options').fadeOut();
+  }, 500);
 });
 
 // Music options.

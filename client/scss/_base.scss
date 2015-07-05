@@ -111,11 +111,6 @@ body {
   transition: all .2s ease-in-out 0s;
   z-index: 20;
   padding: 30px;
-
-  &:hover .music-options {
-    opacity: 1;
-    visibility: visible;
-  }
 }
 
 .music-icon {
@@ -143,9 +138,8 @@ body {
   color: #8798ac;
   clear: both;
   margin: 15px 0 0 0;
-  opacity: 0;
-  visibility: hidden;
-  width: 170px;
+  width: 180px;
+  display: none;
 
   label {
     float: left;
