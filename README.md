@@ -21,7 +21,7 @@ npm run gulp
 ##- Config
 - go to /public and open Config.js
 - change hostname to your address. (e.g., "192.168.123.1") <br>Make sure you don't have a trailing slash after your IP or address. (e.g., "192.168.123.1/")
-- If you have to change port than make sure you change the port on your server as well. <br>You find the server port in /server/server.js on line #18 "app.listen(#port)";
+- If you have to change port then make sure you change the port on your server as well. <br>You find the server port in /server/server.js on line #18 "app.listen(#port)";
 
 ##- Start Server
 ```
