@@ -1,5 +1,0 @@
-suites:
-    main:
-        namespace: Gwent
-        psr4_prefix: Gwent
-        src_path: app

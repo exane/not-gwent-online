@@ -3,7 +3,7 @@ var Card = require("./Card");
 var Deck = require("./Deck");
 var shortid = require("shortid");
 var Promise = require("jquery-deferred");
-var CardManager = require("./CardManager")
+var CardManager = require("./CardManager");
 
 
 var Battle = (function(){

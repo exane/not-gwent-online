@@ -6,6 +6,7 @@
   "dependencies": {
     "connect": "3.0.1",
     "express": "4.12.3",
+    "gulp-rename": "^1.2.2",
     "jquery-deferred": "^0.3.0",
     "minimist": "1.1.0",
     "serve-static": "1.8.0",
@@ -33,20 +34,22 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "build": "gulp --production"
   },
-  "repository" : {
-    "type" : "git"
-  , "url" : "https://github.com/exane/gwent"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exane/not-gwent-online"
   },
   "author": {
     "name": "Tim Meier",
     "email": "raco0n@gmx.de"
   },
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Viktor Geringer",
       "email": "devfakeplus@googlemail.com"
-    }],
+    }
+  ],
   "license": "MIT"
 }
