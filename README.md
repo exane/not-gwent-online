@@ -1,8 +1,7 @@
 #Gwent-Online
 
 #Introduction
-
-Gwent-Online is an open-source project of the card-game Gwent.
+Not-Gwent-Online is a standalone multiplayer version of Gwent, a card game from The Witcher 3. 
 
 #Install
 ##- Requirements
