@@ -30,4 +30,4 @@ node server/server.js
 ```
 
 ##- Start Client
-- Open your browser and go to e.g. "http://192.168.123.1:4000"
+- Open your browser and go to e.g. "http://192.168.123.1:3000"
