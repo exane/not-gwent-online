@@ -1,6 +1,7 @@
 node_modules
 .idea
-public/
+!public/Config.js
+public
 test/spec
 assets/cards/*
 client/scss/_cards.scss

@@ -1,5 +1,8 @@
 var argv = require('minimist')(process.argv.slice(2));
-
+var http = require("http");
+var express = require('express');
+var app = express();
+var Config = require("../public/Config")
 
 global.connections = require("./Connections")();
 
@@ -9,16 +12,17 @@ global.Room = require("./Room");
 
 global.User = require("./User");
 
-/*global.Socket = require("./Socket");*/
+var server = http.createServer(app);
+global.io = require("socket.io").listen(server);
+server.listen(Config.Server.port);
 
+app.use(express.static('public'));
+app.use('/public', express.static('public'));
+app.use('/assets', express.static('assets'));
 
-var app = require('http').createServer();
-global.io = require("socket.io")(app);
-
-app.listen(16918);
+app.listen(Config.WebServer.port);
 
 var admin = io.of("/admin");
-
 
 io.on("connection", function(socket) { //global connection
   var user;
