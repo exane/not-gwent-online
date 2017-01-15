@@ -144,9 +144,6 @@ gulp.task("generate sprites", ["resize lg"], function() {
     //template: "./client/scss/_cards.hbs"
   })
   .pipe(imagemin())
-  .pipe(gulpif("*.png", rename({
-    extname: ".PNG"
-  })))
   .pipe(gulp.dest("./public/build/"));
 })
 
